@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "./animations.css";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    /* Font utama */
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+
+    /* Font serif */
+    --font-serif:
+        "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman",
+        Times, serif;
+
+    /* Warna khas Penerbit Yaguwipa */
+    --color-yaguwipa-red: #b91c1c;
+}
+
+/* Base styles */
+@layer base {
+    body {
+        @apply font-sans text-gray-900 antialiased bg-gray-50;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-serif text-gray-950;
+    }
+
+    /* 
+       PENTING: Menambahkan [x-cloak] untuk menyembunyikan elemen 
+       Alpine.js sebelum script dimuat agar tidak terlihat sekilas. 
+    */
+    [x-cloak] {
+        display: none !important;
+    }
+}

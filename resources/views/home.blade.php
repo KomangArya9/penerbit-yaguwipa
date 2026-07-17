@@ -1,0 +1,192 @@
+@extends('layouts.app')
+
+@section('content')
+    <!-- 1. Hero Section -->
+    <section class="py-24 bg-white text-center">
+        <div class="container mx-auto px-6">
+            <h1 class="text-6xl font-bold tracking-tight text-gray-900 mb-6 animate-on-scroll fade-down">
+                Penerbit Yaguwipa
+            </h1>
+
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed animate-on-scroll fade-up"
+                style="transition-delay: 0.2s;">
+                Penerbit YAGUWIPA berperan aktif menyebarluaskan hasil riset, IPTEKS, dan karya sastra sebagai bentuk
+                gerakan literasi riset dan humaniora
+            </p>
+
+            <div class="flex justify-center gap-4">
+                <!-- Tombol 1: Muncul dengan efek zoom-in -->
+                <a href="/program" class="bg-[var(--color-yaguwipa-red)] text-white px-8 py-3 rounded-lg font-semibold 
+                           hover:brightness-90 hover:opacity-90 hover:scale-[1.02] 
+                           transition-all duration-300 animate-on-scroll zoom-in" style="transition-delay: 0.2s;">
+                    Pelajari Program
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Program Utama (Grid 4 Kolom) -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 animate-on-scroll fade-up" style="transition-delay: 0.1s;">
+                Program Utama Kami
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-fr">
+                @php
+                    $programs = [
+                        ['icon' => 'images/manuscript.png', 'title' => 'Manuscript Coaching', 'desc' => 'Membantu penulis mempersiapkan konten dan struktur naskah hingga siap diterbitkan.'],
+                        ['icon' => 'images/plagiat.png', 'title' => 'Plagiarism Check', 'desc' => 'Layanan cek plagiat kami menggunakan teknologi canggih dan database yang luas untuk membantu deteksi plagiarisme.'],
+                        ['icon' => 'images/package.png', 'title' => 'Full Package Publishing', 'desc' => 'Paket Full Package mencakup semua tahap penerbitan, yakni mulai dari penyuntingan, desain sampul, layout hingga memasarkan karya penulis.'],
+                        ['icon' => 'images/hki.png', 'title' => 'HKI', 'desc' => 'Kami mendampingi proses pendaftaran HKI untuk memastikan karya penulis terlindungi dan mendapat pengakuan hak cipta secara hukum.'],
+                        ['icon' => 'images/katalog.png', 'title' => 'Cataloging', 'desc' => 'Kami bantu mendistribusikan dan memasarkan karya penulis sesuai segmen pasar melalui program cataloging'],
+                        ['icon' => 'images/kolaborasi.png', 'title' => 'Kolaborasi', 'desc' => 'Kami kolaborasi dengan berbagai perusahaan, lembaga pendidikan dan perseorangan menerbitkan karya mereka untuk disebarluaskan'],
+                        ['icon' => 'images/editing.png', 'title' => 'Editing', 'desc' => 'Kami membantu edit draf naskah Anda menjadi nyaman dibaca dan sesuai standar terbitan ber-ISBN atau ber-ISSN'],
+                        ['icon' => 'images/layout.png', 'title' => 'Setting Layout', 'desc' => 'Kami memberikan pelayanan setting layout agar karya tulis Anda tersaji untuk memukau pembaca dan menarik pasar'],
+                        ['icon' => 'images/cover.png', 'title' => 'Cover Design', 'desc' => 'Kami sediakan layanan desain sampul buku, jurnal, prosiding, majalah dan berbagai karya cetak sehingga layak dipasarkan'],
+                        ['icon' => 'images/cetak.png', 'title' => 'Percetakan', 'desc' => 'Kami sediakan jasa percetakan untuk buku, jurnal, prosiding majalah dan karya cetak lainnya dengan kualitas sesuai harga. Cetak karya Anda di kami'],
+                        ['icon' => 'images/issn.png', 'title' => 'Terbitkan Jurnal ber-ISSN', 'desc' => 'Kami kolaborasi dengan berbagai perguruan tinggi dan lembaga riset menerbitkan jurnal ber-ISSN sebagai nilai tambahakreditasi'],
+                        ['icon' => 'images/buku.png', 'title' => 'Buku ber-ISBN', 'desc' => 'Kami menerbitkan buku dan prosiding ber-ISBN untuk sebuah kebanggaan dan kenaikan jabatan fungsional. Terbitkan karya Anda bersama kami'],
+                    ];
+                @endphp
+
+                @foreach($programs as $index => $program)
+                    <div class="bg-white p-8 border border-gray-100 shadow-sm card-hover animate-on-scroll program-reveal flex flex-col h-full transition-all duration-300 ease-in-out"
+                        style="transition-delay: {{ $index < 4 ? (0.2 + ($index * 0.1)) : (0.4 + (($index - 4) * 0.05)) }}s;">
+
+                        <!-- BAGIAN IKON -->
+                        <div class="mb-4 transition-transform duration-500 group-hover:scale-110">
+                            <img src="{{ asset($program['icon']) }}" alt="{{ $program['title'] }}"
+                                class="w-12 h-12 object-contain block filter-red">
+                        </div>
+
+                        <!-- JUDUL -->
+                        <h3 class="font-bold text-lg mb-3 h-16 flex items-center">
+                            {{ $program['title'] }}
+                        </h3>
+
+                        <!-- DESKRIPSI -->
+                        <p class="text-sm text-gray-600 mb-6 flex-grow">
+                            {{ $program['desc'] }}
+                        </p>
+
+                        <!-- Tombol -->
+                        <a href="{{ route('program') }}#{{ Str::slug($program['title']) }}"
+                            class="text-[var(--color-yaguwipa-red)] font-semibold text-sm simple-link mt-auto inline-flex items-center">
+                            Pelajari Lebih Lanjut
+                            <span class="ml-1 transition-transform duration-300 group-hover:translate-x-1">→</span>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 3. About Section -->
+    <section class="py-20 container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center gap-16">
+            <!-- Teks Kiri: Muncul dari Kiri dengan efek slide -->
+            <div class="md:w-1/2 animate-on-scroll fade-right">
+                <span
+                    class="text-[var(--color-yaguwipa-red)] font-semibold tracking-widest uppercase text-sm mb-4 block">Tentang
+                    Kami</span>
+                <h2 class="text-4xl font-bold mb-6 leading-tight">Menyebarluaskan Ilmu,
+                    Membangun Literasi</h2>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Penerbit YAGUWIPA hadir sebagai penerbit kredibel yang mendukung publikasi hasil riset, IPTEKS,
+                    humaniora, dan karya sastra melalui layanan penerbitan, percetakan, serta publikasi ilmiah untuk
+                    memperkuat budaya literasi Indonesia.
+                </p>
+
+                <a href="/profile"
+                    class="inline-flex items-center text-white bg-gray-900 px-6 py-3 rounded-full hover:bg-[var(--color-yaguwipa-red)] transition-all duration-300 group">
+                    Selengkapnya <span class="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+            </div>
+
+            <!-- Gambar Kanan: Efek zoom yang lebih "deep" -->
+            <div class="md:w-1/2 animate-on-scroll zoom-out" style="transition-delay: 0.3s;">
+                <div
+                    class="relative w-full h-[450px] rounded-2xl overflow-hidden card-hover border-4 border-white shadow-2xl">
+                    <img src="path-ke-gambar-kamu.jpg" alt="Tentang Yaguwipa" class="w-full h-full object-cover">
+                    <!-- Overlay Gradient untuk kesan modern -->
+                    <div class="absolute inset-0 bg-gradient-to-tr from-[var(--color-yaguwipa-red)]/20 to-transparent">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Katalog Unggulan -->
+    <section class="py-16 container mx-auto px-6">
+        <div class="flex justify-between items-end mb-10 animate-on-scroll fade-up">
+            <h2 class="text-3xl font-bold">Katalog Unggulan</h2>
+            <a href="/katalog"
+                class="text-[var(--color-yaguwipa-red)] font-semibold flex items-center group transition-opacity duration-300 hover:opacity-80">
+                Lihat Semua
+                <span class="ml-2 transform transition-transform duration-300 group-hover:translate-x-2">→</span>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            @for($i = 0; $i < 4; $i++)
+                <div class="group animate-on-scroll program-reveal" style="transition-delay: {{ 0.2 + ($i * 0.1) }}s;">
+                    <div class="bg-gray-200 aspect-[3/4] mb-4 overflow-hidden rounded-lg shadow-sm card-hover">
+                        <img src="path-buku.jpg" alt="Buku" class="w-full h-full object-cover img-zoom">
+                    </div>
+                    <h3 class="font-bold text-gray-900 group-hover:text-[var(--color-yaguwipa-red)] transition-colors">
+                        Sistem Informasi Manajemen
+                    </h3>
+                    <p class="text-sm text-gray-500">Dr. Ahmad Suberki</p>
+                </div>
+            @endfor
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-50 overflow-hidden">
+        <div class="container mx-auto px-6 relative">
+            <!-- Header Section -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Apa Kata Pembaca</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">Hal-hal yang terkesan bagi Kami.</p>
+            </div>
+
+            <!-- Wrapper Slider -->
+            <div class="relative group px-4 md:px-12">
+                <!-- Tombol Kiri -->
+                <button onclick="scrollSlider(-1)"
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-1 md:p-2 text-gray-400 hover:text-[#B6171E] transition-colors">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+
+                <!-- Slider Container -->
+                <div id="testimoni-slider"
+                    class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-10 w-full no-scrollbar">
+                    @for($i = 0; $i < 6; $i++)
+                        <div
+                            class="card-item min-w-[80%] md:min-w-[45%] lg:min-w-[30%] bg-white p-8 border border-gray-100 shadow-sm rounded-xl snap-center flex flex-col items-center justify-between transition-all duration-700">
+                            <div class="text-orange-400 mb-4">★★★★★</div>
+                            <p class="text-gray-700 italic text-center mb-6 leading-relaxed flex-grow">
+                                "Website ini memberikan kesan profesional dan sangat membantu calon penulis dalam mewujudkan
+                                karya mereka."
+                            </p>
+                            <div class="font-bold text-gray-900 mt-auto">Riko Pradana</div>
+                        </div>
+                    @endfor
+                </div>
+
+                <!-- Tombol Kanan -->
+                <button onclick="scrollSlider(1)"
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-1 md:p-2 text-gray-400 hover:text-[#B6171E] transition-colors">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+@endsection

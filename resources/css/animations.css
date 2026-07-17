@@ -1,0 +1,399 @@
+/* Base setting untuk semua elemen animasi */
+.animate-on-scroll {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Animasi saat aktif */
+.animate-on-scroll.active {
+    opacity: 1;
+    transform: translateY(0) scale(1) !important;
+}
+
+/* Variasi Animasi */
+.fade-down {
+    transform: translateY(-30px);
+}
+.fade-up {
+    transform: translateY(30px);
+}
+.zoom-in {
+    transform: scale(0.95);
+}
+.program-reveal {
+    transform: translateY(30px) scale(0.97);
+}
+
+/* Efek Hover Kartu */
+.card-hover {
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+.card-hover:hover {
+    transform: translateY(-8px) !important; /* Kartu naik sedikit */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important; /* Bayangan lebih dalam */
+}
+
+/* Efek Hover pada Link "Pelajari Lebih Lanjut" */
+.simple-link {
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.simple-link:hover {
+    padding-left: 5px; /* Teks bergeser sedikit ke kanan */
+    opacity: 0.8;
+}
+
+/* Mengatur kecepatan animasi tombol agar terasa 'snappy' */
+.zoom-in {
+    opacity: 0;
+    transform: scale(
+        0.9
+    ); /* Sedikit lebih kecil agar efek zoom terlihat jelas */
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.animate-on-scroll.active.zoom-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Teks muncul dari kiri */
+.fade-right {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Gambar muncul dengan efek zoom-out (terasa lebih lebar) */
+.zoom-out {
+    opacity: 0;
+    transform: scale(1.1);
+    transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.animate-on-scroll.active.fade-right,
+.animate-on-scroll.active.zoom-out {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+/* Styling agar link lebih menonjol */
+.group {
+    cursor: pointer;
+}
+
+/* Menghilangkan underline default agar terlihat lebih bersih, 
+   namun tetap responsif dengan pergerakan panah */
+.group:hover span {
+    display: inline-block;
+}
+
+/* Membuat slider terasa "lengket" saat di-scroll */
+.snap-x {
+    scroll-snap-type: x mandatory;
+}
+
+.snap-center {
+    scroll-snap-align: center;
+}
+
+/* Menyembunyikan scrollbar agar lebih rapi */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Animasi muncul yang lebih lembut untuk slider */
+.fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    -webkit-transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    -moz-transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    -ms-transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    -o-transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* 1. Pengaturan Scroll Snap & Smoothness */
+.snap-x {
+    scroll-snap-type: x mandatory;
+}
+.snap-center {
+    scroll-snap-align: center;
+}
+
+/* 2. Penyembunyi Scrollbar Universal */
+.scrollbar-hide,
+#testimoni-slider {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar,
+#testimoni-slider::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* 3. Slider Container Utama (Dioptimalkan) */
+#testimoni-slider {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+
+    /* Smooth Scrolling & Momentum */
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-x !important;
+
+    /* Performance */
+    will-change: transform;
+    transform: none !important;
+
+    /* Interaksi */
+    cursor: grab;
+    width: 100% !important;
+    padding-bottom: 2rem !important; /* Ruang untuk scrollbar agar tidak terpotong */
+
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#testimoni-slider:active {
+    cursor: grabbing;
+}
+
+/* 4. Efek Panah Hover */
+.group:hover .group-hover-translate {
+    transform: translateX(8px);
+    transition: transform 0.3s ease;
+}
+
+/* Card Testimoni Elegan */
+.card-item {
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0.4;
+    filter: grayscale(100%);
+    transform: scale(0.9);
+}
+
+.card-item.active-card {
+    opacity: 1 !important;
+    filter: grayscale(0%) !important;
+    transform: scale(1) !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08) !important;
+    border-color: rgba(79, 70, 229, 0.1) !important;
+}
+
+.absolute.left-0,
+.absolute.right-0 {
+    transition: opacity 0.3s ease;
+}
+
+/* Animasi dasar */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-transform: translateY(20px);
+    -moz-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    -o-transform: translateY(20px);
+}
+
+.animate-on-scroll.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+}
+
+/* Delay Utility */
+.delay-100 {
+    transition-delay: 0.1s;
+}
+.delay-200 {
+    transition-delay: 0.2s;
+}
+.delay-300 {
+    transition-delay: 0.3s;
+}
+.delay-400 {
+    transition-delay: 0.4s;
+}
+
+/* Custom Scrollbar yang Tipis & Elegan */
+.scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #e5e7eb; /* Warna abu-abu muda */
+    border-radius: 20px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: #d1d5db; /* Lebih gelap saat di-hover */
+}
+
+/* Base style untuk kedua animasi */
+.animate-fade-left,
+.animate-fade-right {
+    opacity: 0;
+    will-change: transform, opacity; /* Optimalisasi performa */
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); /* Sedikit lebih 'smooth' dibanding ease-out standar */
+}
+
+/* Arah masuk */
+.animate-fade-left {
+    transform: translateX(-50px);
+}
+.animate-fade-right {
+    transform: translateX(50px);
+}
+
+/* Saat class .active ditambahkan oleh JS */
+.animate-fade-left.active,
+.animate-fade-right.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Animasi Khusus Portofolio */
+.portfolio-entry {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolio-entry.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes revealUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.animate-reveal {
+    animation: revealUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes scaleFade {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-scale-fade {
+    /* Durasi 1.5s membuatnya muncul dengan sangat perlahan dan anggun */
+    animation: scaleFade 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    opacity: 0;
+}
+
+/* Gambar muncul dari kiri */
+@keyframes slideFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Tulisan muncul dari kanan */
+@keyframes slideFromRight {
+    0% {
+        opacity: 0;
+        transform: translateX(15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-left {
+    animation: slideFromLeft 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    opacity: 0;
+}
+
+.animate-right {
+    animation: slideFromRight 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    opacity: 0;
+}
+
+/* Elemen dalam posisi diam (tersembunyi) */
+.animate-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Elemen bergerak saat class 'active' diberikan oleh JS */
+.animate-card.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-pagination {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Menyembunyikan scrollbar agar tampilan lebih bersih */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.filter-red {
+    /* Filter ini akan mengubah gambar menjadi merah */
+    filter: invert(30%) sepia(90%) saturate(5000%) hue-rotate(350deg)
+        brightness(90%) contrast(90%);
+}
+
+/* Sesuaikan 80px dengan tinggi navbar Anda */
+[id] {
+    scroll-margin-top: 180px; 
+}
+
+html {
+    scroll-behavior: smooth;
+}
