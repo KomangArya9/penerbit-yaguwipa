@@ -5,19 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    // Mematikan fitur timestamps karena tabel tidak memiliki created_at/updated_at
+    // Tentukan primary key karena bukan bernama 'id'
+    protected $primaryKey = 'username';
+    protected $keyType = 'string'; // Karena username biasanya berupa teks/string
+    public $incrementing = false;  // Karena username bukan angka auto-increment
+
+    // Tetap gunakan ini karena database kamu tidak memiliki timestamps
     public $timestamps = false;
 
-    // Menambahkan 'nama' ke dalam fillable agar bisa diisi
+    // Field yang diizinkan untuk diisi massal
     protected $fillable = ['username', 'password', 'nama', 'level'];
 
+    // Sembunyikan field sensitif dari output JSON
     protected $hidden = ['password', 'remember_token'];
 
     // Menggunakan hashing otomatis untuk password
@@ -26,15 +30,9 @@ class User extends Authenticatable implements FilamentUser
         return ['password' => 'hashed'];
     }
 
-    // Menentukan bahwa login menggunakan 'username'
+    // Mengganti default 'email' menjadi 'username' untuk proses login
     public function getAuthIdentifierName(): string
     {
         return 'username';
-    }
-
-    // Mengizinkan akses ke panel admin
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return true;
     }
 }

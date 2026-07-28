@@ -4,9 +4,13 @@
 
     <div class="w-full px-6 md:px-10 flex justify-between items-center relative">
 
-        <!-- Logo -->
+        <!-- Logo (Dinamis dari Pengaturan Admin) -->
+        @php
+            $settingHeader = App\Models\Pengaturan::first();
+            $logoPath = $settingHeader && $settingHeader->header ? asset('storage/' . $settingHeader->header) : asset('images/logo.png');
+        @endphp
         <a href="/" class="flex items-center">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo Yaguwipa" class="h-10 w-auto">
+            <img src="{{ $logoPath }}" alt="Logo Yaguwipa" class="h-10 w-auto object-contain">
         </a>
 
         <!-- Wrapper Mobile (Language Switcher + Hamburger) -->
@@ -215,66 +219,62 @@
             </button>
         </div>
 
-        <!-- Menu Mobile (Compact) -->
+        <!-- Menu Mobile (Dinamis dari Database) -->
         <div x-show="isOpen" x-cloak x-transition @click.away="isOpen = false"
-            class="md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full left-0 z-40">
+            class="md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full left-0 top-full z-40">
             <div class="flex flex-col px-5 py-6">
                 <div class="space-y-4">
-                    <a href="/" class="block text-[15px] font-medium text-gray-700 hover:text-[#B6171E]">Home</a>
-                    <a href="{{ route('profile') }}"
-                        class="block text-[15px] font-medium text-gray-700 hover:text-[#B6171E]">Profil</a>
-                    <a href="{{ route('program') }}"
-                        class="block text-[15px] font-medium text-gray-700 hover:text-[#B6171E]">Program</a>
-                    <a href="{{ route('portofolio') }}"
-                        class="block text-[15px] font-medium text-gray-700 hover:text-[#B6171E]">Portofolio</a>
-                    <a href="{{ route('penulis') }}"
-                        class="block text-[15px] font-medium text-gray-700 hover:text-[#B6171E]">Penulis</a>
-                    <a href="{{ route('katalog') }}"
-                        class="block text-[15px] font-medium text-gray-700 hover:text-[#B6171E]">Katalog</a>
-                    <a href="{{ route('partners') }}"
-                        class="block text-[15px] font-medium text-gray-700 hover:text-[#B6171E]">Partners & Client</a>
-                    <a href="{{ route('news') }}"
-                        class="block text-[15px] font-medium text-gray-700 hover:text-[#B6171E]">News & Events</a>
+                    @isset($menus)
+                        @foreach($menus as $menu)
+                            @php
+                                // Menentukan URL menu untuk desktop berdasarkan kolom 'url' dari database
+                                $menuUrl = strtolower($menu->title) === 'home' ? '/' : '/' . ltrim($menu->url, '/');
+
+                                // Mengecek apakah halaman sedang aktif
+                                $isActive = request()->is(trim($menuUrl, '/')) || (strtolower($menu->title) === 'home' && request()->is('/'));
+                            @endphp
+                            <a href="{{ $menuUrl }}"
+                                class="relative py-2 transition-colors duration-300 {{ $isActive ? 'text-[#B6171E]' : 'hover:text-[#B6171E]' }}">
+
+                                {{ $menu->title }}
+
+                                <!-- Garis bawah dengan animasi "berjalan" -->
+                                <span class="absolute left-0 bottom-0 h-0.5 bg-[#B6171E] origin-left transition-all duration-[700ms] ease-out {{ $isActive ? 'w-full' : 'w-0' }}">
+                                </span>
+                            </a>
+                        @endforeach
+                    @endisset
                 </div>
             </div>
         </div>
 
-        <!-- Menu Desktop -->
+        <!-- Menu Desktop (Dinamis dari Database) -->
         <div class="hidden md:flex space-x-6 text-sm font-medium text-gray-700">
-            @php
-                $links = [
-                    '/' => ['label' => 'Home', 'route' => 'home'],
-                    route('profile') => ['label' => 'Profil', 'route' => 'profile'],
-                    route('program') => ['label' => 'Program', 'route' => 'program'],
-                    route('portofolio') => ['label' => 'Portofolio', 'route' => 'portofolio'],
-                    route('penulis') => ['label' => 'Penulis', 'route' => 'penulis'],
-                    route('katalog') => ['label' => 'Katalog', 'route' => 'katalog'],
-                    route('partners') => ['label' => 'Partners & Client', 'route' => 'partners'],
-                    route('news') => ['label' => 'News & Events', 'route' => 'news'],
-                ];
-            @endphp
+            @isset($menus)
+                @foreach($menus as $menu)
+                    @php
+                        // Menentukan URL menu untuk desktop berdasarkan kolom 'url' dari database
+                        $menuUrl = strtolower($menu->title) === 'home' ? '/' : '/' . ltrim($menu->url, '/');
 
-            @foreach($links as $url => $data)
-                <a href="{{ $url }}"
-                    class="relative py-2 transition-colors duration-300 
-                                        {{ request()->routeIs($data['route']) ? 'text-[#B6171E]' : 'hover:text-[#B6171E]' }}">
+                        // Mengecek apakah halaman sedang aktif
+                        $isActive = request()->is(trim($menuUrl, '/')) || (strtolower($menu->title) === 'home' && request()->is('/'));
+                    @endphp
+                    <a href="{{ $menuUrl }}"
+                        class="relative py-2 transition-colors duration-300 {{ $isActive ? 'text-[#B6171E]' : 'hover:text-[#B6171E]' }}">
 
-                    {{ $data['label'] }}
+                        {{ $menu->title }}
 
-                    <!-- Garis bawah dengan animasi "berjalan" yang lebih tegas -->
-                    <span class="absolute left-0 bottom-0 h-0.5 bg-[#B6171E] origin-left transition-all duration-[700ms] ease-out
-                                            {{ request()->routeIs($data['route']) ? 'w-full' : 'w-0' }}">
-                    </span>
-                </a>
-            @endforeach
+                        <!-- Garis bawah dengan animasi "berjalan" -->
+                        <span class="absolute left-0 bottom-0 h-0.5 bg-[#B6171E] origin-left transition-all duration-[700ms] ease-out {{ $isActive ? 'w-full' : 'w-0' }}">
+                        </span>
+                    </a>
+                @endforeach
+            @endisset
         </div>
 
-        <!-- Right Side -->
+        <!-- Right Side (Language Switcher Desktop) -->
         <div class="hidden md:flex items-center gap-6">
-
-            <!-- Language Switcher -->
             <div x-data="{ open: false }" class="relative">
-                <!-- Tombol -->
                 <button @click="open = !open"
                     class="flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-[#B6171E] transition">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -288,7 +288,7 @@
                     </svg>
                 </button>
 
-                <!-- Dropdown Menu -->
+                <!-- Dropdown Menu Bahasa -->
                 <div x-show="open" @click.away="open = false" x-cloak
                     x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="opacity-0 translate-y-1"
@@ -474,9 +474,7 @@
                     @endforeach
                 </div>
             </div>
-
         </div>
+
     </div>
-
-
 </nav>

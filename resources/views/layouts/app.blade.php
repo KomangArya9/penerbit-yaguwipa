@@ -30,7 +30,7 @@
     @include('components.footer')
 
     <!-- Tombol WhatsApp Floating -->
-    <a href="https://wa.me/6281234567890" target="_blank"
+    <a href="https://wa.me/628113996698" target="_blank"
         class="fixed bottom-6 right-6 z-50 bg-[#25D366] p-4 rounded-full shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center">
         <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
             width="1em" height="1em" viewBox="0 0 24 24">
