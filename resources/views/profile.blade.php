@@ -174,7 +174,7 @@
                                 <div class="text-[#B6171E] mb-2">
                                     {!! str_repeat('★', $review->starts) !!}{!! str_repeat('☆', 5 - $review->starts) !!}
                                 </div>
-                                <p class="italic mb-4 text-gray-700 leading-relaxed">"{{ $review->review }}"</p>
+                                <p class="italic mb-4 text-gray-700 leading-relaxed break-words">"{{ $review->review }}"</p>
                                 <p class="font-bold text-sm">— {{ $review->nama }},
                                     <span class="text-gray-500 font-normal">{{ $review->pekerjaan }}</span>
                                 </p>
@@ -217,8 +217,13 @@
                             <option value="1">1 Bintang</option>
                         </select>
 
-                        <textarea name="review" placeholder="Your Message" required
-                            class="w-full p-3 border border-gray-300 focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] outline-none transition-all rounded"></textarea>
+                        <div>
+                            <textarea name="review" id="review-textarea" placeholder="Your Message" required maxlength="250"
+                                class="w-full p-3 border border-gray-300 focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] outline-none transition-all rounded"></textarea>
+                            <div class="text-right text-xs text-gray-400 mt-1">
+                                <span id="char-count">0</span>/250 karakter
+                            </div>
+                        </div>
 
                         <button type="submit" id="submit-btn"
                             class="w-full bg-[#B6171E] text-white px-8 py-3 font-semibold hover:bg-red-800 transition-all duration-300 rounded">
@@ -226,52 +231,77 @@
                         </button>
                     </form>
 
-                    <!-- 3. Skrip JavaScript untuk Menangani Kiriman Data Tanpa Reload -->
+                    <!-- 3. Skrip JavaScript untuk Menangani Kiriman Data & Penghitung Karakter -->
                     <script>
-                        document.getElementById('review-form').addEventListener('submit', function (e) {
-                            e.preventDefault(); // Mencegah halaman reload atau loading muter-muter
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const textarea = document.getElementById('review-textarea');
+                            const charCount = document.getElementById('char-count');
+                            const reviewForm = document.getElementById('review-form');
 
-                            let formData = new FormData(this);
-                            let submitBtn = document.getElementById('submit-btn');
-                            let alertBox = document.getElementById('review-alert');
-                            let alertMsg = document.getElementById('alert-message');
-
-                            // Ubah tombol jadi status memuat sementara
-                            submitBtn.disabled = true;
-                            submitBtn.innerText = 'MENGIRIM...';
-
-                            fetch("{{ route('review.store') }}", {
-                                method: "POST",
-                                body: formData,
-                                headers: {
-                                    "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
-                                    "Accept": "application/json"
-                                }
-                            })
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        // Munculkan kotak hijau dengan pesan dari server
-                                        alertMsg.innerText = data.message;
-                                        alertBox.classList.remove('hidden');
-
-                                        // Kosongkan form kembali secara otomatis
-                                        document.getElementById('review-form').reset();
-
-                                        // Sembunyikan otomatis kotak hijaunya setelah 5 detik (opsional)
-                                        setTimeout(() => {
-                                            alertBox.classList.add('hidden');
-                                        }, 10000);
-                                    }
-                                })
-                                .catch(error => {
-                                    alert('Terjadi kesalahan, silakan coba lagi.');
-                                })
-                                .finally(() => {
-                                    // Kembalikan tombol ke keadaan semula
-                                    submitBtn.disabled = false;
-                                    submitBtn.innerText = 'SUBMIT REVIEW';
+                            // 1. Fitur Penghitung Karakter Real-time
+                            if (textarea && charCount) {
+                                textarea.addEventListener('input', function () {
+                                    charCount.innerText = this.value.length;
                                 });
+                            }
+
+                            // 2. Fitur Pengiriman Form AJAX Tanpa Reload
+                            if (reviewForm) {
+                                reviewForm.addEventListener('submit', function (e) {
+                                    e.preventDefault(); // Mencegah halaman reload atau loading muter-muter
+
+                                    let formData = new FormData(this);
+                                    let submitBtn = document.getElementById('submit-btn');
+                                    let alertBox = document.getElementById('review-alert');
+                                    let alertMsg = document.getElementById('alert-message');
+
+                                    // Ubah tombol jadi status memuat sementara
+                                    submitBtn.disabled = true;
+                                    submitBtn.innerText = 'MENGIRIM...';
+
+                                    fetch("{{ route('review.store') }}", {
+                                        method: "POST",
+                                        body: formData,
+                                        headers: {
+                                            "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
+                                            "Accept": "application/json"
+                                        }
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.success) {
+                                                // Munculkan kotak hijau dengan pesan dari server
+                                                if (alertMsg && alertBox) {
+                                                    alertMsg.innerText = data.message;
+                                                    alertBox.classList.remove('hidden');
+                                                }
+
+                                                // Kosongkan form kembali secara otomatis
+                                                reviewForm.reset();
+
+                                                // Reset angka penghitung karakter kembali ke 0
+                                                if (charCount) {
+                                                    charCount.innerText = '0';
+                                                }
+
+                                                // Sembunyikan otomatis kotak hijaunya setelah 10 detik
+                                                if (alertBox) {
+                                                    setTimeout(() => {
+                                                        alertBox.classList.add('hidden');
+                                                    }, 10000);
+                                                }
+                                            }
+                                        })
+                                        .catch(error => {
+                                            alert('Terjadi kesalahan, silakan coba lagi.');
+                                        })
+                                        .finally(() => {
+                                            // Kembalikan tombol ke keadaan semula
+                                            submitBtn.disabled = false;
+                                            submitBtn.innerText = 'SUBMIT REVIEW';
+                                        });
+                                });
+                            }
                         });
                     </script>
                 </aside>

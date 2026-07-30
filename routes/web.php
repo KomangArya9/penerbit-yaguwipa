@@ -31,6 +31,9 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\AuthorPublicController;
 use App\Http\Controllers\CatalogPublicController;
 use App\Http\Controllers\PublicUlasanController;
+use App\Http\Controllers\ClientPublicController;
+use App\Http\Controllers\BlogPublicController;
+use App\Http\Controllers\ProgramPublicController;
 
 
 
@@ -93,14 +96,21 @@ Route::get('/penulis', [AuthorPublicController::class, 'index'])->name('authors.
 Route::post('/penulis/store', [AuthorPublicController::class, 'store'])->name('authors.store');
 
 Route::get('/katalog', [CatalogPublicController::class, 'index'])->name('catalog.index');
-Route::get('/katalog/{book}', [CatalogPublicController::class, 'show'])->name('catalog.show');
+Route::get('/katalog/{catalog}', [CatalogPublicController::class, 'show'])->name('catalog.show');
 
 // Route untuk Proses Simpan & Update Data
 Route::post('/katalog/store-public', [CatalogPublicController::class, 'storePublic'])->name('catalog.store.public');
 Route::put('/katalog/{book}', [CatalogPublicController::class, 'update'])->name('catalog.update');
 
-// Route untuk Ulasan Buku
-Route::post('/catalog/{id}/ulasan', [PublicUlasanController::class, 'store'])->name('catalog.ulasan.store');
+// Route untuk Kirim Ulasan Buku Publik
+Route::post('/catalog/{id}/review', [CatalogPublicController::class, 'storeReview'])->name('catalog.review.store');
+
+Route::get('/partners', [ClientPublicController::class, 'index'])->name('partner.index');
+
+Route::get('/news', [BlogPublicController::class, 'index'])->name('news.index');
+Route::get('/news/{slug}', [BlogPublicController::class, 'show'])->name('news.show');
+
+Route::get('/program', [ProgramPublicController::class, 'index'])->name('program');
 
 
 // Route untuk Login & Logout

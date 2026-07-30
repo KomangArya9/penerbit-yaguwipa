@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penerbit Yaguwipa</title>
 
+    @if(isset($blog) && $blog->keyword)
+        <meta name="keywords" content="{{ $blog->keyword }}">
+    @endif
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Google Fonts untuk font serif elegan -->

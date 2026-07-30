@@ -10,16 +10,43 @@ class Catalog extends Model
     use HasFactory;
 
     protected $table = 'catalog';
-    
+
     protected $fillable = [
-    'judul', 'penulis', 'editor', 'penerbit',
-    'i_penulis', 'i_editor', 'jenis', 'kategori', 'bidang',
-    'isbn', 'issn', 'ukuran', 'jumlah', 'terbit',
-    'kondisi', 'ketersediaan', 'keterangan', 'deskripsi',
-    'info', 'harga', 'diskon', 'penjual', 'wa',
-    'alamat', 'ktp', 'bank', 'norek',
-    'slug', 'status', 'cover', 'cover_belakang', 'img', 'soft_file', 'hite'
-];
+        'judul',
+        'penulis',
+        'editor',
+        'penerbit',
+        'i_penulis',
+        'i_editor',
+        'jenis',
+        'kategori',
+        'bidang',
+        'isbn',
+        'issn',
+        'ukuran',
+        'jumlah',
+        'terbit',
+        'kondisi',
+        'ketersediaan',
+        'keterangan',
+        'deskripsi',
+        'info',
+        'harga',
+        'diskon',
+        'penjual',
+        'wa',
+        'alamat',
+        'ktp',
+        'bank',
+        'norek',
+        'slug',
+        'status',
+        'cover',
+        'cover_belakang',
+        'img',
+        'soft_file',
+        'hite'
+    ];
 
     /**
      * Relasi ke tabel ulasan
@@ -27,6 +54,7 @@ class Catalog extends Model
      */
     public function ulasans()
     {
-        return $this->hasMany(Ulasan::class, 'id_catalog', 'id');
+        // Hanya ambil ulasan yang statusnya sudah disetujui (Show)
+        return $this->hasMany(Ulasan::class, 'id_catalog', 'id')->where('status', 'Show');
     }
 }

@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Program extends Model
 {
+    use HasFactory;
+
     protected $table = 'service';
     
-    // Mengaktifkan kembali timestamps karena migration baru menggunakan $table->timestamps()
     public $timestamps = true; 
-
-    // Menggunakan 'id' sebagai primary key (default Laravel)
     protected $primaryKey = 'id';
     public $incrementing = true;
     protected $keyType = 'int';

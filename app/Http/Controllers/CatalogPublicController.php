@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catalog;
+use App\Models\Ulasan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -37,7 +38,9 @@ class CatalogPublicController extends Controller
 
     public function show($id)
     {
-        $catalog = Catalog::where('status', 'Show')->findOrFail($id);
+        // Memuat katalog yang berstatus Show beserta relasi ulasannya
+        $catalog = Catalog::where('status', 'Show')->with('ulasans')->findOrFail($id);
+        $catalog->increment('hite');
         return view('show', compact('catalog'));
     }
 
@@ -221,5 +224,32 @@ class CatalogPublicController extends Controller
 
         return redirect()->route('catalog.show', $catalog->id)
             ->with('success', 'Data katalog berhasil diperbarui!');
+    }
+
+    public function storeReview(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'ulasan' => 'required|string',
+            'stars' => 'required|integer|min:1|max:5',
+        ]);
+
+        Ulasan::create([
+            'id_catalog' => $id,
+            'nama' => $request->nama,
+            'ulasan' => $request->ulasan,
+            'stars' => $request->stars,
+            'status' => 'Pending', // Masuk ke admin untuk disetujui
+        ]);
+
+        // Jika diakses via AJAX/Fetch, kirim response JSON
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Ulasan berhasil dikirim dan akan ditampilkan setelah disetujui admin.'
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Ulasan berhasil dikirim dan akan ditampilkan setelah disetujui admin.');
     }
 }

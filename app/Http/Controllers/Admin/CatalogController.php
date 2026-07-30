@@ -78,7 +78,7 @@ class CatalogController extends Controller
 
     public function edit($id)
     {
-        $catalog = Catalog::findOrFail($id);
+        $catalog = Catalog::findOrFail($id);  
         return view('admin.catalog.edit', compact('catalog'));
     }
 

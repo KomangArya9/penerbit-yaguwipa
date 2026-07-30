@@ -52,12 +52,40 @@
 
         <div class="grid grid-cols-2 gap-4">
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Terbitan (jenis)</label>
-                <input type="text" name="jenis" value="{{ old('jenis') }}" placeholder="Buku, Jurnal, dll" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Terbitan</label>
+                <select id="jenis" name="jenis"
+                    class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-white">
+                    @php $jenisVal = old('jenis'); @endphp
+                    <option value="">Jenis Terbitan</option>
+                    <option value="Buku" {{ $jenisVal == 'Buku' ? 'selected' : '' }}>Buku</option>
+                    <option value="Jurnal" {{ $jenisVal == 'Jurnal' ? 'selected' : '' }}>Jurnal</option>
+                    <option value="Prosiding" {{ $jenisVal == 'Prosiding' ? 'selected' : '' }}>Prosiding</option>
+                    <option value="Majalah Ilmiah" {{ $jenisVal == 'Majalah Ilmiah' ? 'selected' : '' }}>Majalah Ilmiah</option>
+                    <option value="Artikel Ilmiah" {{ $jenisVal == 'Artikel Ilmiah' ? 'selected' : '' }}>Artikel Ilmiah</option>
+                    <option value="Lainnya" {{ $jenisVal == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                </select>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-                <input type="text" name="kategori" value="{{ old('kategori') }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <select id="kategori" name="kategori"
+                    class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-white">
+                    @php $katVal = old('kategori'); @endphp
+                    <option value="">Kategori Terbitan</option>
+                    <option value="Buku Referensi" {{ $katVal == 'Buku Referensi' ? 'selected' : '' }}>Buku Referensi</option>
+                    <option value="Buku Monograf" {{ $katVal == 'Buku Monograf' ? 'selected' : '' }}>Buku Monograf</option>
+                    <option value="Buku Ajar" {{ $katVal == 'Buku Ajar' ? 'selected' : '' }}>Buku Ajar</option>
+                    <option value="Buku Teks" {{ $katVal == 'Buku Teks' ? 'selected' : '' }}>Buku Teks</option>
+                    <option value="Karya Fiksi" {{ $katVal == 'Karya Fiksi' ? 'selected' : '' }}>Karya Fiksi</option>
+                    <option value="Jurnal Nasional" {{ $katVal == 'Jurnal Nasional' ? 'selected' : '' }}>Jurnal Nasional</option>
+                    <option value="Jurnal Nasional Terakreditasi" {{ $katVal == 'Jurnal Nasional Terakreditasi' ? 'selected' : '' }}>Jurnal Nasional Terakreditasi</option>
+                    <option value="Jurnal Internasional" {{ $katVal == 'Jurnal Internasional' ? 'selected' : '' }}>Jurnal Internasional</option>
+                    <option value="Jurnal Internasional Berreputasi" {{ $katVal == 'Jurnal Internasional Berreputasi' ? 'selected' : '' }}>Jurnal Internasional Berreputasi</option>
+                    <option value="Prosiding Nasional" {{ $katVal == 'Prosiding Nasional' ? 'selected' : '' }}>Prosiding Nasional</option>
+                    <option value="Prosiding Nasional Terakreditasi" {{ $katVal == 'Prosiding Nasional Terakreditasi' ? 'selected' : '' }}>Prosiding Nasional Terakreditasi</option>
+                    <option value="Prosiding Internasional" {{ $katVal == 'Prosiding Internasional' ? 'selected' : '' }}>Prosiding Internasional</option>
+                    <option value="Prosiding Internasional Berreputasi" {{ $katVal == 'Prosiding Internasional Berreputasi' ? 'selected' : '' }}>Prosiding Internasional Berreputasi</option>
+                    <option value="Lainnya" {{ $katVal == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                </select>
             </div>
         </div>
 
@@ -97,11 +125,19 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Kondisi</label>
-                <input type="text" name="kondisi" value="{{ old('kondisi') }}" placeholder="Baru / Second" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <select name="kondisi" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm bg-white">
+                    @php $kondisiVal = old('kondisi'); @endphp
+                    <option value="Baru" {{ $kondisiVal == 'Baru' ? 'selected' : '' }}>Baru</option>
+                    <option value="Second Hand" {{ $kondisiVal == 'Second Hand' ? 'selected' : '' }}>Second Hand</option>
+                </select>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Ketersediaan</label>
-                <input type="text" name="ketersediaan" value="{{ old('ketersediaan') }}" placeholder="Tersedia / Pre-Order" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <select name="ketersediaan" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm bg-white">
+                    @php $tersediaVal = old('ketersediaan'); @endphp
+                    <option value="Tersedia" {{ $tersediaVal == 'Tersedia' ? 'selected' : '' }}>Tersedia</option>
+                    <option value="Pre-Order" {{ $tersediaVal == 'Pre-Order' ? 'selected' : '' }}>Pre-Order</option>
+                </select>
             </div>
         </div>
 
@@ -168,22 +204,22 @@
         <div class="grid grid-cols-2 gap-4 pt-4 border-t">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Cover Depan (cover)</label>
-                <input type="file" name="cover" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700">
+                <input type="file" name="cover" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-[#B6171E]">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Cover Belakang (cover_belakang)</label>
-                <input type="file" name="cover_belakang" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700">
+                <input type="file" name="cover_belakang" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-[#B6171E]">
             </div>
         </div>
 
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Daftar Isi (img)</label>
-                <input type="file" name="img" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700">
+                <input type="file" name="img" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-[#B6171E]">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Soft File Dokumen (Opsional)</label>
-                <input type="file" name="soft_file" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700">
+                <input type="file" name="soft_file" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-[#B6171E]">
             </div>
         </div>
 
@@ -195,16 +231,16 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <select name="status" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm bg-white">
-                    <option value="Show">Show</option>
-                    <option value="Hide">Hide</option>
-                    <option value="Pending">Pending</option>
+                    <option value="Show" {{ old('status') == 'Show' ? 'selected' : '' }}>Show</option>
+                    <option value="Hide" {{ old('status') == 'Hide' ? 'selected' : '' }}>Hide</option>
+                    <option value="Pending" {{ old('status') == 'Pending' ? 'selected' : '' }}>Pending</option>
                 </select>
             </div>
         </div>
 
         <div class="flex justify-end gap-2 pt-4">
-            <a href="{{ route('admin.catalog.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg text-sm font-semibold">Batal</a>
-            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700">Submit</button>
+            <a href="{{ route('admin.catalog.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-300">Batal</a>
+            <button type="submit" class="px-4 py-2 bg-[#B6171E] text-white rounded-lg text-sm font-semibold hover:bg-red-900 transition-all">Submit</button>
         </div>
     </form>
 </div>

@@ -9,7 +9,6 @@ class Ulasan extends Model
 {
     use HasFactory;
 
-    // Menyesuaikan dengan nama tabel di database
     protected $table = 'ulasan';
 
     protected $fillable = [
@@ -20,9 +19,6 @@ class Ulasan extends Model
         'status',
     ];
 
-    /**
-     * Relasi ke tabel Catalog
-     */
     public function catalog()
     {
         return $this->belongsTo(Catalog::class, 'id_catalog', 'id');

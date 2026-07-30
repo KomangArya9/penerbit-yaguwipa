@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Author;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AuthorController extends Controller
@@ -69,17 +70,19 @@ class AuthorController extends Controller
         $data = $request->all();
         $data['slug'] = Str::slug($request->nama);
 
-        // Handle upload foto baru jika ada
+       // Handle upload foto baru jika ada
         if ($request->hasFile('foto')) {
-            // Hapus foto lama fisik jika ada di folder public/uploads/authors
-            if ($author->foto && file_exists(public_path($author->foto))) {
-                unlink(public_path($author->foto));
+            // Hapus foto lama di storage jika ada
+            if ($author->foto && Storage::disk('public')->exists($author->foto)) {
+                Storage::disk('public')->delete($author->foto);
             }
 
             $file = $request->file('foto');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/authors'), $filename);
-            $data['foto'] = 'uploads/authors/' . $filename;
+            
+            // Simpan foto baru ke folder storage/app/public/authors
+            $path = $file->storeAs('authors', $filename, 'public');
+            $data['foto'] = $path;
         }
 
         $author->update($data);

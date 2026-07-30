@@ -43,19 +43,21 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Institusi Penulis</label>
-                <input type="text" name="institusi_penulis" value="{{ old('institusi_penulis', $catalog->institusi_penulis) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <input type="text" name="i_penulis" value="{{ old('i_penulis', $catalog->i_penulis) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Institusi Editor</label>
-                <input type="text" name="institusi_editor" value="{{ old('institusi_editor', $catalog->institusi_editor) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <input type="text" name="i_editor" value="{{ old('i_editor', $catalog->i_editor) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
             </div>
         </div>
 
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Terbitan</label>
-                <select name="jenis_terbitan" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm bg-white">
-                    @php $jenisVal = old('jenis_terbitan', $catalog->jenis_terbitan); @endphp
+                <select id="jenis" name="jenis"
+                    class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-white">
+                    @php $jenisVal = old('jenis', $catalog->jenis ?? $catalog->jenis); @endphp
+                    <option value="">Jenis Terbitan</option>
                     <option value="Buku" {{ $jenisVal == 'Buku' ? 'selected' : '' }}>Buku</option>
                     <option value="Jurnal" {{ $jenisVal == 'Jurnal' ? 'selected' : '' }}>Jurnal</option>
                     <option value="Prosiding" {{ $jenisVal == 'Prosiding' ? 'selected' : '' }}>Prosiding</option>
@@ -66,8 +68,10 @@
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-                <select name="kategori" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm bg-white">
+                <select id="kategori" name="kategori"
+                    class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-white">
                     @php $katVal = old('kategori', $catalog->kategori); @endphp
+                    <option value="">Kategori Terbitan</option>
                     <option value="Buku Referensi" {{ $katVal == 'Buku Referensi' ? 'selected' : '' }}>Buku Referensi</option>
                     <option value="Buku Monograf" {{ $katVal == 'Buku Monograf' ? 'selected' : '' }}>Buku Monograf</option>
                     <option value="Buku Ajar" {{ $katVal == 'Buku Ajar' ? 'selected' : '' }}>Buku Ajar</option>
@@ -89,7 +93,7 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Bidang Ilmu</label>
-                <input type="text" name="bidang_ilmu" value="{{ old('bidang_ilmu', $catalog->bidang_ilmu) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <input type="text" name="bidang" value="{{ old('bidang', $catalog->bidang) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">ISBN</label>
@@ -111,11 +115,11 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Halaman</label>
-                <input type="text" name="jumlah_halaman" value="{{ old('jumlah_halaman', $catalog->jumlah_halaman) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <input type="text" name="jumlah" value="{{ old('jumlah', $catalog->jumlah) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Bulan & Tahun Terbit</label>
-                <input type="text" name="tahun_terbit" value="{{ old('tahun_terbit', $catalog->tahun_terbit) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <input type="text" name="terbit" value="{{ old('terbit', $catalog->terbit) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
             </div>
         </div>
 
@@ -145,7 +149,7 @@
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Info Tambahan</label>
-                <textarea name="info_tambahan" rows="4" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">{{ old('info_tambahan', $catalog->info_tambahan) }}</textarea>
+                <textarea name="info" rows="4" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">{{ old('info', $catalog->info) }}</textarea>
             </div>
         </div>
 
@@ -156,7 +160,7 @@
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Harga Diskon</label>
-                <input type="text" name="harga_diskon" value="{{ old('harga_diskon', $catalog->harga_diskon) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <input type="text" name="diskon" value="{{ old('diskon', $catalog->diskon) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
             </div>
         </div>
 
@@ -174,7 +178,7 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">No WA</label>
-                <input type="text" name="no_wa" value="{{ old('no_wa', $catalog->no_wa) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <input type="text" name="wa" value="{{ old('wa', $catalog->wa) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
@@ -185,15 +189,15 @@
         <div class="grid grid-cols-3 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">No KTP</label>
-                <input type="text" name="no_ktp" value="{{ old('no_ktp', $catalog->no_ktp) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <input type="text" name="ktp" value="{{ old('ktp', $catalog->ktp) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Nama Bank</label>
-                <input type="text" name="nama_bank" value="{{ old('nama_bank', $catalog->nama_bank) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <input type="text" name="bank" value="{{ old('bank', $catalog->bank) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Rekening</label>
-                <input type="text" name="no_rekening" value="{{ old('no_rekening', $catalog->no_rekening) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
+                <input type="text" name="norek" value="{{ old('norek', $catalog->norek) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm">
             </div>
         </div>
 
@@ -204,21 +208,21 @@
                 @if($catalog->cover)
                     <div class="mb-2"><img src="{{ asset('storage/' . $catalog->cover) }}" class="w-20 h-28 object-cover rounded border"></div>
                 @endif
-                <input type="file" name="cover" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                <input type="file" name="cover" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-[#B6171E] hover:file:bg-red-100">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Cover Belakang</label>
                 @if($catalog->cover_belakang)
                     <div class="mb-2"><img src="{{ asset('storage/' . $catalog->cover_belakang) }}" class="w-20 h-28 object-cover rounded border"></div>
                 @endif
-                <input type="file" name="cover_belakang" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                <input type="file" name="cover_belakang" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-[#B6171E] hover:file:bg-red-100">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Daftar Isi (Img)</label>
                 @if($catalog->img)
                     <div class="mb-2"><img src="{{ asset('storage/' . $catalog->img) }}" class="w-20 h-28 object-cover rounded border"></div>
                 @endif
-                <input type="file" name="img" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                <input type="file" name="img" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-[#B6171E] hover:file:bg-red-100">
             </div>
         </div>
 
@@ -230,15 +234,17 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <select name="status" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm bg-white">
-                    <option value="Show" {{ $catalog->status == 'Show' ? 'selected' : '' }}>Show</option>
-                    <option value="Hide" {{ $catalog->status == 'Hide' ? 'selected' : '' }}>Hide</option>
+                    @php $statusVal = old('status', $catalog->status); @endphp
+                    <option value="Show" {{ $statusVal == 'Show' ? 'selected' : '' }}>Show</option>
+                    <option value="Hide" {{ $statusVal == 'Hide' ? 'selected' : '' }}>Hide</option>
+                    <option value="Pending" {{ $statusVal == 'Pending' ? 'selected' : '' }}>Pending</option>
                 </select>
             </div>
         </div>
 
         <div class="flex justify-end gap-2 pt-4">
-            <a href="{{ route('admin.catalog.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg text-sm font-semibold">Batal</a>
-            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700">Simpan Perubahan</button>
+            <a href="{{ route('admin.catalog.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-300">Batal</a>
+            <button type="submit" class="px-4 py-2 bg-[#B6171E] text-white rounded-lg text-sm font-semibold hover:bg-red-900 transition-all">Simpan Perubahan</button>
         </div>
     </form>
 </div>
