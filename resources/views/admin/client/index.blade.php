@@ -6,12 +6,12 @@
     <div class="p-8">
         <div class="mb-6 flex justify-between items-center">
             <div>
-                <h1 class="text-2xl font-bold text-slate-800">Partners & Clients</h1>
-                <p class="text-slate-500 text-sm">Kelola daftar partner dan client instansi/perusahaan.</p>
+                <h1 class="text-2xl font-bold text-slate-800">@lang('admin.client_index_title')</h1>
+                <p class="text-slate-500 text-sm">@lang('admin.client_index_description')</p>
             </div>
             <a href="{{ route('client.create') }}"
                 class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow-sm transition">
-                + Add Data
+                + @lang('common.add_data')
             </a>
         </div>
 
@@ -26,11 +26,11 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs uppercase font-semibold">
-                            <th class="p-4 w-16">No</th>
-                            <th class="p-4">Nama Client</th>
-                            <th class="p-4">Logo</th>
-                            <th class="p-4">Status</th>
-                            <th class="p-4 text-center w-36">Aksi</th>
+                            <th class="p-4 w-16">@lang('common.no_label')</th>
+                            <th class="p-4">@lang('admin.client_label_name')</th>
+                            <th class="p-4">@lang('common.logo')</th>
+                            <th class="p-4">@lang('common.status')</th>
+                            <th class="p-4 text-center w-36">@lang('common.action')</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-200 text-slate-700 text-sm">
@@ -54,22 +54,22 @@
                                 <td class="p-4 text-center space-x-1">
                                     <a href="{{ route('client.edit', $item->title) }}"
                                         class="inline-block px-3 py-1.5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg text-xs font-medium transition">
-                                        Edit
+                                        @lang('common.edit')
                                     </a>
                                     <form action="{{ route('client.destroy', $item->title) }}" method="POST" class="inline"
-                                        onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                        onsubmit="return confirm('@lang('admin.client_confirm_delete')')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
                                             class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-medium transition">
-                                            Delete
+                                            @lang('common.delete')
                                         </button>
                                     </form>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="p-8 text-center text-slate-400">Belum ada data client.</td>
+                                <td colspan="5" class="p-8 text-center text-slate-400">@lang('admin.client_empty')</td>
                             </tr>
                         @endforelse
                     </tbody>

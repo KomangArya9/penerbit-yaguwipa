@@ -4,7 +4,7 @@
     <div class="max-w-4xl mx-auto px-6 py-20">
         <!-- Tombol Kembali -->
         <a href="{{ route('portofolio') }}" class="inline-flex items-center text-sm font-semibold text-gray-600 hover:text-[#B6171E] mb-8 transition-colors">
-            &larr; Kembali ke Portofolio
+            &larr; @lang('portfolio.back_to_portfolio')
         </a>
 
         <!-- Kategori & Judul -->
@@ -16,12 +16,12 @@
         <!-- Informasi Tambahan (Lokasi, Tanggal, Dilihat) -->
         <div class="flex flex-wrap gap-6 text-sm text-gray-500 mb-8 pb-4 border-b border-gray-200">
             @if($project->lokasi)
-                <div><span class="font-semibold text-gray-700">Lokasi:</span> {{ $project->lokasi }}</div>
+                <div><span class="font-semibold text-gray-700">@lang('portfolio.location_label')</span> {{ $project->lokasi }}</div>
             @endif
             @if($project->date)
-                <div><span class="font-semibold text-gray-700">Tanggal:</span> {{ $project->date }}</div>
+                <div><span class="font-semibold text-gray-700">@lang('portfolio.date_label')</span> {{ $project->date }}</div>
             @endif
-            <div><span class="font-semibold text-gray-700">Dilihat:</span> {{ $project->hit }} kali</div>
+            <div><span class="font-semibold text-gray-700">@lang('portfolio.views_label')</span> {{ $project->hit }} @lang('portfolio.times')</div>
         </div>
 
         <!-- Galeri / Gambar Utama -->
@@ -42,7 +42,7 @@
         @if($project->url)
             <div class="mt-10 pt-6 border-t border-gray-200">
                 <a href="{{ $project->url }}" target="_blank" class="inline-block bg-[#B6171E] text-white px-6 py-3 rounded-sm font-semibold hover:bg-opacity-90 transition-all">
-                    Kunjungi Tautan Proyek &rarr;
+                    @lang('portfolio.visit_project_link') &rarr;
                 </a>
             </div>
         @endif

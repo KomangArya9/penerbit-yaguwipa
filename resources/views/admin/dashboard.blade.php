@@ -5,8 +5,8 @@
 @section('content')
 <div class="p-8">
     <div class="mb-8">
-        <h1 class="text-2xl font-bold text-slate-800">Dashboard</h1>
-        <p class="text-slate-500">Selamat datang di Admin Panel Penerbit Yaguwipa.</p>
+        <h1 class="text-2xl font-bold text-slate-800">@lang('admin.dashboard_title')</h1>
+        <p class="text-slate-500">@lang('admin.dashboard_welcome')</p>
     </div>
 
     <!-- Container Statistik -->
@@ -14,11 +14,11 @@
         @php
             // Menggunakan ?? 0 agar jika $data tidak ada, dia otomatis jadi 0
             $stats = [
-                ['label' => 'Total Catalog', 'value' => $data['totalCatalog'] ?? 0],
-                ['label' => 'Total Blog',    'value' => $data['totalBlog'] ?? 0],
-                ['label' => 'Total Project', 'value' => $data['totalProject'] ?? 0],
-                ['label' => 'Total Review',  'value' => $data['totalReview'] ?? 0],
-                ['label' => 'Total Authors', 'value' => $data['totalAuthors'] ?? 0],
+                ['label' => __('admin.dashboard_stats_total_catalog'), 'value' => $data['totalCatalog'] ?? 0],
+                ['label' => __('admin.dashboard_stats_total_blog'),    'value' => $data['totalBlog'] ?? 0],
+                ['label' => __('admin.dashboard_stats_total_project'), 'value' => $data['totalProject'] ?? 0],
+                ['label' => __('admin.dashboard_stats_total_review'),  'value' => $data['totalReview'] ?? 0],
+                ['label' => __('admin.dashboard_stats_total_authors'), 'value' => $data['totalAuthors'] ?? 0],
             ];
         @endphp
 

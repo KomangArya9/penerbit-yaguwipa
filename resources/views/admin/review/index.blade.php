@@ -1,13 +1,13 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Manajemen Review')
+@section('title', __('admin.review_index_title'))
 
 @section('content')
 <div class="p-8">
     <div class="mb-8 flex justify-between items-center">
         <div>
-            <h1 class="text-2xl font-bold text-slate-800">Manajemen Review</h1>
-            <p class="text-slate-500">Kelola ulasan yang dikirimkan oleh pengguna.</p>
+            <h1 class="text-2xl font-bold text-slate-800">@lang('admin.review_index_title')</h1>
+            <p class="text-slate-500">@lang('admin.review_index_description')</p>
         </div>
     </div>
 
@@ -22,13 +22,13 @@
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs uppercase font-semibold">
-                        <th class="p-4 w-16">No</th>
-                        <th class="p-4">Nama</th>
-                        <th class="p-4">Pekerjaan</th>
-                        <th class="p-4">Rating</th>
-                        <th class="p-4 max-w-xs">Review</th>
-                        <th class="p-4">Status</th>
-                        <th class="p-4 text-center whitespace-nowrap">Aksi</th>
+                        <th class="p-4 w-16">@lang('common.no_label')</th>
+                        <th class="p-4">@lang('admin.review_label_name')</th>
+                        <th class="p-4">@lang('admin.review_label_job')</th>
+                        <th class="p-4">@lang('common.rating')</th>
+                        <th class="p-4 max-w-xs">@lang('common.review')</th>
+                        <th class="p-4">@lang('common.status')</th>
+                        <th class="p-4 text-center whitespace-nowrap">@lang('common.action')</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-200 text-slate-700 text-sm">
@@ -53,23 +53,23 @@
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="px-3 py-1.5 bg-amber-50 text-amber-600 hover:bg-amber-100 rounded-lg text-xs font-medium transition">
-                                    {{ $item->status == 'Show' ? 'Hide' : 'Show' }}
+                                    {{ $item->status == 'Show' ? __('common.hide') : __('common.show') }}
                                 </button>
                             </form>
 
                             <!-- Tombol Hapus -->
-                            <form action="{{ route('admin.review.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus review ini?')">
+                            <form action="{{ route('admin.review.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('@lang('admin.review_confirm_delete')')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="px-3 py-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-lg text-xs font-medium transition">
-                                    Hapus
+                                    @lang('common.delete')
                                 </button>
                             </form>
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="p-6 text-center text-slate-400">Belum ada review yang masuk.</td>
+                        <td colspan="7" class="p-6 text-center text-slate-400">@lang('admin.review_empty')</td>
                     </tr>
                     @endforelse
                 </tbody>

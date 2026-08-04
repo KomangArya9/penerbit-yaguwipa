@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'page_title' => 'ニュース＆イベント',
+    'page_subtitle' => 'ヤグウィパ出版社からの最新情報、業界ニュース、リテラシーイベントのスケジュールをお届けします。',
+    'category_label' => 'カテゴリー：',
+    'select_tags' => 'タグを選択',
+    'filter_by_tag' => 'タグでフィルター',
+    'reset_tag' => 'タグをリセット',
+    'trending' => 'トレンド',
+    'read_more' => '続きを読む',
+    'read_full' => '全文を読む',
+    'no_news' => 'このカテゴリーまたはタグのニュースやイベントはまだありません。',
+    'back_to_news' => 'ニュースに戻る',
+    'share_prompt' => 'この記事を気に入りましたか？今すぐ共有しましょう：',
+    'share_button' => '共有',
+    'share_modal_title' => 'ニュースを共有',
+    'share_select_platform' => '記事を共有するプラットフォームを選択：',
+    'link_copied_instagram' => 'リンクがコピーされました！Instagramのプロフィールまたはダイレクトメッセージに貼り付けてください。',
+    'or_copy_link' => 'またはリンクをコピー：',
+    'link_copied' => 'リンクがコピーされました！',
+    'copy' => 'コピー',
+    'related_news' => '関連ニュース',
+    'tag_prefix' => 'タグ: #',
+];

@@ -2,19 +2,19 @@
 
 @section('content')
 <div class="p-8">
-    <h1 class="text-2xl font-bold mb-6">Menu Manager</h1>
+    <h1 class="text-2xl font-bold mb-6">@lang('admin.menu_index_title')</h1>
 
     <!-- Tombol Add Data -->
-    <button class="bg-blue-600 text-white px-4 py-2 rounded mb-4">+ Add Data</button>
+    <button class="bg-blue-600 text-white px-4 py-2 rounded mb-4">@lang('common.add_data')</button>
 
     <div class="bg-white shadow rounded-lg overflow-hidden">
         <table class="w-full text-left">
             <thead class="bg-slate-100">
                 <tr>
-                    <th class="p-4">No</th>
-                    <th class="p-4">Title</th>
-                    <th class="p-4">Status</th>
-                    <th class="p-4">Action</th>
+                    <th class="p-4">@lang('common.no_label')</th>
+                    <th class="p-4">@lang('common.title')</th>
+                    <th class="p-4">@lang('common.status')</th>
+                    <th class="p-4">@lang('common.action')</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,8 +28,8 @@
                         </span>
                     </td>
                     <td class="p-4">
-                        <button class="bg-sky-500 text-white px-3 py-1 rounded text-sm">Edit</button>
-                        <button class="bg-red-500 text-white px-3 py-1 rounded text-sm">Delete</button>
+                        <button class="bg-sky-500 text-white px-3 py-1 rounded text-sm">@lang('common.edit')</button>
+                        <button class="bg-red-500 text-white px-3 py-1 rounded text-sm">@lang('common.delete')</button>
                     </td>
                 </tr>
                 @endforeach

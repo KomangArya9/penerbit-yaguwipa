@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'page_title' => '新闻与活动',
+    'page_subtitle' => '关注 Yaguwipa 出版社的最新动态、行业新闻和文学活动日程。',
+    'category_label' => '分类：',
+    'select_tags' => '选择标签',
+    'filter_by_tag' => '按标签筛选',
+    'reset_tag' => '重置标签',
+    'trending' => '热门',
+    'read_more' => '阅读更多',
+    'read_full' => '阅读全文',
+    'no_news' => '此分类或标签下暂无新闻或活动。',
+    'back_to_news' => '返回新闻',
+    'share_prompt' => '喜欢这篇文章？立即分享：',
+    'share_button' => '分享',
+    'share_modal_title' => '分享新闻',
+    'share_select_platform' => '选择分享平台：',
+    'link_copied_instagram' => '链接已复制！请粘贴到 Instagram 个人简介或私信中。',
+    'or_copy_link' => '或复制链接：',
+    'link_copied' => '链接已复制！',
+    'copy' => '复制',
+    'related_news' => '相关新闻',
+    'tag_prefix' => '标签: #',
+];

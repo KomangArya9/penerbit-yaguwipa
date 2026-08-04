@@ -4,11 +4,10 @@
     <div class="max-w-7xl mx-auto px-6 py-16">
         <!-- Header News & Events -->
         <div class="text-center mb-12 animate-on-scroll">
-            <h1 class="text-4xl font-bold text-gray-900 mb-6 tracking-tight">News & Events</h1>
+            <h1 class="text-4xl font-bold text-gray-900 mb-6 tracking-tight">@lang('news.page_title')</h1>
 
             <p class="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-                Ikuti perkembangan terbaru, berita industri, dan jadwal acara literasi
-                dari Penerbit Yaguwipa.
+                @lang('news.page_subtitle')
             </p>
         </div>
 
@@ -16,10 +15,10 @@
         <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-4 border-b border-gray-200 pb-6">
             <!-- Filter Kategori -->
             <div class="flex flex-wrap gap-2 items-center">
-                <span class="text-sm font-semibold text-gray-700 mr-2">Kategori:</span>
+                <span class="text-sm font-semibold text-gray-700 mr-2">@lang('news.category_label')</span>
                 <a href="{{ route('news.index') }}"
                     class="px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-300 {{ !request('category') ? 'bg-red-800 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
-                    Semua
+                    @lang('common.all')
                 </a>
                 @foreach($categories as $cat)
                     <a href="{{ route('news.index', array_merge(request()->all(), ['category' => $cat->id])) }}"
@@ -34,7 +33,7 @@
                 <div>
                     <button @click="open = !open" type="button"
                         class="inline-flex justify-center items-center gap-x-1.5 px-3 py-1.5 text-xs font-medium rounded border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-all">
-                        <span>{{ request('tag') ? 'Tag: #' . request('tag') : 'Pilih Tags' }}</span>
+                        <span>{{ request('tag') ? __('news.tag_prefix') . request('tag') : __('news.select_tags') }}</span>
                         <svg class="-mr-1 h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd"
                                 d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
@@ -48,10 +47,10 @@
                     class="absolute right-0 z-10 mt-2 w-72 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none p-3"
                     style="display: none;">
                     <div class="mb-2 pb-2 border-b border-gray-100 flex justify-between items-center">
-                        <span class="text-xs font-bold text-gray-500">Filter Berdasarkan Tag</span>
+                        <span class="text-xs font-bold text-gray-500">@lang('news.filter_by_tag')</span>
                         @if(request('tag'))
                             <a href="{{ route('news.index', array_merge(request()->except('tag'), ['page' => 1])) }}"
-                                class="text-[10px] text-red-800 hover:underline">Reset Tag</a>
+                                class="text-[10px] text-red-800 hover:underline">@lang('news.reset_tag')</a>
                         @endif
                     </div>
 
@@ -85,7 +84,7 @@
                 <div class="animate-right flex flex-col justify-center">
                     <div class="flex items-center gap-3 mb-4">
                         <span
-                            class="bg-[#B6171E] text-white text-[10px] px-2 py-1 tracking-widest uppercase font-bold">Trending</span>
+                            class="bg-[#B6171E] text-white text-[10px] px-2 py-1 tracking-widest uppercase font-bold">@lang('news.trending')</span>
                         <span
                             class="text-xs text-gray-500 font-medium">{{ \Carbon\Carbon::parse($trending->date)->format('d M Y') }}</span>
                         @if($trending->kategori)
@@ -103,7 +102,7 @@
 
                     <a href="{{ route('news.show', $trending->slug) }}"
                         class="group inline-flex items-center text-white bg-gray-900 px-4 py-1.5 rounded-full hover:bg-[#B6171E] transition-all duration-300 w-fit">
-                        <span class="text-xs font-semibold">Selengkapnya</span>
+                        <span class="text-xs font-semibold">@lang('news.read_more')</span>
                         <span
                             class="ml-1.5 transform group-hover:translate-x-1 transition-transform duration-300 ease-out">→</span>
                     </a>
@@ -150,14 +149,14 @@
                     <a href="{{ route('news.show', $blog->slug) }}"
                         class="group inline-flex items-center text-red-800 font-semibold text-sm transition-all duration-300 mt-auto w-fit">
                         <span class="transition-transform duration-300 group-hover:translate-x-1">
-                            Baca Selengkapnya
+                            @lang('news.read_full')
                         </span>
                         <span class="ml-1 transition-transform duration-300 group-hover:translate-x-1 inline-block">→</span>
                     </a>
                 </div>
             @empty
                 <div class="col-span-full text-center py-16 text-gray-400">
-                    <p class="text-lg">Belum ada berita atau acara yang tersedia untuk kategori atau tag ini.</p>
+                    <p class="text-lg">@lang('news.no_news')</p>
                 </div>
             @endforelse
         </section>

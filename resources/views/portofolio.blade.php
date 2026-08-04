@@ -5,8 +5,8 @@
 
         <!-- 1. Header -->
         <div class="mb-12 animate-on-scroll delay-100">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">Portofolio</h1>
-            <p class="text-gray-600">Rekam jejak karya dan proyek yang telah diselesaikan.</p>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">@lang('portfolio.page_title')</h1>
+            <p class="text-gray-600">@lang('portfolio.page_subtitle')</p>
         </div>
 
         <!-- 2. Filter Tab Dinamis dari Database -->
@@ -15,7 +15,7 @@
             <a href="{{ route('portofolio') }}"
                 class="animate-on-scroll opacity-0 translate-y-8 pb-3 border-b-2 {{ !request('category') ? 'border-[#B6171E] text-[#B6171E]' : 'border-transparent text-gray-500 hover:text-gray-900' }} font-semibold transition-colors duration-300 whitespace-nowrap"
                 style="transition-delay: 100ms;">
-                Semua
+                @lang('portfolio.all')
             </a>
 
             <!-- Perulangan Kategori dari Database Admin -->
@@ -43,7 +43,7 @@
                             <img src="{{ asset('storage/' . $primaryPhoto->img) }}" alt="{{ $project->title }}"
                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                         @else
-                            <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">No Image</div>
+                            <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">{{ __('common.no_image') }}</div>
                         @endif
                     </div>
 
@@ -57,7 +57,7 @@
                 </a>
             @empty
                 <div class="col-span-full text-center py-12 text-gray-400">
-                    Belum ada portofolio yang tersedia untuk kategori ini.
+                    @lang('portfolio.no_projects')
                 </div>
             @endforelse
         </div>

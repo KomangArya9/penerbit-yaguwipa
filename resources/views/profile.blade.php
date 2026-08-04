@@ -8,21 +8,16 @@
 
             <section class="text-center max-w-3xl mx-auto mb-20">
                 <h4 class="animate-on-scroll text-[#B91C1C] font-bold text-xs uppercase tracking-widest mb-4">
-                    PENERBIT TEPERCAYA
+                    @lang('profile.trusted_publisher')
                 </h4>
                 <h1 class="animate-on-scroll delay-100 text-4xl md:text-5xl text-gray-900 mb-6">
-                    Tentang Penerbit YAGUWIPA
+                    @lang('profile.about_heading')
                 </h1>
                 <p class="animate-on-scroll delay-200 text-gray-600 font-sans text-lg leading-relaxed mb-8">
-                    Penerbit YAGUWIPA berkomitmen menyebarluaskan hasil riset, IPTEKS, dan karya sastra sebagai bagian dari
-                    gerakan literasi. Kami menyediakan layanan penerbitan yang didukung tim profesional di bidang editorial,
-                    desain, dan pemasaran untuk menghasilkan karya yang berkualitas, informatif, dan inspiratif.
-
-                    Mari bersama Penerbit YAGUWIPA menghadirkan karya yang memberikan manfaat, memperluas wawasan, dan
-                    berkontribusi bagi perkembangan ilmu pengetahuan serta literasi masyarakat.
+                    @lang('profile.about_description')
                 </p>
                 <p class="animate-on-scroll delay-300 text-gray-500 leading-relaxed italic border-t border-gray-300 pt-6">
-                    "Menghubungkan gagasan dengan dunia melalui publikasi yang berkualitas dan berintegritas."
+                    "@lang('profile.tagline')"
                 </p>
             </section>
 
@@ -33,7 +28,7 @@
                     <!-- Photo Archive -->
                     <section class="animate-on-scroll">
                         <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-gray-900">
-                            Photo Archive
+                            @lang('profile.photo_archive')
                         </h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                             @forelse($albums as $index => $album)
@@ -50,14 +45,14 @@
                                 </div>
                             @empty
                                 <div class="col-span-full text-center text-gray-500 py-10 text-sm bg-gray-200 rounded">
-                                    Belum ada foto album.
+                                    @lang('profile.no_album_photos')
                                 </div>
                             @endforelse
 
                             <a href="{{ route('photos.all') }}"
                                 class="animate-on-scroll delay-600 bg-gray-200 flex flex-col items-center justify-center font-semibold text-xs cursor-pointer hover:bg-gray-300 transition aspect-[3/4] rounded-lg shadow-md text-center p-4">
-                                <span class="text-gray-800 font-bold text-sm mb-1">View All Photos</span>
-                                <span class="text-xs text-gray-500 font-normal">Lihat Semua →</span>
+                                <span class="text-gray-800 font-bold text-sm mb-1">@lang('profile.view_all_photos')</span>
+                                <span class="text-xs text-gray-500 font-normal">@lang('profile.view_all') →</span>
                             </a>
                         </div>
                     </section>
@@ -65,7 +60,7 @@
                     <!-- Documentary & Film Section -->
                     <section class="animate-on-scroll delay-200 relative">
                         <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-gray-900">
-                            Documentary & Film
+                            @lang('profile.documentary_film')
                         </h3>
 
                         @php
@@ -97,7 +92,7 @@
                         @else
                             <div
                                 class="animate-on-scroll delay-300 bg-gray-200 aspect-video flex items-center justify-center text-gray-500 w-full mb-4 rounded-lg shadow">
-                                Belum ada video utama.
+                                @lang('profile.no_main_video')
                             </div>
                         @endif
 
@@ -133,7 +128,7 @@
                                             <!-- Badge YouTube -->
                                             <span
                                                 class="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm">
-                                                YouTube
+                                                {{ __('common.youtube') }}
                                             </span>
                                         </a>
 
@@ -150,7 +145,7 @@
                         <div class="mt-6 text-right">
                             <a href="{{ route('videos.all') }}"
                                 class="text-sm text-[#B6171E] font-semibold hover:underline inline-flex items-center gap-1">
-                                Lihat Semua Video &rarr;
+                                @lang('profile.view_all_videos') &rarr;
                             </a>
                         </div>
                     </section>
@@ -161,7 +156,7 @@
             <!-- Section: Reader Perspectives & Form -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <div class="md:col-span-2">
-                    <h3 class="animate-on-scroll text-xl font-bold mb-8 text-gray-900">Reader Perspectives</h3>
+                    <h3 class="animate-on-scroll text-xl font-bold mb-8 text-gray-900">@lang('profile.reader_perspectives')</h3>
 
                     <!-- Kontainer Ulasan dengan ID Auto-Scroll -->
                     <div id="review-auto-scroll-container"
@@ -181,7 +176,7 @@
                             </div>
                         @empty
                             <div class="bg-white p-6 border border-gray-100 text-center text-gray-500 rounded-lg">
-                                Belum ada ulasan yang ditampilkan.
+                                @lang('profile.no_reviews')
                             </div>
                         @endforelse
 
@@ -190,7 +185,7 @@
 
                 <aside
                     class="animate-on-scroll delay-200 bg-white p-8 border border-gray-100 shadow-sm self-start rounded-lg">
-                    <h3 class="font-bold mb-6 text-gray-900">Share Your Experience</h3>
+                    <h3 class="font-bold mb-6 text-gray-900">@lang('profile.share_experience')</h3>
 
                     <!-- 1. Tempat Kotak Notifikasi Hijau (Awalnya tersembunyi/hidden) -->
                     <div id="review-alert"
@@ -201,33 +196,33 @@
                     <!-- 2. Form Ulasan -->
                     <form id="review-form" class="space-y-4">
                         @csrf
-                        <input type="text" name="nama" placeholder="Full Name" required
+                        <input type="text" name="nama" placeholder="{{ __('common.full_name') }}" required
                             class="w-full p-3 border border-gray-300 focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] outline-none transition-all rounded">
 
-                        <input type="text" name="pekerjaan" placeholder="Pekerjaan (Opsional)"
+                        <input type="text" name="pekerjaan" placeholder="@lang('profile.job_optional')"
                             class="w-full p-3 border border-gray-300 focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] outline-none transition-all rounded">
 
                         <select name="starts" required
                             class="w-full p-3 border border-gray-300 focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] outline-none transition-all rounded">
-                            <option value="">Rating (1-5)</option>
-                            <option value="5">5 Bintang</option>
-                            <option value="4">4 Bintang</option>
-                            <option value="3">3 Bintang</option>
-                            <option value="2">2 Bintang</option>
-                            <option value="1">1 Bintang</option>
+                            <option value="">@lang('profile.rating_label')</option>
+                            <option value="5">@lang('profile.stars_5')</option>
+                            <option value="4">@lang('profile.stars_4')</option>
+                            <option value="3">@lang('profile.stars_3')</option>
+                            <option value="2">@lang('profile.stars_2')</option>
+                            <option value="1">@lang('profile.stars_1')</option>
                         </select>
 
                         <div>
-                            <textarea name="review" id="review-textarea" placeholder="Your Message" required maxlength="250"
+                            <textarea name="review" id="review-textarea" placeholder="{{ __('common.message_placeholder') }}" required maxlength="250"
                                 class="w-full p-3 border border-gray-300 focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] outline-none transition-all rounded"></textarea>
                             <div class="text-right text-xs text-gray-400 mt-1">
-                                <span id="char-count">0</span>/250 karakter
+                                <span id="char-count">0</span>/250 @lang('profile.characters')
                             </div>
                         </div>
 
                         <button type="submit" id="submit-btn"
                             class="w-full bg-[#B6171E] text-white px-8 py-3 font-semibold hover:bg-red-800 transition-all duration-300 rounded">
-                            SUBMIT REVIEW
+                            @lang('profile.submit_review')
                         </button>
                     </form>
 
@@ -257,7 +252,7 @@
 
                                     // Ubah tombol jadi status memuat sementara
                                     submitBtn.disabled = true;
-                                    submitBtn.innerText = 'MENGIRIM...';
+                                    submitBtn.innerText = '@lang("profile.sending")';
 
                                     fetch("{{ route('review.store') }}", {
                                         method: "POST",
@@ -293,12 +288,12 @@
                                             }
                                         })
                                         .catch(error => {
-                                            alert('Terjadi kesalahan, silakan coba lagi.');
+                                            alert('@lang("profile.error_generic")');
                                         })
                                         .finally(() => {
                                             // Kembalikan tombol ke keadaan semula
                                             submitBtn.disabled = false;
-                                            submitBtn.innerText = 'SUBMIT REVIEW';
+                                            submitBtn.innerText = '@lang("profile.submit_review")';
                                         });
                                 });
                             }

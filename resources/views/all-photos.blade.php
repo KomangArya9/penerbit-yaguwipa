@@ -4,8 +4,8 @@
 <div class="bg-gray-50 py-16">
     <div class="container mx-auto px-4 md:px-12">
         <div class="mb-8">
-            <a href="{{ route('profile') }}" class="text-sm text-[#B6171E] font-semibold hover:underline">← Kembali ke Profil</a>
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2">Semua Foto Album</h1>
+            <a href="{{ route('profile') }}" class="text-sm text-[#B6171E] font-semibold hover:underline">← @lang('photos.back_to_profile')</a>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2">@lang('photos.page_title')</h1>
         </div>
 
         <!-- Grid dengan ukuran portrait vertikal h-64 md:h-72 -->
@@ -23,7 +23,7 @@
                 </div>
             @empty
                 <div class="col-span-full text-center py-12 text-gray-500 bg-white rounded shadow">
-                    Belum ada album foto yang ditampilkan.
+                    @lang('photos.no_albums')
                 </div>
             @endforelse
         </div>

@@ -5,9 +5,9 @@
 
         <!-- Judul Header -->
         <div class="text-center mb-16 animate-on-scroll delay-100">
-            <h2 class="text-3xl font-bold text-gray-900 mb-3">Program Kerja Kami</h2>
+            <h2 class="text-3xl font-bold text-gray-900 mb-3">@lang('program.page_title')</h2>
             <p class="text-gray-600 text-sm max-w-lg mx-auto">
-                Dedikasi kami untuk menyediakan ekosistem yang menyeluruh.
+                @lang('program.page_subtitle')
             </p>
         </div>
 
@@ -43,7 +43,7 @@
         @else
             <!-- Pesan jika data belum diinput dari admin -->
             <div class="text-center py-12">
-                <p class="text-gray-500 italic">Belum ada program yang ditambahkan oleh admin.</p>
+                <p class="text-gray-500 italic">@lang('program.no_programs')</p>
             </div>
         @endif
 

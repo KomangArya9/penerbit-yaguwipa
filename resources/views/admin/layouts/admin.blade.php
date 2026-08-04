@@ -25,7 +25,7 @@
     <aside class="w-64 bg-slate-800 text-white flex-shrink-0 h-screen flex flex-col sticky top-0">
         <!-- Logo Header -->
         <div class="p-5 font-bold text-lg border-b border-slate-700 flex-shrink-0">
-            Penerbit Yaguwipa
+            @lang('admin.sidebar_brand')
         </div>
 
         <!-- Navigation Container (Bisa di-scroll tapi scrollbar disembunyikan) -->
@@ -33,11 +33,11 @@
             <!-- Dashboard Utama -->
             <a href="{{ route('admin.dashboard') }}"
                 class="block px-5 py-2.5 hover:bg-slate-700 transition text-sm text-gray-300 {{ request()->routeIs('admin.dashboard') ? 'bg-slate-700' : '' }}">
-                Dashboard
+                @lang('admin.sidebar_dashboard')
             </a>
 
             <div class="pt-4 pb-2 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Content Manager
+                @lang('admin.sidebar_content_manager')
             </div>
 
             <!-- 1. Menu Dropdown Pengaturan -->
@@ -45,7 +45,7 @@
                 <button @click="open = !open"
                     class="w-full flex items-center justify-between px-5 py-2.5 text-sm text-gray-300 hover:bg-slate-700 hover:text-white transition-all duration-200 focus:outline-none"
                     :class="open ? 'bg-slate-700' : ''" type="button">
-                    <span>Pengaturan</span>
+                    <span>@lang('admin.sidebar_pengaturan')</span>
                     <svg :class="open ? 'rotate-180' : ''"
                         class="w-4 h-4 text-gray-400 transition-transform duration-200" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
@@ -55,11 +55,11 @@
                 <div x-show="open" x-transition class="mt-1 pl-4 space-y-1 bg-slate-900/30 py-1" style="display: none;">
                     <a href="{{ route('admin.pengaturan.general') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.pengaturan.general*') ? 'bg-slate-700/50' : '' }}">
-                        General Settings
+                        @lang('admin.sidebar_general_settings')
                     </a>
                     <a href="{{ route('admin.menu.index') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.menu*') ? 'bg-slate-700/50' : '' }}">
-                        Menu Manager
+                        @lang('admin.sidebar_menu_manager')
                     </a>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 <button @click="open = !open"
                     class="w-full flex items-center justify-between px-5 py-2.5 text-sm text-gray-300 hover:bg-slate-700 hover:text-white transition-all duration-200 focus:outline-none"
                     :class="open ? 'bg-slate-700' : ''" type="button">
-                    <span>News & Events</span>
+                    <span>@lang('admin.sidebar_news_events')</span>
                     <svg :class="open ? 'rotate-180' : ''"
                         class="w-4 h-4 text-gray-400 transition-transform duration-200" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
@@ -79,11 +79,11 @@
                 <div x-show="open" x-transition class="mt-1 pl-4 space-y-1 bg-slate-900/30 py-1" style="display: none;">
                     <a href="{{ route('admin.kategori.index') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.kategori*') ? 'bg-slate-700/50' : '' }}">
-                        Kategori News & Events
+                        @lang('admin.sidebar_kategori_news')
                     </a>
                     <a href="{{ route('admin.blog.index') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.blog*') ? 'bg-slate-700/50' : '' }}">
-                        News & Events
+                        @lang('admin.sidebar_news_events')
                     </a>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                 <button @click="open = !open"
                     class="w-full flex items-center justify-between px-5 py-2.5 text-sm text-gray-300 hover:bg-slate-700 hover:text-white transition-all duration-200 focus:outline-none"
                     :class="open ? 'bg-slate-700' : ''" type="button">
-                    <span>Portofolio</span>
+                    <span>@lang('admin.sidebar_portofolio')</span>
                     <svg :class="open ? 'rotate-180' : ''"
                         class="w-4 h-4 text-gray-400 transition-transform duration-200" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
@@ -103,11 +103,11 @@
                 <div x-show="open" x-transition class="mt-1 pl-4 space-y-1 bg-slate-900/30 py-1" style="display: none;">
                     <a href="{{ route('admin.kategori-project.index') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.kategori-project*') ? 'bg-slate-700/50' : '' }}">
-                        Kategori Portofolio
+                        @lang('admin.sidebar_kategori_portofolio')
                     </a>
                     <a href="{{ route('admin.project.index') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.project*') ? 'bg-slate-700/50' : '' }}">
-                        Portofolio
+                        @lang('admin.sidebar_portofolio')
                     </a>
                 </div>
             </div>
@@ -115,13 +115,13 @@
             <!-- Menu Biasa: Program -->
             <a href="{{ route('program.index') }}"
                 class="block px-5 py-2.5 hover:bg-slate-700 transition text-sm text-gray-300 {{ request()->routeIs('program*') ? 'bg-slate-700' : '' }}">
-                Program
+                @lang('admin.sidebar_program')
             </a>
 
             <!-- Menu Biasa: Partners & Clients -->
             <a href="{{ route('client.index') }}"
                 class="block px-5 py-2.5 hover:bg-slate-700 transition text-sm text-gray-300 {{ request()->routeIs('client*') ? 'bg-slate-700' : '' }}">
-                Partners & Clients
+                @lang('admin.sidebar_partners_clients')
             </a>
 
             <!-- 4. Menu Dropdown Gallery -->
@@ -129,7 +129,7 @@
                 <button @click="open = !open"
                     class="w-full flex items-center justify-between px-5 py-2.5 text-sm text-gray-300 hover:bg-slate-700 hover:text-white transition-all duration-200 focus:outline-none"
                     :class="open ? 'bg-slate-700' : ''" type="button">
-                    <span>Gallery</span>
+                    <span>@lang('admin.sidebar_gallery')</span>
                     <svg :class="open ? 'rotate-180' : ''"
                         class="w-4 h-4 text-gray-400 transition-transform duration-200" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
@@ -139,11 +139,11 @@
                 <div x-show="open" x-transition class="mt-1 pl-4 space-y-1 bg-slate-900/30 py-1" style="display: none;">
                     <a href="{{ route('admin.album.index') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.album*') ? 'bg-slate-700/50' : '' }}">
-                        Foto
+                        @lang('admin.sidebar_foto')
                     </a>
                     <a href="{{ route('admin.video.index') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.video*') ? 'bg-slate-700/50' : '' }}">
-                        Video
+                        @lang('admin.sidebar_video')
                     </a>
                 </div>
             </div>
@@ -151,13 +151,13 @@
             <!-- Menu Biasa: Review -->
             <a href="{{ route('admin.review.index') }}"
                 class="block px-5 py-2.5 hover:bg-slate-700 transition text-sm text-gray-300 {{ request()->routeIs('admin.review*') ? 'bg-slate-700' : '' }}">
-                Review
+                @lang('admin.sidebar_review')
             </a>
 
             <!-- Menu Biasa: Penulis -->
             <a href="{{ route('admin.authors.index') }}"
                 class="block px-5 py-2.5 hover:bg-slate-700 transition text-sm text-gray-300 {{ request()->routeIs('admin.authors*') ? 'bg-slate-700' : '' }}">
-                Penulis
+                @lang('admin.sidebar_penulis')
             </a>
 
             <!-- 5. Menu Dropdown Catalog -->
@@ -165,7 +165,7 @@
                 <button @click="open = !open"
                     class="w-full flex items-center justify-between px-5 py-2.5 text-sm text-gray-300 hover:bg-slate-700 hover:text-white transition-all duration-200 focus:outline-none"
                     :class="open ? 'bg-slate-700' : ''" type="button">
-                    <span>Catalog</span>
+                    <span>@lang('admin.sidebar_catalog')</span>
                     <svg :class="open ? 'rotate-180' : ''"
                         class="w-4 h-4 text-gray-400 transition-transform duration-200" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
@@ -175,11 +175,11 @@
                 <div x-show="open" x-transition class="mt-1 pl-4 space-y-1 bg-slate-900/30 py-1" style="display: none;">
                     <a href="{{ route('admin.catalog.index') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.catalog*') ? 'bg-slate-700/50' : '' }}">
-                        Catalog
+                        @lang('admin.sidebar_catalog')
                     </a>
                     <a href="{{ route('admin.ulasan.index') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.ulasan*') ? 'bg-slate-700/50' : '' }}">
-                        Ulasan
+                        @lang('admin.sidebar_ulasan')
                     </a>
                 </div>
             </div>
@@ -189,7 +189,7 @@
                 <button @click="open = !open"
                     class="w-full flex items-center justify-between px-5 py-2.5 text-sm text-gray-300 hover:bg-slate-700 hover:text-white transition-all duration-200 focus:outline-none"
                     :class="open ? 'bg-slate-700' : ''" type="button">
-                    <span>Ekstra</span>
+                    <span>@lang('admin.sidebar_ekstra')</span>
                     <svg :class="open ? 'rotate-180' : ''"
                         class="w-4 h-4 text-gray-400 transition-transform duration-200" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
@@ -199,11 +199,11 @@
                 <div x-show="open" x-transition class="mt-1 pl-4 space-y-1 bg-slate-900/30 py-1" style="display: none;">
                     <a href="{{ route('admin.media.index') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.media*') ? 'bg-slate-700/50' : '' }}">
-                        Sosial Media
+                        @lang('admin.sidebar_sosial_media')
                     </a>
                     <a href="{{ route('admin.kontak_kami.index') }}"
                         class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors {{ request()->routeIs('admin.kontak_kami*') ? 'bg-slate-700/50' : '' }}">
-                        Contact Us
+                        @lang('admin.sidebar_contact_us')
                     </a>
                 </div>
             </div>
@@ -212,7 +212,7 @@
         <!-- Footer / Account Menu di Bagian Bawah -->
         <div class="border-t border-slate-700 p-2 flex-shrink-0 bg-slate-900/40">
             <a href="#"
-                class="block px-5 py-2.5 hover:bg-slate-700 transition text-sm text-gray-300 rounded-lg">Account</a>
+                class="block px-5 py-2.5 hover:bg-slate-700 transition text-sm text-gray-300 rounded-lg">@lang('admin.sidebar_account')</a>
         </div>
     </aside>
 
@@ -224,11 +224,11 @@
             <div class="flex gap-3 items-center">
                 <a href="{{ route('admin.password.edit') }}"
                     class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-1.5 rounded text-sm transition">
-                    Change Password
+                    @lang('admin.sidebar_change_password')
                 </a>
                 <form action="{{ route('logout') }}" method="POST" class="inline">
                     @csrf
-                    <button type="submit" class="text-gray-500 hover:text-red-600 text-sm font-medium">Logout</button>
+                    <button type="submit" class="text-gray-500 hover:text-red-600 text-sm font-medium">@lang('admin.sidebar_logout')</button>
                 </form>
             </div>
         </header>

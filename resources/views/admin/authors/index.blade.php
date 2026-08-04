@@ -5,8 +5,8 @@
 
         <!-- Header Halaman -->
         <div class="mb-6">
-            <h1 class="text-2xl font-bold text-gray-900">Verifikasi & Manajemen Penulis</h1>
-            <p class="text-sm text-gray-600 mt-1">Daftar penulis yang mendaftar dari website. Silakan review dan ubah status tampilnya.</p>
+            <h1 class="text-2xl font-bold text-gray-900">@lang('admin.authors_index_title')</h1>
+            <p class="text-sm text-gray-600 mt-1">@lang('admin.authors_index_description')</p>
         </div>
 
         <!-- Alert Notifikasi Sukses -->
@@ -22,12 +22,12 @@
                 <table class="w-full text-left border-collapse text-sm">
                     <thead>
                         <tr class="bg-gray-50 border-b border-gray-200 text-gray-700 uppercase text-xs tracking-wider">
-                            <th class="py-3 px-6 font-semibold w-16">No</th>
-                            <th class="py-3 px-6 font-semibold">Nama</th>
-                            <th class="py-3 px-6 font-semibold">Email</th>
-                            <th class="py-3 px-6 font-semibold">Nomor</th>
-                            <th class="py-3 px-6 font-semibold text-center">Status</th>
-                            <th class="py-3 px-6 font-semibold text-center w-40">Aksi</th>
+                            <th class="py-3 px-6 font-semibold w-16">@lang('common.no_label')</th>
+                            <th class="py-3 px-6 font-semibold">@lang('common.name')</th>
+                            <th class="py-3 px-6 font-semibold">@lang('common.email')</th>
+                            <th class="py-3 px-6 font-semibold">@lang('common.phone')</th>
+                            <th class="py-3 px-6 font-semibold text-center">@lang('common.status')</th>
+                            <th class="py-3 px-6 font-semibold text-center w-40">@lang('common.action')</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 text-gray-700">
@@ -55,9 +55,9 @@
                                             {{ $author->status == 'show' ? 'bg-green-100 text-green-800 border-green-300' : '' }}
                                             {{ $author->status == 'hide' ? 'bg-red-100 text-red-800 border-red-300' : '' }}
                                             {{ $author->status == 'pending' ? 'bg-yellow-100 text-yellow-800 border-yellow-300' : '' }}">
-                                            <option value="show" {{ $author->status == 'show' ? 'selected' : '' }}>Show</option>
-                                            <option value="hide" {{ $author->status == 'hide' ? 'selected' : '' }}>Hide</option>
-                                            <option value="pending" {{ $author->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                            <option value="show" {{ $author->status == 'show' ? 'selected' : '' }}>@lang('common.show')</option>
+                                            <option value="hide" {{ $author->status == 'hide' ? 'selected' : '' }}>@lang('common.hide')</option>
+                                            <option value="pending" {{ $author->status == 'pending' ? 'selected' : '' }}>@lang('common.pending')</option>
                                         </select>
                                     </form>
                                 </td>
@@ -66,16 +66,16 @@
                                         <!-- Tombol Edit -->
                                         <a href="{{ route('admin.authors.edit', $author->id) }}"
                                             class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-semibold shadow-sm transition-all">
-                                            Edit
+                                            @lang('common.edit')
                                         </a>
                                         <!-- Tombol Delete -->
                                         <form action="{{ route('admin.authors.destroy', $author->id) }}" method="POST"
-                                            onsubmit="return confirm('Yakin ingin menghapus data penulis ini?')">
+                                            onsubmit="return confirm('@lang('admin.authors_confirm_delete')')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
                                                 class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded text-xs font-semibold shadow-sm transition-all">
-                                                Delete
+                                                @lang('common.delete')
                                             </button>
                                         </form>
                                     </div>
@@ -91,7 +91,7 @@
                                                 d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
                                             </path>
                                         </svg>
-                                        <span class="text-sm font-medium text-gray-600">Belum ada pendaftaran penulis masuk.</span>
+                                        <span class="text-sm font-medium text-gray-600">@lang('admin.authors_empty')</span>
                                     </div>
                                 </td>
                             </tr>

@@ -21,9 +21,52 @@
     <!-- Vite akan mengolah @import "tailwindcss" di app.css -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <!-- Google Translate Init -->
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'id',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Hide Google Translate Default UI -->
+    <style>
+        /* Hide Google Translate UI - only AFTER it's created */
+        body { top: 0 !important; }
+        #google_translate_element { position: absolute; left: -9999px; top: -9999px; }
+    </style>
+    <script>
+        // Hide Google Translate banner AFTER it's created
+        document.addEventListener('DOMContentLoaded', function() {
+            var gtBannerObserver = new MutationObserver(function() {
+                // Hide the banner frame that appears at top of page
+                var banner = document.querySelector('.goog-te-banner-frame');
+                if (banner) banner.style.display = 'none';
+
+                // Hide the skiptranslate overlay that Google adds to body
+                var bodyChildren = document.body.children;
+                for (var i = 0; i < bodyChildren.length; i++) {
+                    var child = bodyChildren[i];
+                    if (child.classList && child.classList.contains('skiptranslate')) {
+                        child.style.display = 'none';
+                    }
+                }
+                // Fix body position
+                document.body.style.top = '0px';
+            });
+            gtBannerObserver.observe(document.body, { childList: true, subtree: true });
+        });
+    </script>
+
 </head>
 
 <body class="antialiased bg-gray-50 text-gray-900">
+
+    <!-- Google Translate Container (hidden but functional) -->
+    <div id="google_translate_element"></div>
 
     @include('components.navbar')
 

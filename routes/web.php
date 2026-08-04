@@ -37,18 +37,18 @@ use App\Http\Controllers\ProgramPublicController;
 
 
 
-// 1. Middleware untuk menerapkan bahasa dari session di setiap request
-App::setLocale(Session::get('locale', 'id'));
+// 1. Locale default Indonesia (konten asli dalam bahasa Indonesia)
+App::setLocale('id');
 
-// 2. Route untuk pindah bahasa
-Route::get('/lang/{locale}', function ($locale) {
-    if (in_array($locale, ['en', 'id'])) {
-        Session::put('locale', $locale);
-    }
-    return redirect()->back();
-})->name('lang.switch');
+// 2. [DISABLED] Route pindah bahasa sekarang menggunakan Google Translate
+// Route::get('/lang/{locale}', function ($locale) {
+//     if (in_array($locale, ['en', 'id'])) {
+//         Session::put('locale', $locale);
+//     }
+//     return redirect()->back();
+// })->name('lang.switch');
 
-// 3. Route Utama / Publik (Sudah dibersihkan dari duplikasi)
+// 3. Route Utama / Publik
 Route::get('/', function () {
     return view('home');
 })->name('home');

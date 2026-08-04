@@ -3,9 +3,9 @@
 @section('content')
 <div class="p-6">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Kategori Projects</h2>
+        <h2 class="text-2xl font-bold text-gray-800">@lang('admin.kategori_project_index_title')</h2>
         <a href="{{ route('admin.kategori-project.create') }}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold shadow transition flex items-center gap-2">
-            + Add Data
+            @lang('common.add_data')
         </a>
     </div>
 
@@ -19,9 +19,9 @@
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr class="bg-gray-50 text-gray-700 text-xs uppercase tracking-wider border-b border-gray-200">
-                    <th class="p-4 w-16 text-center">No</th>
-                    <th class="p-4">Title</th>
-                    <th class="p-4 text-center">Aksi</th>
+                    <th class="p-4 w-16 text-center">@lang('common.no_label')</th>
+                    <th class="p-4">@lang('common.title')</th>
+                    <th class="p-4 text-center">@lang('common.action')</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 text-sm text-gray-600">
@@ -31,20 +31,20 @@
                     <td class="p-4 font-semibold text-gray-800">{{ $item->title }}</td>
                     <td class="p-4 text-center space-x-1">
                         <a href="{{ route('admin.kategori-project.edit', $item->id) }}" class="inline-block px-3 py-1.5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg text-xs font-medium transition">
-                            Edit
+                            @lang('common.edit')
                         </a>
-                        <form action="{{ route('admin.kategori-project.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
+                        <form action="{{ route('admin.kategori-project.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('@lang('admin.kategori_project_confirm_delete')')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-medium transition">
-                                Delete
+                                @lang('common.delete')
                             </button>
                         </form>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="3" class="p-6 text-center text-gray-400">Belum ada data kategori.</td>
+                    <td colspan="3" class="p-6 text-center text-gray-400">@lang('admin.kategori_project_empty')</td>
                 </tr>
                 @endforelse
             </tbody>

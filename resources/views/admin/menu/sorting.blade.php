@@ -3,9 +3,9 @@
 @section('content')
     <div class="p-6 max-w-4xl mx-auto">
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Struktur Menu Website</h2>
+            <h2 class="text-2xl font-bold text-gray-800">@lang('admin.menu_sorting_title')</h2>
             <a href="{{ route('admin.menu.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
-                &larr; Kembali ke Menu Manager
+                &larr; @lang('admin.menu_sorting_back')
             </a>
         </div>
 
@@ -30,7 +30,7 @@
                 @endif
             @empty
                 <div class="bg-white p-6 rounded text-center text-gray-400 border">
-                    Belum ada data struktur menu.
+                    @lang('admin.menu_sorting_empty')
                 </div>
             @endforelse
         </div>

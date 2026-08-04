@@ -5,9 +5,9 @@
 
         <!-- 1. Header Halaman -->
         <div class="text-center mb-16 animate-on-scroll">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">Penulis Kami</h1>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">@lang('authors.page_title')</h1>
             <div class="author-description">
-                <p>{{ \App\Models\Pengaturan::first()->team ?? 'Deskripsi penulis belum diatur.' }}</p>
+                <p>{{ \App\Models\Pengaturan::first()->team ?? __('authors.no_description_fallback') }}</p>
             </div>
         </div>
 
@@ -31,14 +31,14 @@
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="font-bold text-lg">{{ $author->nama }}</h3>
                         <span class="text-[10px] font-bold bg-[#B6171E] text-white px-2 py-1 uppercase tracking-wider">
-                            {{ $author->institusi ?? 'Penulis' }}
+                            {{ $author->institusi ?? __('authors.badge_fallback') }}
                         </span>
                     </div>
 
                     <p class="text-xs font-bold text-[#B6171E] mb-4">{{ $author->keahlian ?? '-' }}</p>
 
                     <div class="border-t pt-4">
-                        <p class="text-sm font-semibold mb-2 text-gray-900">Profil Singkat:</p>
+                        <p class="text-sm font-semibold mb-2 text-gray-900">@lang('authors.short_profile')</p>
                         <p class="text-sm text-gray-600 line-clamp-3">{{ $author->profile }}</p>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
             <!-- Pemicu Form Penulis -->
             <button onclick="document.getElementById('modal-penulis').classList.remove('hidden')"
                 class="border-2 border-gray-300 text-gray-700 px-10 py-2.5 rounded-lg font-medium hover:bg-[#B6171E] hover:text-white hover:border-[#B6171E] transition-all duration-300 animate-on-scroll fade-in-up">
-                Form Penulis
+                @lang('authors.form_button')
             </button>
 
             <!-- Tombol Form Unggah Naskah -->
@@ -58,7 +58,7 @@
                 target="_blank"
                 class="block text-center bg-[#B6171E] border-2 border-gray-300 text-white px-10 py-2.5 rounded-lg font-medium hover:bg-white hover:text-gray-700 transition-all duration-300 animate-on-scroll fade-in-up"
                 style="transition-delay: 0.2s;">
-                Form Unggah Naskah
+                @lang('authors.upload_manuscript')
             </a>
         </div>
 
@@ -72,8 +72,8 @@
                 <button onclick="document.getElementById('modal-penulis').classList.add('hidden')"
                     class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>
 
-                <h2 class="text-2xl font-bold mb-2 text-gray-900">Form Penulis</h2>
-                <p class="text-xs text-gray-500 mb-6">Lengkapi data diri Anda di bawah ini untuk mendaftar sebagai penulis.
+                <h2 class="text-2xl font-bold mb-2 text-gray-900">@lang('authors.form_title')</h2>
+                <p class="text-xs text-gray-500 mb-6">@lang('authors.form_description')
                 </p>
 
                 <!-- Notifikasi Modern (Diganti dengan Banner Kustom yang Estetik) -->
@@ -92,87 +92,87 @@
                     @csrf
                     <!-- Nama Lengkap dengan Gelar -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap dengan Gelar <span
+                        <label class="block text-sm font-medium text-gray-700 mb-1">@lang('authors.full_name_with_title') <span
                                 class="text-red-500">*</span></label>
-                        <input type="text" name="nama" required placeholder="Contoh: Dr. I Nengah Laba"
+                        <input type="text" name="nama" required placeholder="{{ __('authors.name_placeholder') }}"
                             class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
                     </div>
 
                     <!-- Institusi atau Perusahaan -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Institusi atau Perusahaan <span
+                        <label class="block text-sm font-medium text-gray-700 mb-1">@lang('authors.institution_or_company') <span
                                 class="text-red-500">*</span></label>
-                        <input type="text" name="institusi" required placeholder="Contoh: Universitas Udayana"
+                        <input type="text" name="institusi" required placeholder="{{ __('authors.institution_placeholder') }}"
                             class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
                     </div>
 
                     <!-- Grid Kontak (Telepon & Email) -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon <span
+                            <label class="block text-sm font-medium text-gray-700 mb-1">@lang('authors.phone_number') <span
                                     class="text-red-500">*</span></label>
-                            <input type="text" name="nomor" required placeholder="Contoh: 081234567890"
+                            <input type="text" name="nomor" required placeholder="{{ __('authors.phone_placeholder') }}"
                                 class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Email <span
+                            <label class="block text-sm font-medium text-gray-700 mb-1">@lang('authors.email') <span
                                     class="text-red-500">*</span></label>
-                            <input type="email" name="email" required placeholder="Contoh: email@domain.com"
+                            <input type="email" name="email" required placeholder="{{ __('authors.email_placeholder') }}"
                                 class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
                         </div>
                     </div>
 
                     <!-- Alamat -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Alamat <span
+                        <label class="block text-sm font-medium text-gray-700 mb-1">@lang('authors.address') <span
                                 class="text-red-500">*</span></label>
-                        <input type="text" name="alamat" required placeholder="Alamat lengkap domisili"
+                        <input type="text" name="alamat" required placeholder="{{ __('authors.address_placeholder') }}"
                             class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
                     </div>
 
                     <!-- Link Social Media & Keahlian -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Link Social Media <span
+                            <label class="block text-sm font-medium text-gray-700 mb-1">@lang('authors.social_media') <span
                                     class="text-red-500">*</span></label>
                             <input type="text" name="social_media" required placeholder="www.instagram.com/namapenulis"
                                 class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Keahlian <span
-                                    class="text-gray-400 font-normal">(opsional)</span></label>
-                            <input type="text" name="keahlian" placeholder="Boleh tuliskan lebih dari satu"
+                            <label class="block text-sm font-medium text-gray-700 mb-1">@lang('authors.expertise') <span
+                                    class="text-gray-400 font-normal">(@lang('authors.optional'))</span></label>
+                            <input type="text" name="keahlian" placeholder="{{ __('authors.expertise_placeholder') }}"
                                 class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
                         </div>
                     </div>
 
                     <!-- Profil Singkat -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Profil Singkat <span
+                        <label class="block text-sm font-medium text-gray-700 mb-1">@lang('authors.short_profile_label') <span
                                 class="text-red-500">*</span></label>
                         <textarea name="profile" rows="4" required
-                            placeholder="Ceritakan sedikit tentang latar belakang Anda..."
+                            placeholder="{{ __('authors.profile_placeholder') }}"
                             class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]"></textarea>
                     </div>
 
                     <!-- Unggah Foto Profil -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Unggah Foto Profil <span
+                        <label class="block text-sm font-medium text-gray-700 mb-1">@lang('authors.upload_photo') <span
                                 class="text-red-500">*</span></label>
                         <input type="file" name="foto" required
                             class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-[#B6171E] hover:file:bg-red-100">
-                        <p class="text-xs text-gray-400 mt-1">note: max. 2MB (IMAGE)</p>
+                        <p class="text-xs text-gray-400 mt-1">@lang('authors.photo_note')</p>
                     </div>
 
                     <!-- Tombol Aksi -->
                     <div class="flex justify-end gap-2 pt-4 border-t">
                         <button type="button" onclick="document.getElementById('modal-penulis').classList.add('hidden')"
                             class="px-5 py-2.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-300 transition-all">
-                            Batal
+                            @lang('common.cancel')
                         </button>
                         <button type="submit" id="submit-btn"
                             class="px-6 py-2.5 bg-[#B6171E] text-white rounded-lg font-semibold text-sm hover:bg-red-900 transition-all shadow-md">
-                            Daftar Sekarang
+                            @lang('authors.register_now')
                         </button>
                     </div>
                 </form>
@@ -199,7 +199,7 @@
                     let originalText = submitBtn.innerText;
 
                     // Ubah status tombol jadi proses
-                    submitBtn.innerText = 'Mengirim...';
+                    submitBtn.innerText = '@lang('common.sending')';
                     submitBtn.disabled = true;
                     alertBox.classList.add('hidden');
 
@@ -216,11 +216,11 @@
                             if (contentType && contentType.indexOf("application/json") !== -1) {
                                 let result = await response.json();
                                 if (!response.ok) {
-                                    throw new Error(result.message || 'Terjadi kesalahan pada validasi data.');
+                                    throw new Error(result.message || '@lang('authors.validation_error')');
                                 }
                                 return result;
                             } else {
-                                throw new Error("Server tidak merespons dalam format JSON. Periksa kembali Controller Anda.");
+                                throw new Error("@lang('authors.server_error')");
                             }
                         })
                         .then(data => {
@@ -230,8 +230,8 @@
                                 <div class="bg-emerald-500 text-white p-2 rounded-full flex items-center justify-center">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
                                 </div>`;
-                            alertTitle.innerText = "Pendaftaran Berhasil!";
-                            alertMessage.innerText = data.message || "Data penulis Anda berhasil disimpan.";
+                            alertTitle.innerText = "@lang('authors.registration_success')";
+                            alertMessage.innerText = data.message || "@lang('authors.registration_success_message')";
                             alertBox.classList.remove('hidden');
 
                             // Otomatis geser modal ke paling atas agar notifikasi terlihat
@@ -253,8 +253,8 @@
                                 <div class="bg-rose-500 text-white p-2 rounded-full flex items-center justify-center">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                                 </div>`;
-                            alertTitle.innerText = "Gagal Mengirim!";
-                            alertMessage.innerText = error.message || "Pastikan semua kolom wajib terisi dan ukuran foto max. 2MB.";
+                            alertTitle.innerText = "@lang('authors.submission_failed')";
+                            alertMessage.innerText = error.message || "@lang('authors.submission_failed_message')";
                             alertBox.classList.remove('hidden');
 
                             // Otomatis geser modal ke paling atas agar pesan error terlihat

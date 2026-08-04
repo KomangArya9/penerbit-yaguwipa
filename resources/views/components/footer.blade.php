@@ -8,34 +8,34 @@
             <div class="w-full md:w-1/3 space-y-6">
                 <div class="w-48">
                     @if($setting && $setting->logo)
-                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Penerbit Yaguwipa"
+                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ __('common.site_title') }}"
                             class="w-full h-auto">
                     @else
-                        <img src="{{ asset('images/logo-footer.png') }}" alt="Logo Penerbit Yaguwipa" class="w-full h-auto">
+                        <img src="{{ asset('images/logo-footer.png') }}" alt="{{ __('common.site_title') }}" class="w-full h-auto">
                     @endif
                 </div>
 
                 <!-- Alamat dinamis dari database -->
                 <p class="text-sm text-gray-100 leading-relaxed">
-                    {{ $setting->address ?? 'Jln. Ganetri IV No. 4 DPS 80237 Bali' }}
+                    {{ $setting->address ?? '' }}
                 </p>
 
                 <div class="text-sm text-gray-100 space-y-2">
                     <!-- Phone dinamis dari database -->
-                    <p><span class="font-semibold text-white">Phone:</span> {{ $setting->phone ?? '+62 8113996698' }}
+                    <p><span class="font-semibold text-white">@lang('footer.phone'):</span> {{ $setting->phone ?? '+62 8113996698' }}
                     </p>
 
                     <!-- Email dinamis dari database -->
-                    <p><span class="font-semibold text-white">Email:</span> {{ $setting->email ??
+                    <p><span class="font-semibold text-white">@lang('footer.email'):</span> {{ $setting->email ??
                         'partners@penerbityaguwipa.id' }}</p>
 
                     <!-- Website dinamis dari database -->
-                    <p><span class="font-semibold text-white">Website:</span>
+                    <p><span class="font-semibold text-white">@lang('footer.website'):</span>
                         {{ $setting->website ?? 'www.penerbityaguwipa.id' }}</p>
                 </div>
 
                 <div>
-                    <h3 class="text-white font-bold mb-4">Sosial Media</h3>
+                    <h3 class="text-white font-bold mb-4">@lang('footer.social_media')</h3>
                     <div class="flex gap-4">
                         <!-- Ikon Sosial Media -->
                         <a href="https://www.youtube.com/@yaguwipapublisher"
@@ -75,44 +75,44 @@
             <div class="flex flex-row justify-start md:justify-end gap-16 md:gap-24 w-full md:w-2/3">
                 <!-- Sitemap -->
                 <div>
-                    <h3 class="font-bold text-lg mb-6 text-white">Sitemap</h3>
+                    <h3 class="font-bold text-lg mb-6 text-white">@lang('footer.sitemap')</h3>
                     <ul class="space-y-3 text-sm text-gray-100">
-                        <li><a href="/" class="hover:underline transition">› Home</a></li>
-                        <li><a href="/profile" class="hover:underline transition">› Profil</a></li>
-                        <li><a href="/program" class="hover:underline transition">› Program</a></li>
-                        <li><a href="/portofolio" class="hover:underline transition">› Portofolio</a></li>
-                        <li><a href="/penulis" class="hover:underline transition">› Penulis</a></li>
-                        <li><a href="/katalog" class="hover:underline transition">› Katalog</a></li>
-                        <li><a href="/partners" class="hover:underline transition">› Partners & Client</a></li>
-                        <li><a href="/news" class="hover:underline transition">› News & Events</a></li>
+                        <li><a href="/" class="hover:underline transition">› @lang('footer.home')</a></li>
+                        <li><a href="/profile" class="hover:underline transition">› @lang('footer.profile')</a></li>
+                        <li><a href="/program" class="hover:underline transition">› @lang('footer.program')</a></li>
+                        <li><a href="/portofolio" class="hover:underline transition">› @lang('footer.portfolio')</a></li>
+                        <li><a href="/penulis" class="hover:underline transition">› @lang('footer.authors')</a></li>
+                        <li><a href="/katalog" class="hover:underline transition">› @lang('footer.catalog')</a></li>
+                        <li><a href="/partners" class="hover:underline transition">› @lang('footer.partners')</a></li>
+                        <li><a href="/news" class="hover:underline transition">› @lang('footer.news')</a></li>
                     </ul>
                 </div>
 
                 <!-- Services -->
                 <div>
-                    <h3 class="font-bold text-lg mb-6 text-white">Services</h3>
+                    <h3 class="font-bold text-lg mb-6 text-white">@lang('footer.services')</h3>
                     <ul class="space-y-3 text-sm text-gray-100">
                         @php
                             $servicesList = [
-                                'Manuscript Coaching' => 'manuscript-coaching',
-                                'Plagiarism Check' => 'plagiarism-check',
-                                'Full Package Publishing' => 'full-package-publishing',
-                                'HKI' => 'hki',
-                                'Cataloging' => 'cataloging',
-                                'Kolaborasi' => 'kolaborasi',
-                                'Editing' => 'editing',
-                                'Setting Layout' => 'setting-layout',
-                                'Cover Design' => 'cover-design',
-                                'Percetakan' => 'percetakan',
-                                'Terbitkan Jurnal ber-ISSN' => 'terbitkan-jurnal-ber-issn',
-                                'Buku ber-ISBN' => 'buku-ber-isbn'
+                                __('footer.service_manuscript_coaching') => 'manuscript-coaching',
+                                __('footer.service_plagiarism_check') => 'plagiarism-check',
+                                __('footer.service_full_package_publishing') => 'full-package-publishing',
+                                __('footer.service_hki') => 'hki',
+                                __('footer.service_cataloging') => 'cataloging',
+                                __('footer.collaboration') => 'kolaborasi',
+                                __('footer.service_editing') => 'editing',
+                                __('footer.service_setting_layout') => 'setting-layout',
+                                __('footer.service_cover_design') => 'cover-design',
+                                __('footer.printing') => 'percetakan',
+                                __('footer.journal_issn') => 'terbitkan-jurnal-ber-issn',
+                                __('footer.book_isbn') => 'buku-ber-isbn'
                             ];
                         @endphp
 
                         @foreach($servicesList as $title => $slug)
                             <li>
                                 <a href="{{ url('/program#' . $slug) }}"
-                                    class="hover:underline transition {{ $title == 'Terbitkan Jurnal ber-ISSN' ? 'whitespace-nowrap' : '' }}">
+                                    class="hover:underline transition {{ $slug == 'terbitkan-jurnal-ber-issn' ? 'whitespace-nowrap' : '' }}">
                                     › {{ $title }}
                                 </a>
                             </li>
@@ -127,9 +127,9 @@
     <div class="bg-[#1B1717] w-full py-8 border-t-2 border-gray-700">
         <div
             class="container mx-auto px-4 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-300">
-            <p>{{ $setting->copyright ?? '&copy; 2026 Penerbit Yaguwipa - Bergerak Menerbit Karya. All Rights Reserved.' }}
+            <p>{{ $setting->copyright ?? __('footer.copyright') }}
             </p>
-            <p>Designed by Yaguwipa Tech Team</p>
+            <p>@lang('footer.designed_by')</p>
         </div>
     </div>
 </footer>

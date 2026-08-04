@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'page_title' => 'Actualités et événements',
+    'page_subtitle' => 'Suivez les dernières nouvelles, l\'actualité du secteur et le calendrier des événements littéraires de l\'éditeur Yaguwipa.',
+    'category_label' => 'Catégorie :',
+    'select_tags' => 'Sélectionner les tags',
+    'filter_by_tag' => 'Filtrer par tag',
+    'reset_tag' => 'Réinitialiser les tags',
+    'trending' => 'Tendances',
+    'read_more' => 'En savoir plus',
+    'read_full' => 'Lire la suite',
+    'no_news' => 'Aucune actualité ou événement n\'est disponible pour cette catégorie ou ce tag.',
+    'back_to_news' => 'Retour aux actualités',
+    'share_prompt' => 'Vous avez aimé cet article ? Partagez-le maintenant :',
+    'share_button' => 'Partager',
+    'share_modal_title' => 'Partager l\'actualité',
+    'share_select_platform' => 'Choisissez une plateforme pour partager l\'article :',
+    'link_copied_instagram' => 'Lien copié avec succès ! Veuillez le coller dans votre biographie ou message direct Instagram.',
+    'or_copy_link' => 'Ou copiez le lien :',
+    'link_copied' => 'Lien copié avec succès !',
+    'copy' => 'Copier',
+    'related_news' => 'Autres actualités',
+    'tag_prefix' => 'Tag : #',
+];

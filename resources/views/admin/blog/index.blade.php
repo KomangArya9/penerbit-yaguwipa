@@ -3,9 +3,9 @@
 @section('content')
 <div class="p-6">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">News & Events</h2>
+        <h2 class="text-2xl font-bold text-gray-800">@lang('admin.blog_index_title')</h2>
         <a href="{{ route('admin.blog.create') }}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold shadow transition flex items-center gap-2">
-            + Add Data
+            @lang('common.add_data')
         </a>
     </div>
 
@@ -19,14 +19,14 @@
         <table class="w-full text-left border-collapse whitespace-nowrap">
             <thead>
                 <tr class="bg-gray-50 text-gray-700 text-xs uppercase tracking-wider border-b border-gray-200">
-                    <th class="p-4 w-16">No</th>
-                    <th class="p-4">Kategori</th>
-                    <th class="p-4">Date</th>
-                    <th class="p-4">Title</th>
-                    <th class="p-4 text-center">Image</th>
-                    <th class="p-4 text-center">Hit</th>
-                    <th class="p-4 text-center">Status</th>
-                    <th class="p-4 text-center w-32">Aksi</th>
+                    <th class="p-4 w-16">@lang('common.no_label')</th>
+                    <th class="p-4">@lang('common.category')</th>
+                    <th class="p-4">@lang('common.date')</th>
+                    <th class="p-4">@lang('common.title')</th>
+                    <th class="p-4 text-center">@lang('common.image')</th>
+                    <th class="p-4 text-center">@lang('common.hit')</th>
+                    <th class="p-4 text-center">@lang('common.status')</th>
+                    <th class="p-4 text-center w-32">@lang('common.action')</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 text-sm text-gray-600">
@@ -40,7 +40,7 @@
                         @if($item->img)
                             <img src="{{ asset('storage/' . $item->img) }}" alt="Img" class="w-12 h-12 object-cover rounded-lg mx-auto shadow-sm">
                         @else
-                            <span class="text-gray-400 text-xs">No Image</span>
+                            <span class="text-gray-400 text-xs">@lang('common.no_image')</span>
                         @endif
                     </td>
                     <td class="p-4 text-center font-medium">{{ $item->hit }}</td>
@@ -51,20 +51,20 @@
                     </td>
                     <td class="p-4 text-center space-x-1">
                         <a href="{{ route('admin.blog.edit', $item->id) }}" class="inline-block px-3 py-1.5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg text-xs font-medium transition">
-                            Edit
+                            @lang('common.edit')
                         </a>
-                        <form action="{{ route('admin.blog.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus berita ini?')">
+                        <form action="{{ route('admin.blog.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('@lang('admin.blog_confirm_delete')')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-medium transition">
-                                Delete
+                                @lang('common.delete')
                             </button>
                         </form>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="p-6 text-center text-gray-400">Belum ada data news & events.</td>
+                    <td colspan="8" class="p-6 text-center text-gray-400">@lang('admin.blog_empty')</td>
                 </tr>
                 @endforelse
             </tbody>

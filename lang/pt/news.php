@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'page_title' => 'Notícias e eventos',
+    'page_subtitle' => 'Acompanhe as últimas novidades, notícias do setor e o calendário de eventos da editora Yaguwipa.',
+    'category_label' => 'Categoria:',
+    'select_tags' => 'Selecionar tags',
+    'filter_by_tag' => 'Filtrar por tag',
+    'reset_tag' => 'Redefinir tag',
+    'trending' => 'Em alta',
+    'read_more' => 'Leia mais',
+    'read_full' => 'Leia o artigo completo',
+    'no_news' => 'Nenhuma notícia ou evento disponível para esta categoria ou tag.',
+    'back_to_news' => 'Voltar às notícias',
+    'share_prompt' => 'Gostou deste artigo? Compartilhe agora:',
+    'share_button' => 'Compartilhar',
+    'share_modal_title' => 'Compartilhar notícia',
+    'share_select_platform' => 'Escolha uma plataforma para compartilhar o artigo:',
+    'link_copied_instagram' => 'Link copiado com sucesso! Por favor, cole na sua bio ou mensagem direta do Instagram.',
+    'or_copy_link' => 'Ou copie o link:',
+    'link_copied' => 'Link copiado com sucesso!',
+    'copy' => 'Copiar',
+    'related_news' => 'Outras notícias',
+    'tag_prefix' => 'Tag: #',
+];

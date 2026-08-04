@@ -10,7 +10,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
                     </path>
                 </svg>
-                Kembali ke Berita
+                @lang('news.back_to_news')
             </a>
         </div>
 
@@ -26,7 +26,7 @@
                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
                     </path>
                 </svg>
-                {{ $blog->hit }} Views
+                {{ $blog->hit }} {{ __('common.views') }}
             </span>
         </div>
 
@@ -49,7 +49,7 @@
 
         <!-- Tombol Pemicu Pop-up Share -->
         <div class="flex items-center justify-between py-6 border-t border-b border-gray-200 mb-16">
-            <span class="text-sm font-semibold text-gray-700">Suka artikel ini? Bagikan sekarang:</span>
+            <span class="text-sm font-semibold text-gray-700">@lang('news.share_prompt')</span>
             <button @click="shareModal = true"
                 class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-800 rounded-lg hover:bg-red-900 transition-colors shadow-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,7 +57,7 @@
                         d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z">
                     </path>
                 </svg>
-                Bagikan
+                @lang('news.share_button')
             </button>
         </div>
 
@@ -66,7 +66,7 @@
             <div @click.away="shareModal = false"
                 class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 relative transform transition-all">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-bold text-gray-900">Bagikan Berita</h3>
+                    <h3 class="text-lg font-bold text-gray-900">@lang('news.share_modal_title')</h3>
                     <button @click="shareModal = false" class="text-gray-400 hover:text-gray-600">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
@@ -74,7 +74,7 @@
                         </svg>
                     </button>
                 </div>
-                <p class="text-xs text-gray-500 mb-4 line-clamp-1">Pilih platform untuk membagikan artikel:
+                <p class="text-xs text-gray-500 mb-4 line-clamp-1">@lang('news.share_select_platform'):
                     "{{ $blog->title }}"</p>
 
                 <!-- Pilihan Sosmed (Termasuk Instagram) -->
@@ -98,7 +98,7 @@
                     </a>
                     <!-- Instagram (Salin Link + Alert khusus Instagram) -->
                     <button
-                        onclick="navigator.clipboard.writeText('{{ url()->current() }}'); alert('Link berhasil disalin! Silakan tempel (paste) di Bio atau Direct Message Instagram Anda.');"
+                        onclick="navigator.clipboard.writeText('{{ url()->current() }}'); alert('@lang('news.link_copied_instagram')');"
                         class="flex flex-col items-center justify-center p-3 border border-gray-200 rounded-lg hover:bg-pink-50 hover:border-pink-300 transition-colors group">
                         <span class="text-xs font-semibold text-gray-700 group-hover:text-pink-600">Instagram</span>
                     </button>
@@ -106,14 +106,14 @@
 
                 <!-- Salin Link -->
                 <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1">Atau salin tautan:</label>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">@lang('news.or_copy_link')</label>
                     <div class="flex items-center gap-2">
                         <input type="text" readonly value="{{ url()->current() }}"
                             class="w-full bg-gray-50 border border-gray-300 text-gray-600 text-xs rounded-lg px-3 py-2 focus:outline-none">
                         <button
-                            onclick="navigator.clipboard.writeText('{{ url()->current() }}'); alert('Link berhasil disalin!');"
+                            onclick="navigator.clipboard.writeText('{{ url()->current() }}'); alert('@lang('news.link_copied')');"
                             class="px-4 py-2 bg-gray-900 text-white text-xs font-medium rounded-lg hover:bg-gray-800 transition-colors whitespace-nowrap">
-                            Salin
+                            @lang('news.copy')
                         </button>
                     </div>
                 </div>
@@ -123,7 +123,7 @@
         <!-- Berita Terkait (Related Blogs) -->
         @if($relatedBlogs->count() > 0)
             <div class="pt-4">
-                <h3 class="text-2xl font-bold text-gray-900 mb-6">Berita Lainnya</h3>
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">@lang('news.related_news')</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     @foreach($relatedBlogs as $item)
                         <div class="border border-gray-200 p-4 rounded-lg flex flex-col">

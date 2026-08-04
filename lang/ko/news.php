@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'page_title' => '뉴스 및 이벤트',
+    'page_subtitle' => '야구위파 출판사의 최신 소식, 업계 뉴스, 문헌 이벤트 일정을 확인하세요.',
+    'category_label' => '카테고리:',
+    'select_tags' => '태그 선택',
+    'filter_by_tag' => '태그별 필터',
+    'reset_tag' => '태그 초기화',
+    'trending' => '인기',
+    'read_more' => '더 보기',
+    'read_full' => '전체 읽기',
+    'no_news' => '이 카테고리나 태그에 대한 뉴스나 이벤트가 아직 없습니다.',
+    'back_to_news' => '뉴스로 돌아가기',
+    'share_prompt' => '이 기사가 유용했나요? 지금 공유하세요:',
+    'share_button' => '공유',
+    'share_modal_title' => '뉴스 공유',
+    'share_select_platform' => '기사를 공유할 플랫폼 선택:',
+    'link_copied_instagram' => '링크가 복사되었습니다! Instagram 프로필이나 다이렉트 메시지에 붙여넣어 주세요.',
+    'or_copy_link' => '또는 링크 복사:',
+    'link_copied' => '링크가 복사되었습니다!',
+    'copy' => '복사',
+    'related_news' => '관련 뉴스',
+    'tag_prefix' => '태그: #',
+];

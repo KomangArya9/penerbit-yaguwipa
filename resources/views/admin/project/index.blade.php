@@ -3,10 +3,10 @@
 @section('content')
     <div class="p-6">
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Portofolio</h2>
+            <h2 class="text-2xl font-bold text-gray-800">@lang('admin.project_index_title')</h2>
             <a href="{{ route('admin.project.create') }}"
                 class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold shadow transition flex items-center gap-2">
-                + Add Data
+                @lang('common.add_data')
             </a>
         </div>
 
@@ -20,16 +20,16 @@
             <table class="w-full text-left border-collapse whitespace-nowrap">
                 <thead>
                     <tr class="bg-gray-50 text-gray-700 text-xs uppercase tracking-wider border-b border-gray-200">
-                        <th class="p-4 w-12 text-center">No</th>
-                        <th class="p-4">Date</th>
-                        <th class="p-4">Kategori</th>
-                        <th class="p-4">Services</th>
-                        <th class="p-4">Title</th>
-                        <th class="p-4">Lokasi</th>
-                        <th class="p-4 text-center">Image</th>
-                        <th class="p-4 text-center">Hit</th>
-                        <th class="p-4 text-center">Status</th>
-                        <th class="p-4 text-center">Aksi</th>
+                        <th class="p-4 w-12 text-center">@lang('common.no_label')</th>
+                        <th class="p-4">@lang('common.date')</th>
+                        <th class="p-4">@lang('common.category')</th>
+                        <th class="p-4">@lang('common.services')</th>
+                        <th class="p-4">@lang('common.title')</th>
+                        <th class="p-4">@lang('admin.project_label_location')</th>
+                        <th class="p-4 text-center">@lang('common.image')</th>
+                        <th class="p-4 text-center">@lang('common.hit')</th>
+                        <th class="p-4 text-center">@lang('common.status')</th>
+                        <th class="p-4 text-center">@lang('common.action')</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 text-sm text-gray-600">
@@ -49,7 +49,7 @@
 @if($primaryPhoto && $primaryPhoto->img)
     <img src="{{ asset('storage/' . $primaryPhoto->img) }}" alt="{{ $item->title }}" class="w-16 h-16 object-cover rounded">
 @else
-    <span class="text-gray-400 text-xs">No Image</span>
+    <span class="text-gray-400 text-xs">@lang('common.no_image')</span>
 @endif
                             </td>
                             <td class="p-4 text-center font-medium">{{ $item->hit }}</td>
@@ -62,22 +62,22 @@
                             <td class="p-4 text-center space-x-1">
                                 <a href="{{ route('admin.project.edit', $item->id) }}"
                                     class="inline-block px-3 py-1.5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg text-xs font-medium transition">
-                                    Edit
+                                    @lang('common.edit')
                                 </a>
                                 <form action="{{ route('admin.project.destroy', $item->id) }}" method="POST" class="inline"
-                                    onsubmit="return confirm('Yakin ingin menghapus portofolio ini?')">
+                                    onsubmit="return confirm('@lang('admin.project_confirm_delete')')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
                                         class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-medium transition">
-                                        Delete
+                                        @lang('common.delete')
                                     </button>
                                 </form>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="10" class="p-6 text-center text-gray-400">Belum ada data portofolio.</td>
+                            <td colspan="10" class="p-6 text-center text-gray-400">@lang('admin.project_empty')</td>
                         </tr>
                     @endforelse
                 </tbody>

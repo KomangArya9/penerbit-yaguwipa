@@ -6,10 +6,10 @@
         <!-- Header Navigasi & Judul -->
         <div class="mb-8">
             <a href="{{ route('profile') }}" class="text-sm text-[#B6171E] font-semibold hover:underline inline-flex items-center gap-1 mb-2">
-                &larr; Kembali ke Profil
+                &larr; @lang('videos.back_to_profile')
             </a>
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Semua Koleksi Video & Dokumenter</h1>
-            <p class="text-sm text-gray-600 mt-1">Daftar lengkap dokumentasi video dan film yang telah dipublikasikan.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">@lang('videos.page_title')</h1>
+            <p class="text-sm text-gray-600 mt-1">@lang('videos.page_subtitle')</p>
         </div>
 
         <!-- Grid Daftar Video -->
@@ -54,7 +54,7 @@
                 </div>
             @empty
                 <div class="col-span-full text-center py-16 bg-white rounded-lg shadow">
-                    <p class="text-gray-500 text-base">Belum ada video yang ditampilkan.</p>
+                    <p class="text-gray-500 text-base">@lang('videos.no_videos')</p>
                 </div>
             @endforelse
         </div>

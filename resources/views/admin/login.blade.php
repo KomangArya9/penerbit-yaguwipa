@@ -11,7 +11,7 @@
     <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-slate-200">
         <div class="text-center mb-6">
             <h2 class="text-3xl font-bold text-slate-800">Yaguwipa</h2>
-            <p class="text-gray-500 text-sm mt-1">Silakan masuk ke panel admin</p>
+            <p class="text-gray-500 text-sm mt-1">@lang('admin.login_subtitle')</p>
         </div>
 
         {{-- Menampilkan pesan error global --}}
@@ -26,10 +26,10 @@
             
             {{-- Input Username --}}
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">@lang('admin.login_label_username')</label>
                 <input type="text" name="username" value="{{ old('username') }}" required autofocus
                        class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-slate-500 focus:border-slate-500 outline-none text-sm" 
-                       placeholder="Masukkan username">
+                       placeholder="@lang('admin.login_username_placeholder')">
                 @error('username')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -37,7 +37,7 @@
 
             {{-- Input Password --}}
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">@lang('admin.login_label_password')</label>
                 <input type="password" name="password" required
                        class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-slate-500 focus:border-slate-500 outline-none text-sm" 
                        placeholder="••••••••">
@@ -48,7 +48,7 @@
 
             <button type="submit" 
                     class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-2.5 rounded-lg transition duration-200 text-sm shadow-md">
-                Masuk
+                @lang('admin.login_button')
             </button>
         </form>
     </div>

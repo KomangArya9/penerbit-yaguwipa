@@ -5,11 +5,10 @@
 
         <!-- 1. Header Section -->
         <div class="text-center mb-16 max-w-3xl mx-auto animate-on-scroll">
-            <h1 class="text-4xl font-bold text-gray-900 mb-6 tracking-tight">Partner & Klien</h1>
+            <h1 class="text-4xl font-bold text-gray-900 mb-6 tracking-tight">@lang('partners.page_title')</h1>
 
             <p class="text-gray-600 text-lg leading-relaxed">
-                Kami bangga bekerja sama dengan berbagai institusi dan mitra strategis dalam memajukan dunia literasi.
-                Kolaborasi ini memperkuat komitmen kami pada penyebaran ilmu pengetahuan.
+                @lang('partners.page_description')
             </p>
         </div>
 
@@ -34,7 +33,7 @@
                     </div>
                 @empty
                     <div class="col-span-full text-center py-12 text-gray-400">
-                        <p>Belum ada partner atau klien yang ditampilkan.</p>
+                        <p>@lang('partners.no_partners')</p>
                     </div>
                 @endforelse
             </div>

@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'page_title' => 'News & Events',
+    'page_subtitle' => 'Follow the latest developments, industry news, and literacy event schedules from Yaguwipa Publisher.',
+    'category_label' => 'Category:',
+    'select_tags' => 'Select Tags',
+    'filter_by_tag' => 'Filter by Tag',
+    'reset_tag' => 'Reset Tag',
+    'trending' => 'Trending',
+    'read_more' => 'Read More',
+    'read_full' => 'Read Full Article',
+    'no_news' => 'No news or events are available for this category or tag yet.',
+    'back_to_news' => 'Back to News',
+    'share_prompt' => 'Like this article? Share it now:',
+    'share_button' => 'Share',
+    'share_modal_title' => 'Share News',
+    'share_select_platform' => 'Select a platform to share the article:',
+    'link_copied_instagram' => 'Link copied successfully! Please paste it in your Instagram Bio or Direct Message.',
+    'or_copy_link' => 'Or copy the link:',
+    'link_copied' => 'Link copied successfully!',
+    'copy' => 'Copy',
+    'related_news' => 'Other News',
+    'tag_prefix' => 'Tag: #',
+];
