@@ -6,7 +6,7 @@
             <h2 class="text-2xl font-bold text-gray-800">@lang('admin.program_index_title')</h2>
             <a href="{{ route('program.create') }}"
                 class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold shadow transition flex items-center gap-2">
-                + @lang('common.add_data')
+                @lang('common.add_data')
             </a>
         </div>
 

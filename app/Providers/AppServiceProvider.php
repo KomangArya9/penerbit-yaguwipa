@@ -22,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Set locale dari session di setiap request
+        \App::setLocale(\Session::get('locale', 'id'));
+
         // Membuat variabel $setting dan $menus bisa diakses di SEMUA halaman (views)
         View::composer('*', function ($view) {
             $view->with('setting', Pengaturan::first());

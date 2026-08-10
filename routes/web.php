@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\App;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GeneralSettingsController;
@@ -37,51 +36,17 @@ use App\Http\Controllers\ProgramPublicController;
 
 
 
-// 1. Locale default Indonesia (konten asli dalam bahasa Indonesia)
-App::setLocale('id');
-
-// 2. [DISABLED] Route pindah bahasa sekarang menggunakan Google Translate
-// Route::get('/lang/{locale}', function ($locale) {
-//     if (in_array($locale, ['en', 'id'])) {
-//         Session::put('locale', $locale);
-//     }
-//     return redirect()->back();
-// })->name('lang.switch');
+// 1. Route pindah bahasa
+Route::get('/lang/{locale}', function ($locale) {
+    $available = ['id','en','ar','de','es','fr','ja','ko','pt','ru','th','tr','vi','zh-CN'];
+    if (in_array($locale, $available)) {
+        Session::put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('lang.switch');
 
 // 3. Route Utama / Publik
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
-Route::get('/profile', function () {
-    return view('profile');
-})->name('profile');
-
-Route::get('/program', function () {
-    return view('program');
-})->name('program');
-
-Route::get('/portofolio', function () {
-    return view('portofolio');
-})->name('portofolio');
-
-Route::get('/penulis', function () {
-    return view('penulis');
-})->name('penulis');
-
-Route::get('/katalog', function () {
-    return view('katalog');
-})->name('katalog');
-
-Route::get('/partners', function () {
-    return view('partner');
-})->name('partners');
-
-Route::get('/news', function () {
-    return view('news');
-})->name('news');
-
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::get('/photos', [ProfileController::class, 'allPhotos'])->name('photos.all');
