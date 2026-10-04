@@ -154,4 +154,19 @@ class CatalogController extends Controller
 
         return redirect()->route('admin.catalog.index')->with('success', 'Katalog berhasil dihapus!');
     }
+
+    public function approve(Request $request, $id)
+    {
+        $catalog = Catalog::findOrFail($id);
+        
+        if ($request->filled('status')) {
+            $catalog->status = $request->status;
+        } else {
+            $catalog->status = ($catalog->status === 'Show') ? 'Hide' : 'Show';
+        }
+
+        $catalog->save();
+
+        return redirect()->back()->with('success', "Status katalog '{$catalog->judul}' berhasil diubah menjadi {$catalog->status}!");
+    }
 }

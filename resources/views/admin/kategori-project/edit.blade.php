@@ -1,32 +1,47 @@
 @extends('admin.layouts.admin')
 
+@section('title', 'Edit Kategori Portofolio')
+
 @section('content')
-<div class="p-6 max-w-xl mx-auto bg-white rounded-xl shadow border border-gray-100">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Edit Kategori</h2>
-
-    @if ($errors->any())
-        <div class="mb-4 p-4 bg-rose-100 text-rose-700 rounded-lg text-sm">
-            <ul class="list-disc list-inside">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form action="{{ route('admin.kategori-project.update', $kategoriProject->id) }}" method="POST" class="space-y-4">
-        @csrf
-        @method('PUT')
-
+<div class="p-8 max-w-4xl mx-auto space-y-6">
+    <!-- Page Header & Back Button -->
+    <div class="flex items-center justify-between">
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-            <input type="text" name="title" value="{{ old('title', $kategoriProject->title) }}" class="w-full rounded-lg border-gray-300 border p-2.5 text-sm" required>
+            <h1 class="text-2xl font-bold text-slate-800">Edit Kategori Portofolio</h1>
+            <p class="text-slate-500 text-sm mt-1">Perbarui nama kategori portofolio "{{ $kategoriProject->title }}".</p>
         </div>
+        <a href="{{ route('admin.kategori-project.index') }}"
+            class="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition">
+            &larr; Kembali
+        </a>
+    </div>
 
-        <div class="flex justify-end gap-2 pt-4">
-            <a href="{{ route('admin.kategori-project.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg text-sm font-semibold">Batal</a>
-            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700">Perbarui</button>
-        </div>
-    </form>
+    <!-- Form Card -->
+    <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
+        <form action="{{ route('admin.kategori-project.update', $kategoriProject->id) }}" method="POST" class="space-y-6">
+            @csrf
+            @method('PUT')
+
+            <!-- Title -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Kategori <span class="text-rose-500">*</span></label>
+                <input type="text" name="title" value="{{ old('title', $kategoriProject->title) }}" required
+                    class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                @error('title') <p class="text-xs text-rose-500 mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100">
+                <a href="{{ route('admin.kategori-project.index') }}"
+                    class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition">
+                    Batal
+                </a>
+                <button type="submit"
+                    class="px-6 py-2.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-lg text-sm font-medium transition shadow-sm">
+                    Perbarui Kategori
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection

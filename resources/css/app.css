@@ -44,4 +44,40 @@
     [x-cloak] {
         display: none !important;
     }
+
+    /* Sembunyikan SEMUA variasi banner dan toolbar Google Translate */
+    .goog-te-banner-frame,
+    .goog-te-banner-frame.skiptranslate,
+    iframe.goog-te-banner-frame,
+    iframe[id*=":1.container"],
+    iframe[id*=":2.container"],
+    iframe[class*="goog-te-banner"],
+    iframe[class*="skiptranslate"],
+    iframe[src*="translate.google"],
+    .VIpgJd-ZVi9od-ORHb-OEVmcd,
+    .VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+    .VIpgJd-ZVi9od-ORHb,
+    #goog-gt-tt,
+    .goog-te-balloon-frame {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0px !important;
+        width: 0px !important;
+        pointer-events: none !important;
+        position: fixed !important;
+        top: -9999px !important;
+        left: -9999px !important;
+        z-index: -99999 !important;
+    }
+
+    html, body {
+        top: 0px !important;
+        position: static !important;
+    }
+
+    .goog-text-highlight {
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
 }

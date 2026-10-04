@@ -47,7 +47,7 @@
             </div>
 
             <button type="submit" 
-                    class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-2.5 rounded-lg transition duration-200 text-sm shadow-md">
+                    class="w-full bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold py-2.5 rounded-lg transition duration-200 text-sm shadow-md">
                 Masuk
             </button>
         </form>

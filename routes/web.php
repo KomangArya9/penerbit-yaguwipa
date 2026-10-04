@@ -37,51 +37,18 @@ use App\Http\Controllers\ProgramPublicController;
 
 
 
-// 1. Middleware untuk menerapkan bahasa dari session di setiap request
-App::setLocale(Session::get('locale', 'id'));
-
-// 2. Route untuk pindah bahasa
+// 1. Route untuk pindah bahasa (kompatibilitas redirect & cookie Google Translate)
 Route::get('/lang/{locale}', function ($locale) {
-    if (in_array($locale, ['en', 'id'])) {
-        Session::put('locale', $locale);
+    $code = strtolower($locale);
+    $response = redirect()->back();
+    if ($code === 'id') {
+        return $response->withCookie(cookie('googtrans', '', -1, '/'));
     }
-    return redirect()->back();
+    return $response->withCookie(cookie('googtrans', '/id/' . $code, 60 * 24 * 365, '/'));
 })->name('lang.switch');
 
-// 3. Route Utama / Publik (Sudah dibersihkan dari duplikasi)
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
-Route::get('/profile', function () {
-    return view('profile');
-})->name('profile');
-
-Route::get('/program', function () {
-    return view('program');
-})->name('program');
-
-Route::get('/portofolio', function () {
-    return view('portofolio');
-})->name('portofolio');
-
-Route::get('/penulis', function () {
-    return view('penulis');
-})->name('penulis');
-
-Route::get('/katalog', function () {
-    return view('katalog');
-})->name('katalog');
-
-Route::get('/partners', function () {
-    return view('partner');
-})->name('partners');
-
-Route::get('/news', function () {
-    return view('news');
-})->name('news');
-
-Route::get('/', [HomeController::class, 'index']);
+// 3. Route Utama / Publik
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::get('/photos', [ProfileController::class, 'allPhotos'])->name('photos.all');
@@ -119,8 +86,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.proses');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-
-// 4. Route Admin yang Diproteksi (Sudah diratakan dan dibersihkan dari duplikasi)
+// 4. Route Admin yang Diproteksi
 Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     // Dashboard Admin
@@ -129,20 +95,21 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     // General Settings
     Route::get('/pengaturan/general', [GeneralSettingsController::class, 'edit'])->name('admin.pengaturan.general');
     Route::put('/pengaturan/general', [GeneralSettingsController::class, 'update'])->name('admin.pengaturan.update');
-    Route::get('/admin/pengaturan/delete-image/{field}', [GeneralSettingsController::class, 'deleteImage'])->name('admin.pengaturan.delete.image');
+    Route::get('/pengaturan/delete-image/{field}', [GeneralSettingsController::class, 'deleteImage'])->name('admin.pengaturan.delete.image');
 
-    // Menu Manager Routes (Urutan yang benar: Statis di atas, dinamis/ID di bawah)
+    // Menu Manager Routes
     Route::get('/pengaturan/menu', [MenuManagerController::class, 'index'])->name('admin.menu.index');
     Route::get('/pengaturan/menu/create', [MenuManagerController::class, 'create'])->name('admin.menu.create');
     Route::get('/pengaturan/menu/sorting', [MenuManagerController::class, 'sorting'])->name('admin.menu.sorting');
+    Route::put('/pengaturan/menu/sorting', [MenuManagerController::class, 'updateSorting'])->name('admin.menu.updateSorting');
     Route::post('/pengaturan/menu', [MenuManagerController::class, 'store'])->name('admin.menu.store');
-
+    Route::patch('/pengaturan/menu/{id}/toggle', [MenuManagerController::class, 'toggleStatus'])->name('admin.menu.toggle');
     Route::get('/pengaturan/menu/{id}/edit', [MenuManagerController::class, 'edit'])->name('admin.menu.edit');
     Route::put('/pengaturan/menu/{id}', [MenuManagerController::class, 'update'])->name('admin.menu.update');
     Route::delete('/pengaturan/menu/{id}', [MenuManagerController::class, 'destroy'])->name('admin.menu.destroy');
 
 
-    // Client / Partners Routes (Manual untuk menghindari konflik nama)
+    // Client / Partners Routes
     Route::get('/client', [ClientController::class, 'index'])->name('client.index');
     Route::get('/client/create', [ClientController::class, 'create'])->name('client.create');
     Route::post('/client', [ClientController::class, 'store'])->name('client.store');
@@ -151,71 +118,81 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::delete('/client/{id}', [ClientController::class, 'destroy'])->name('client.destroy');
 
 
+    // Review Routes
     Route::get('/review', [AdminReviewController::class, 'index'])->name('admin.review.index');
     Route::put('/review/{id}/toggle', [AdminReviewController::class, 'toggleStatus'])->name('admin.review.toggle');
+    Route::put('/review/{id}/status', [AdminReviewController::class, 'updateStatus'])->name('admin.review.updateStatus');
     Route::delete('/review/{id}', [AdminReviewController::class, 'destroy'])->name('admin.review.destroy');
 
+    // Program Routes
     Route::resource('program', ProgramController::class);
 
+    // Kategori Portofolio Routes
+    Route::get('/kategori-project', [KategoriProjectController::class, 'index'])->name('admin.kategori-project.index');
+    Route::get('/kategori-project/create', [KategoriProjectController::class, 'create'])->name('admin.kategori-project.create');
+    Route::post('/kategori-project', [KategoriProjectController::class, 'store'])->name('admin.kategori-project.store');
+    Route::get('/kategori-project/{kategori_project}/edit', [KategoriProjectController::class, 'edit'])->name('admin.kategori-project.edit');
+    Route::put('/kategori-project/{kategori_project}', [KategoriProjectController::class, 'update'])->name('admin.kategori-project.update');
+    Route::delete('/kategori-project/{kategori_project}', [KategoriProjectController::class, 'destroy'])->name('admin.kategori-project.destroy');
 
-    Route::get('/admin/kategori-project', [KategoriProjectController::class, 'index'])->name('admin.kategori-project.index');
-    Route::get('/admin/kategori-project/create', [KategoriProjectController::class, 'create'])->name('admin.kategori-project.create');
-    Route::post('/admin/kategori-project', [KategoriProjectController::class, 'store'])->name('admin.kategori-project.store');
-    Route::get('/admin/kategori-project/{kategori_project}/edit', [KategoriProjectController::class, 'edit'])->name('admin.kategori-project.edit');
-    Route::put('/admin/kategori-project/{kategori_project}', [KategoriProjectController::class, 'update'])->name('admin.kategori-project.update');
-    Route::delete('/admin/kategori-project/{kategori_project}', [KategoriProjectController::class, 'destroy'])->name('admin.kategori-project.destroy');
+    // Portofolio Project Routes
+    Route::resource('project', ProjectController::class, ['names' => 'admin.project']);
 
-    Route::resource('admin/project', ProjectController::class, ['names' => 'admin.project']);
+    // Authors / Penulis Routes
+    Route::get('/authors', [AuthorController::class, 'index'])->name('admin.authors.index');
+    Route::get('/authors/{id}/edit', [AuthorController::class, 'edit'])->name('admin.authors.edit');
+    Route::put('/authors/{id}', [AuthorController::class, 'update'])->name('admin.authors.update');
+    Route::put('/authors/{id}/status', [AuthorController::class, 'updateStatus'])->name('admin.authors.updateStatus');
+    Route::delete('/authors/{id}', [AuthorController::class, 'destroy'])->name('admin.authors.destroy');
 
-    Route::get('admin/authors', [AuthorController::class, 'index'])->name('admin.authors.index');
-    Route::get('admin/authors/{id}/edit', [AuthorController::class, 'edit'])->name('admin.authors.edit');
-    Route::put('admin/authors/{id}', [AuthorController::class, 'update'])->name('admin.authors.update');
-    Route::put('admin/authors/{id}/status', [AuthorController::class, 'updateStatus'])->name('admin.authors.updateStatus');
-    Route::delete('admin/authors/{id}', [AuthorController::class, 'destroy'])->name('admin.authors.destroy');
+    // Media Sosial Routes
+    Route::get('/media', [MediaController::class, 'index'])->name('admin.media.index');
+    Route::get('/media/create', [MediaController::class, 'create'])->name('admin.media.create');
+    Route::post('/media', [MediaController::class, 'store'])->name('admin.media.store');
+    Route::get('/media/{id}/edit', [MediaController::class, 'edit'])->name('admin.media.edit');
+    Route::put('/media/{id}', [MediaController::class, 'update'])->name('admin.media.update');
+    Route::delete('/media/{id}', [MediaController::class, 'destroy'])->name('admin.media.destroy');
 
-    Route::get('/admin/media', [MediaController::class, 'index'])->name('admin.media.index');
-    Route::get('/admin/media/create', [MediaController::class, 'create'])->name('admin.media.create');
-    Route::post('/admin/media', [MediaController::class, 'store'])->name('admin.media.store');
-    Route::get('/admin/media/{id}/edit', [MediaController::class, 'edit'])->name('admin.media.edit');
-    Route::put('/admin/media/{id}', [MediaController::class, 'update'])->name('admin.media.update');
-    Route::delete('/admin/media/{id}', [MediaController::class, 'destroy'])->name('admin.media.destroy');
+    // Kontak Kami Routes
+    Route::get('/kontak-kami', [KontakKamiController::class, 'index'])->name('admin.kontak_kami.index');
+    Route::get('/kontak-kami/create', [KontakKamiController::class, 'create'])->name('admin.kontak_kami.create');
+    Route::post('/kontak-kami', [KontakKamiController::class, 'store'])->name('admin.kontak_kami.store');
+    Route::get('/kontak-kami/{id}/edit', [KontakKamiController::class, 'edit'])->name('admin.kontak_kami.edit');
+    Route::put('/kontak-kami/{id}', [KontakKamiController::class, 'update'])->name('admin.kontak_kami.update');
+    Route::delete('/kontak-kami/{id}', [KontakKamiController::class, 'destroy'])->name('admin.kontak_kami.destroy');
 
-    Route::get('/admin/kontak-kami', [KontakKamiController::class, 'index'])->name('admin.kontak_kami.index');
-    Route::get('/admin/kontak-kami/create', [KontakKamiController::class, 'create'])->name('admin.kontak_kami.create');
-    Route::post('/admin/kontak-kami', [KontakKamiController::class, 'store'])->name('admin.kontak_kami.store');
-    Route::get('/admin/kontak-kami/{id}/edit', [KontakKamiController::class, 'edit'])->name('admin.kontak_kami.edit');
-    Route::put('/admin/kontak-kami/{id}', [KontakKamiController::class, 'update'])->name('admin.kontak_kami.update');
-    Route::delete('/admin/kontak-kami/{id}', [KontakKamiController::class, 'destroy'])->name('admin.kontak_kami.destroy');
+    // Catalog Routes
+    Route::resource('catalog', CatalogController::class)->names('admin.catalog');
+    Route::patch('/catalog/{id}/approve', [CatalogController::class, 'approve'])->name('admin.catalog.approve');
 
-    Route::resource('admin/catalog', CatalogController::class)->names('admin.catalog');
+    // Ulasan Buku Routes
+    Route::get('/ulasan', [UlasanController::class, 'index'])->name('admin.ulasan.index');
+    Route::put('/ulasan/{id}/status', [UlasanController::class, 'updateStatus'])->name('admin.ulasan.updateStatus');
+    Route::delete('/ulasan/{id}', [UlasanController::class, 'destroy'])->name('admin.ulasan.destroy');
 
-    Route::get('/admin/ulasan', [UlasanController::class, 'index'])->name('admin.ulasan.index');
-    Route::put('/admin/ulasan/{id}/status', [UlasanController::class, 'updateStatus'])->name('admin.ulasan.updateStatus');
-    Route::delete('/admin/ulasan/{id}', [UlasanController::class, 'destroy'])->name('admin.ulasan.destroy');
+    // Album & Foto Routes
+    Route::get('/album', [AlbumController::class, 'index'])->name('admin.album.index');
+    Route::get('/album/create', [AlbumController::class, 'create'])->name('admin.album.create');
+    Route::post('/album', [AlbumController::class, 'store'])->name('admin.album.store');
+    Route::get('/album/{id}/edit', [AlbumController::class, 'edit'])->name('admin.album.edit');
+    Route::put('/album/{id}', [AlbumController::class, 'update'])->name('admin.album.update');
+    Route::delete('/album/{id}', [AlbumController::class, 'destroy'])->name('admin.album.destroy');
 
-    Route::get('/admin/album', [AlbumController::class, 'index'])->name('admin.album.index');
-    Route::get('/admin/album/create', [AlbumController::class, 'create'])->name('admin.album.create');
-    Route::post('/admin/album', [AlbumController::class, 'store'])->name('admin.album.store');
-    Route::get('/admin/album/{id}/edit', [AlbumController::class, 'edit'])->name('admin.album.edit');
-    Route::put('/admin/album/{id}', [AlbumController::class, 'update'])->name('admin.album.update');
-    Route::delete('/admin/album/{id}', [AlbumController::class, 'destroy'])->name('admin.album.destroy');
+    // Video Routes
+    Route::get('/video', [VideoController::class, 'index'])->name('admin.video.index');
+    Route::get('/video/create', [VideoController::class, 'create'])->name('admin.video.create');
+    Route::post('/video', [VideoController::class, 'store'])->name('admin.video.store');
+    Route::get('/video/{id}/edit', [VideoController::class, 'edit'])->name('admin.video.edit');
+    Route::put('/video/{id}', [VideoController::class, 'update'])->name('admin.video.update');
+    Route::delete('/video/{id}', [VideoController::class, 'destroy'])->name('admin.video.destroy');
 
-    Route::get('/admin/video', [VideoController::class, 'index'])->name('admin.video.index');
-    Route::get('/admin/video/create', [VideoController::class, 'create'])->name('admin.video.create');
-    Route::post('/admin/video', [VideoController::class, 'store'])->name('admin.video.store');
-    Route::get('/admin/video/{id}/edit', [VideoController::class, 'edit'])->name('admin.video.edit');
-    Route::put('/admin/video/{id}', [VideoController::class, 'update'])->name('admin.video.update');
-    Route::delete('/admin/video/{id}', [VideoController::class, 'destroy'])->name('admin.video.destroy');
+    // Kategori News & Events Routes
+    Route::resource('kategori', KategoriController::class, ['names' => 'admin.kategori']);
 
-    // Route untuk Kategori News & Events
-    Route::resource('admin/kategori', KategoriController::class, ['names' => 'admin.kategori']);
+    // News & Events (Blog) Routes
+    Route::resource('blog', BlogController::class, ['names' => 'admin.blog']);
 
-    // Route untuk News & Events (Blog)
-    Route::resource('admin/blog', BlogController::class, ['names' => 'admin.blog']);
-
-    // Route Ganti Password
-    Route::get('/admin/password', [PasswordController::class, 'edit'])->name('admin.password.edit');
-    Route::put('/admin/password', [PasswordController::class, 'update'])->name('admin.password.update');
-
-    Route::patch('/admin/catalog/{id}/approve', [CatalogController::class, 'approve'])->name('admin.catalog.approve');
+    // Ganti Password Routes
+    Route::get('/password', [PasswordController::class, 'edit'])->name('admin.password.edit');
+    Route::put('/password', [PasswordController::class, 'update'])->name('admin.password.update');
 });

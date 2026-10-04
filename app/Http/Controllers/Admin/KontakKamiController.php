@@ -24,7 +24,7 @@ class KontakKamiController extends Controller
         $request->validate([
             'title'  => 'required|string|max:255',
             'kontak' => 'required|string|max:255',
-            'type'   => 'required|string|max:255',
+            'type'   => 'required|string|in:Whatsapp,Call',
         ]);
 
         KontakKami::create($request->all());
@@ -34,8 +34,11 @@ class KontakKamiController extends Controller
 
     public function edit($id)
     {
-        $kontakKami = KontakKami::findOrFail($id);
-        return view('admin.kontak_kami.edit', compact('kontakKami'));
+        $item = KontakKami::findOrFail($id);
+        return view('admin.kontak_kami.edit', [
+            'item' => $item,
+            'kontakItem' => $item,
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -43,7 +46,7 @@ class KontakKamiController extends Controller
         $request->validate([
             'title'  => 'required|string|max:255',
             'kontak' => 'required|string|max:255',
-            'type'   => 'required|string|max:255',
+            'type'   => 'required|string|in:Whatsapp,Call',
         ]);
 
         $kontakKami = KontakKami::findOrFail($id);

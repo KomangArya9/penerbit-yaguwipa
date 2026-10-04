@@ -1,73 +1,90 @@
 @extends('admin.layouts.admin')
 
+@section('title', 'Media Sosial')
+
 @section('content')
-    <div class="container px-6 mx-auto grid">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Sosial Media
-        </h2>
-
-        @if(session('success'))
-            <div class="mb-4 p-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
-                role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <div class="mb-4">
+<div class="p-8 max-w-7xl mx-auto space-y-6">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800">Media Sosial</h1>
+            <p class="text-slate-500 text-sm mt-1">Kelola tautan akun media sosial resmi Penerbit Yaguwipa yang tampil di footer website.</p>
+        </div>
+        <div>
             <a href="{{ route('admin.media.create') }}"
-                class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-md active:bg-blue-600 hover:bg-blue-700 focus:outline-none">
-                + Add Data
+                class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-medium px-4 py-2 rounded-lg text-sm transition shadow-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Tambah Sosial Media
             </a>
         </div>
+    </div>
 
-        <div class="w-full overflow-hidden rounded-lg shadow-xs bg-white dark:bg-gray-800">
-            <div class="w-full overflow-x-auto">
-                <table class="w-full whitespace-no-wrap">
-                    <thead>
-                        <tr
-                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                            <th class="px-4 py-3" style="width: 10%;">No</th>
-                            <th class="px-4 py-3" style="width: 25%;">Title</th>
-                            <th class="px-4 py-3" style="width: 45%;">Url</th>
-                            <th class="px-4 py-3 text-center" style="width: 20%;">Action</th>
+    <!-- Alert Sukses -->
+    @if(session('success'))
+        <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl flex items-center gap-3 shadow-2xs">
+            <svg class="w-5 h-5 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm font-medium">{{ session('success') }}</span>
+        </div>
+    @endif
+
+    <!-- Data Table Card -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 text-xs uppercase font-semibold">
+                        <th class="p-4 w-16 text-center">No</th>
+                        <th class="p-4">Platform Media Sosial</th>
+                        <th class="p-4">Tautan (URL)</th>
+                        <th class="p-4 text-center w-36">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+                    @forelse($media as $index => $item)
+                        <tr class="hover:bg-slate-50/80 transition">
+                            <td class="p-4 text-center font-medium text-slate-400">{{ $index + 1 }}</td>
+                            <td class="p-4 font-semibold text-slate-800">
+                                <span class="capitalize">{{ $item->title }}</span>
+                            </td>
+                            <td class="p-4">
+                                <a href="{{ $item->url }}" target="_blank"
+                                    class="text-red-600 hover:underline inline-flex items-center gap-1 font-mono text-xs">
+                                    {{ $item->url }}
+                                    <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                </a>
+                            </td>
+                            <td class="p-4 text-center whitespace-nowrap space-x-2">
+                                <a href="{{ route('admin.media.edit', ['id' => $item->id]) }}"
+                                    class="inline-flex items-center px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium transition">
+                                    Edit
+                                </a>
+                                <form action="{{ route('admin.media.destroy', ['id' => $item->id]) }}" method="POST" class="inline"
+                                    onsubmit="return confirm('Yakin ingin menghapus sosial media {{ $item->title }}?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="inline-flex items-center px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg text-xs font-medium transition">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400">
-                        @foreach($media as $index => $item)
-                            <tr class="dark:hover:bg-gray-900">
-                                <td class="px-4 py-3 text-sm">{{ $index + 1 }}</td>
-                                <td class="px-4 py-3 text-sm font-semibold">{{ $item->title }}</td>
-                                <td class="px-4 py-3 text-sm">
-                                    <a href="{{ $item->url }}" target="_blank"
-                                        class="text-blue-500 hover:underline">{{ $item->url }}</a>
-                                </td>
-                                <td class="px-4 py-3 text-sm text-center">
-                                    <div class="inline-flex items-center space-x-2">
-                                        <!-- Tombol Edit -->
-                                        <a href="{{ route('admin.media.edit', ['id' => $item->id]) }}"
-                                            class="px-3 py-1 text-xs font-medium text-white rounded hover:bg-opacity-90"
-                                            style="background-color: #0dcaf0;">
-                                            Edit
-                                        </a>
-                                        
-                                        <!-- Tombol Delete -->
-                                        <form action="{{ route('admin.media.destroy', ['id' => $item->id]) }}" method="POST" class="inline"
-                                            onsubmit="return confirm('Yakin ingin menghapus data ini?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="px-3 py-1 text-xs font-medium text-white rounded hover:bg-opacity-90"
-                                                style="background-color: #dc3545;">
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="p-8 text-center text-slate-400 text-sm">
+                                Belum ada data media sosial yang ditambahkan.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 @endsection

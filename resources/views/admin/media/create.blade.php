@@ -1,49 +1,60 @@
 @extends('admin.layouts.admin')
 
+@section('title', 'Tambah Media Sosial')
+
 @section('content')
-    <div class="container px-6 mx-auto grid">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Tambah Sosial Media
-        </h2>
-
-        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <form action="{{ route('admin.media.store') }}" method="POST">
-                @csrf
-
-                <!-- Input Title -->
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400 font-semibold">Title</span>
-                    <input type="text" name="title" value="{{ old('title') }}"
-                        class="block w-full mt-1 px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none dark:text-gray-300 @error('title') border-red-600 @enderror"
-                        placeholder="Title..." required>
-                    @error('title')
-                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
-                    @enderror
-                </label>
-
-                <!-- Input URL -->
-                <label class="block mt-4 text-sm">
-                    <span class="text-gray-700 dark:text-gray-400 font-semibold">Url</span>
-                    <input type="url" name="url" value="{{ old('url') }}"
-                        class="block w-full mt-1 px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 focus:border-blue-400 focus:outline-none dark:text-gray-300 @error('url') border-red-600 @enderror"
-                        placeholder="Url..." required>
-                    @error('url')
-                        <span class="text-xs text-red-600 dark:text-red-400">{{ $message }}</span>
-                    @enderror
-                </label>
-
-                <!-- Tombol Aksi -->
-                <div class="flex mt-6 space-x-4">
-                    <button type="submit"
-                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none">
-                        Simpan
-                    </button>
-                    <a href="{{ route('admin.media.index') }}"
-                        class="px-4 py-2 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 bg-gray-300 border border-transparent rounded-lg active:bg-gray-400 hover:bg-gray-400 focus:outline-none">
-                        Batal
-                    </a>
-                </div>
-            </form>
+<div class="p-8 max-w-4xl mx-auto space-y-6">
+    <!-- Page Header & Back Button -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800">Tambah Media Sosial</h1>
+            <p class="text-slate-500 text-sm mt-1">Tambahkan tautan akun media sosial resmi penerbit.</p>
         </div>
+        <a href="{{ route('admin.media.index') }}"
+            class="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition">
+            &larr; Kembali
+        </a>
     </div>
+
+    <!-- Form Card -->
+    <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
+        <form action="{{ route('admin.media.store') }}" method="POST" class="space-y-6">
+            @csrf
+
+            <!-- Title -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Platform Media Sosial <span class="text-rose-500">*</span></label>
+                <input type="text" name="title" value="{{ old('title') }}"
+                    class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none"
+                    placeholder="Contoh: Instagram / Facebook / TikTok / LinkedIn" required>
+                @error('title')
+                    <p class="text-xs text-rose-500 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- URL -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tautan / URL Lengkap <span class="text-rose-500">*</span></label>
+                <input type="url" name="url" value="{{ old('url') }}"
+                    class="border border-slate-300 p-2.5 rounded-lg w-full text-sm font-mono focus:ring-2 focus:ring-red-500 focus:outline-none"
+                    placeholder="Contoh: https://instagram.com/penerbityaguwipa" required>
+                @error('url')
+                    <p class="text-xs text-rose-500 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100">
+                <a href="{{ route('admin.media.index') }}"
+                    class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition">
+                    Batal
+                </a>
+                <button type="submit"
+                    class="px-6 py-2.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-lg text-sm font-medium transition shadow-sm">
+                    Simpan Media Sosial
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection

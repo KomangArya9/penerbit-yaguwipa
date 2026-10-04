@@ -5,58 +5,60 @@
 
         <!-- 1. Header Halaman -->
         <div class="text-center mb-16 animate-on-scroll">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">Penulis Kami</h1>
-            <div class="author-description">
-                <p>{{ \App\Models\Pengaturan::first()->team ?? 'Deskripsi penulis belum diatur.' }}</p>
+            <h1 class="text-4xl sm:text-5xl font-bold font-serif text-stone-900 mb-4 tracking-tight">{{ $setting->penulis_title ?? 'Penulis Kami' }}</h1>
+            <div class="author-description text-stone-600 max-w-2xl mx-auto leading-relaxed text-base">
+                <p>{{ $setting->team ?? 'Deskripsi penulis belum diatur.' }}</p>
             </div>
         </div>
 
         <!-- 2. Grid Kartu Penulis -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-7 mb-20">
             @foreach($authors as $index => $author)
-                <div class="portfolio-entry border border-gray-200 p-6 shadow-sm hover:shadow-lg transition-all duration-300"
-                    style="transition-delay: {{ $index * 150 }}ms;">
+                <div class="portfolio-entry bg-white rounded-2xl border border-stone-200/80 p-7 shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:border-stone-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                    style="transition-delay: {{ $index * 100 }}ms;">
 
-                    <!-- Foto Profil -->
-                    <div
-                        class="w-24 h-24 mb-6 overflow-hidden rounded-full mx-auto border-4 border-white shadow-sm bg-gray-100 flex items-center justify-center">
-                        @if($author->foto && file_exists(public_path($author->foto)))
-                            <img src="{{ asset($author->foto) }}" alt="{{ $author->nama }}" class="w-full h-full object-cover">
-                        @else
-                            <img src="{{ asset('images/default.jpg') }}" alt="{{ $author->nama }}"
-                                class="w-full h-full object-cover">
-                        @endif
+                    <div>
+                        <!-- Foto Profil -->
+                        <div
+                            class="w-24 h-24 mb-6 overflow-hidden rounded-full mx-auto border-3 border-stone-100 shadow-md bg-stone-100 flex items-center justify-center shrink-0">
+                            @if($author->foto && file_exists(public_path($author->foto)))
+                                <img src="{{ asset($author->foto) }}" alt="{{ $author->nama }}" class="w-full h-full object-cover">
+                            @else
+                                <img src="{{ asset('images/default.jpg') }}" alt="{{ $author->nama }}"
+                                    class="w-full h-full object-cover">
+                            @endif
+                        </div>
+
+                        <div class="flex justify-between items-start mb-2.5 gap-2">
+                            <h3 class="font-serif font-bold text-lg text-stone-900 leading-snug">{{ $author->nama }}</h3>
+                            <span class="text-[10px] font-semibold bg-red-50 text-[#B6171E] border border-red-200/60 px-2.5 py-1 rounded-full uppercase tracking-wider shrink-0">
+                                {{ $author->institusi ?? 'Penulis' }}
+                            </span>
+                        </div>
+
+                        <p class="text-xs font-semibold text-[#B6171E] mb-4">{{ $author->keahlian ?? '-' }}</p>
                     </div>
 
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="font-bold text-lg">{{ $author->nama }}</h3>
-                        <span class="text-[10px] font-bold bg-[#B6171E] text-white px-2 py-1 uppercase tracking-wider">
-                            {{ $author->institusi ?? 'Penulis' }}
-                        </span>
-                    </div>
-
-                    <p class="text-xs font-bold text-[#B6171E] mb-4">{{ $author->keahlian ?? '-' }}</p>
-
-                    <div class="border-t pt-4">
-                        <p class="text-sm font-semibold mb-2 text-gray-900">Profil Singkat:</p>
-                        <p class="text-sm text-gray-600 line-clamp-3">{{ $author->profile }}</p>
+                    <div class="border-t border-stone-100 pt-4 mt-auto">
+                        <p class="text-[11px] font-bold uppercase tracking-wider mb-1.5 text-stone-500">Profil Singkat</p>
+                        <p class="text-sm text-stone-600 leading-relaxed line-clamp-3">{{ $author->profile }}</p>
                     </div>
                 </div>
             @endforeach
         </div>
 
         <!-- 3. Section Formulir -->
-        <div class="grid md:grid-cols-2 gap-8">
+        <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             <!-- Pemicu Form Penulis -->
             <button onclick="document.getElementById('modal-penulis').classList.remove('hidden')"
-                class="border-2 border-gray-300 text-gray-700 px-10 py-2.5 rounded-lg font-medium hover:bg-[#B6171E] hover:text-white hover:border-[#B6171E] transition-all duration-300 animate-on-scroll fade-in-up">
+                class="border border-stone-300 bg-white text-stone-800 px-8 py-3.5 rounded-xl font-medium hover:border-[#B6171E] hover:text-[#B6171E] shadow-2xs hover:shadow-md transition-all duration-200 animate-on-scroll fade-in-up active:scale-[0.99] cursor-pointer">
                 Form Penulis
             </button>
 
-            <!-- Tombol Form Unggah Naskah -->
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScflolJ88GIIsQmBnR6-kEwd4Z9YvfSWk7d4ps458a6pM2PYg/viewform"
+            <!-- Tombol Form Unggah Naskah (Dinamis dari Admin Pengaturan) -->
+            <a href="{{ $setting->cek ?? '#' }}"
                 target="_blank"
-                class="block text-center bg-[#B6171E] border-2 border-gray-300 text-white px-10 py-2.5 rounded-lg font-medium hover:bg-white hover:text-gray-700 transition-all duration-300 animate-on-scroll fade-in-up"
+                class="block text-center bg-[#B6171E] text-white px-8 py-3.5 rounded-xl font-medium hover:bg-[#9e141a] shadow-sm hover:shadow-md transition-all duration-200 animate-on-scroll fade-in-up active:scale-[0.99]"
                 style="transition-delay: 0.2s;">
                 Form Unggah Naskah
             </a>
@@ -64,19 +66,19 @@
 
         <!-- Modal Form Penulis -->
         <div id="modal-penulis"
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden p-4 overflow-y-auto">
+            class="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/60 backdrop-blur-xs hidden p-4 overflow-y-auto">
             <div
-                class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-2xl relative my-8 max-h-[90vh] overflow-y-auto border border-gray-100 text-left">
+                class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-2xl relative my-8 max-h-[90vh] overflow-y-auto border border-stone-200 text-left">
 
                 <!-- Tombol Close (X) -->
                 <button onclick="document.getElementById('modal-penulis').classList.add('hidden')"
-                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>
+                    class="absolute top-4 right-4 w-8 h-8 rounded-full bg-stone-100 text-stone-500 hover:text-stone-900 hover:bg-stone-200 flex items-center justify-center text-xl font-bold transition-all">&times;</button>
 
-                <h2 class="text-2xl font-bold mb-2 text-gray-900">Form Penulis</h2>
-                <p class="text-xs text-gray-500 mb-6">Lengkapi data diri Anda di bawah ini untuk mendaftar sebagai penulis.
+                <h2 class="text-2xl font-bold font-serif mb-1 text-stone-900">Form Penulis</h2>
+                <p class="text-xs text-stone-500 mb-6">Lengkapi data diri Anda di bawah ini untuk mendaftar sebagai penulis.
                 </p>
 
-                <!-- Notifikasi Modern (Diganti dengan Banner Kustom yang Estetik) -->
+                <!-- Notifikasi Modern -->
                 <div id="form-alert"
                     class="hidden mb-6 p-4 rounded-xl text-sm flex items-center gap-3 shadow-sm transition-all duration-300">
                     <!-- Icon disuntikkan via JS -->
@@ -92,86 +94,86 @@
                     @csrf
                     <!-- Nama Lengkap dengan Gelar -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap dengan Gelar <span
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Nama Lengkap dengan Gelar <span
                                 class="text-red-500">*</span></label>
                         <input type="text" name="nama" required placeholder="Contoh: Dr. I Nengah Laba"
-                            class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
+                            class="w-full p-3 border border-stone-200 rounded-xl text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-stone-50/50 hover:bg-white transition-all">
                     </div>
 
                     <!-- Institusi atau Perusahaan -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Institusi atau Perusahaan <span
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Institusi atau Perusahaan <span
                                 class="text-red-500">*</span></label>
                         <input type="text" name="institusi" required placeholder="Contoh: Universitas Udayana"
-                            class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
+                            class="w-full p-3 border border-stone-200 rounded-xl text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-stone-50/50 hover:bg-white transition-all">
                     </div>
 
                     <!-- Grid Kontak (Telepon & Email) -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon <span
+                            <label class="block text-sm font-medium text-stone-700 mb-1">Nomor Telepon <span
                                     class="text-red-500">*</span></label>
                             <input type="text" name="nomor" required placeholder="Contoh: 081234567890"
-                                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
+                                class="w-full p-3 border border-stone-200 rounded-xl text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-stone-50/50 hover:bg-white transition-all">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Email <span
+                            <label class="block text-sm font-medium text-stone-700 mb-1">Email <span
                                     class="text-red-500">*</span></label>
                             <input type="email" name="email" required placeholder="Contoh: email@domain.com"
-                                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
+                                class="w-full p-3 border border-stone-200 rounded-xl text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-stone-50/50 hover:bg-white transition-all">
                         </div>
                     </div>
 
                     <!-- Alamat -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Alamat <span
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Alamat <span
                                 class="text-red-500">*</span></label>
                         <input type="text" name="alamat" required placeholder="Alamat lengkap domisili"
-                            class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
+                            class="w-full p-3 border border-stone-200 rounded-xl text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-stone-50/50 hover:bg-white transition-all">
                     </div>
 
                     <!-- Link Social Media & Keahlian -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Link Social Media <span
+                            <label class="block text-sm font-medium text-stone-700 mb-1">Link Social Media <span
                                     class="text-red-500">*</span></label>
                             <input type="text" name="social_media" required placeholder="www.instagram.com/namapenulis"
-                                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
+                                class="w-full p-3 border border-stone-200 rounded-xl text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-stone-50/50 hover:bg-white transition-all">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Keahlian <span
-                                    class="text-gray-400 font-normal">(opsional)</span></label>
+                            <label class="block text-sm font-medium text-stone-700 mb-1">Keahlian <span
+                                    class="text-stone-400 font-normal">(opsional)</span></label>
                             <input type="text" name="keahlian" placeholder="Boleh tuliskan lebih dari satu"
-                                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]">
+                                class="w-full p-3 border border-stone-200 rounded-xl text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-stone-50/50 hover:bg-white transition-all">
                         </div>
                     </div>
 
                     <!-- Profil Singkat -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Profil Singkat <span
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Profil Singkat <span
                                 class="text-red-500">*</span></label>
                         <textarea name="profile" rows="4" required
                             placeholder="Ceritakan sedikit tentang latar belakang Anda..."
-                            class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E]"></textarea>
+                            class="w-full p-3 border border-stone-200 rounded-xl text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-stone-50/50 hover:bg-white transition-all"></textarea>
                     </div>
 
                     <!-- Unggah Foto Profil -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Unggah Foto Profil <span
+                        <label class="block text-sm font-medium text-stone-700 mb-1">Unggah Foto Profil <span
                                 class="text-red-500">*</span></label>
                         <input type="file" name="foto" required
-                            class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-[#B6171E] hover:file:bg-red-100">
-                        <p class="text-xs text-gray-400 mt-1">note: max. 2MB (IMAGE)</p>
+                            class="w-full text-sm text-stone-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-red-50 file:text-[#B6171E] hover:file:bg-red-100 file:cursor-pointer">
+                        <p class="text-xs text-stone-400 mt-1">note: max. 2MB (IMAGE)</p>
                     </div>
 
                     <!-- Tombol Aksi -->
-                    <div class="flex justify-end gap-2 pt-4 border-t">
+                    <div class="flex justify-end gap-2.5 pt-4 border-t border-stone-200">
                         <button type="button" onclick="document.getElementById('modal-penulis').classList.add('hidden')"
-                            class="px-5 py-2.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-300 transition-all">
+                            class="px-5 py-2.5 bg-stone-100 text-stone-700 rounded-xl text-sm font-medium hover:bg-stone-200 active:scale-95 transition-all">
                             Batal
                         </button>
                         <button type="submit" id="submit-btn"
-                            class="px-6 py-2.5 bg-[#B6171E] text-white rounded-lg font-semibold text-sm hover:bg-red-900 transition-all shadow-md">
+                            class="px-6 py-2.5 bg-[#B6171E] text-white rounded-xl font-medium text-sm hover:bg-[#9e141a] transition-all shadow-sm active:scale-95">
                             Daftar Sekarang
                         </button>
                     </div>
@@ -246,18 +248,15 @@
                             }, 3000);
                         })
                         .catch(error => {
-                            console.error('Error Terdeteksi:', error);
-                            // Tampilkan Banner Error yang Estetik
-                            alertBox.className = "mb-6 p-4 rounded-xl text-sm flex items-center gap-3 bg-rose-50 border border-rose-200 text-rose-900 shadow-sm";
+                            alertBox.className = "mb-6 p-4 rounded-xl text-sm flex items-center gap-3 bg-red-50 border border-red-200 text-red-900 shadow-sm";
                             alertIcon.innerHTML = `
-                                <div class="bg-rose-500 text-white p-2 rounded-full flex items-center justify-center">
+                                <div class="bg-red-500 text-white p-2 rounded-full flex items-center justify-center">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                                 </div>`;
-                            alertTitle.innerText = "Gagal Mengirim!";
-                            alertMessage.innerText = error.message || "Pastikan semua kolom wajib terisi dan ukuran foto max. 2MB.";
+                            alertTitle.innerText = "Gagal Mendaftar";
+                            alertMessage.innerText = error.message;
                             alertBox.classList.remove('hidden');
 
-                            // Otomatis geser modal ke paling atas agar pesan error terlihat
                             if (modalContent) modalContent.scrollTo({ top: 0, behavior: 'smooth' });
                         })
                         .finally(() => {

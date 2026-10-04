@@ -29,11 +29,11 @@ class ProgramController extends Controller
             'status'  => 'required',
             'short'   => 'nullable',
             'icon'    => 'required|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
-            'img'     => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
             'url'     => 'nullable|url',
         ]);
 
         $iconPath = $request->file('icon')->store('services/icons', 'public');
+        $this->colorizeIcon($iconPath);
         $imgPath = $request->hasFile('img') ? $request->file('img')->store('services/images', 'public') : null;
 
         Program::create([
@@ -66,7 +66,6 @@ class ProgramController extends Controller
             'status'  => 'required',
             'short'   => 'nullable',
             'icon'    => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
-            'img'     => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
             'url'     => 'nullable|url',
         ]);
 
@@ -76,6 +75,7 @@ class ProgramController extends Controller
                 Storage::disk('public')->delete($iconPath);
             }
             $iconPath = $request->file('icon')->store('services/icons', 'public');
+            $this->colorizeIcon($iconPath);
         }
 
         $imgPath = $program->img;
@@ -114,5 +114,24 @@ class ProgramController extends Controller
         $program->delete();
 
         return redirect()->route('program.index')->with('success', 'Program berhasil dihapus!');
+    }
+
+    protected function colorizeIcon(?string $iconPath): void
+    {
+        if (!$iconPath) {
+            return;
+        }
+
+        try {
+            $script = base_path('scripts/colorize_icon.py');
+            $fullPath = storage_path('app/public/' . $iconPath);
+
+            if (file_exists($script) && file_exists($fullPath)) {
+                $cmd = 'python ' . escapeshellarg($script) . ' ' . escapeshellarg($fullPath);
+                @exec($cmd);
+            }
+        } catch (\Throwable $e) {
+            // Tetap berjalan jika python tidak merespons
+        }
     }
 }

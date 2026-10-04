@@ -5,7 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View; 
 use App\Models\Pengaturan;         
-use App\Models\Menu; // Tambahkan namespace model Menu
+use App\Models\Menu;
+use App\Models\Media;
+use App\Models\KontakKami;
+use App\Models\Program;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,7 +28,10 @@ class AppServiceProvider extends ServiceProvider
         // Membuat variabel $setting dan $menus bisa diakses di SEMUA halaman (views)
         View::composer('*', function ($view) {
             $view->with('setting', Pengaturan::first());
-            $view->with('menus', Menu::where('status', 'Show')->orderBy('urutan', 'asc')->get());
+            $view->with('kontakList', KontakKami::all());
+            $view->with('menus', Menu::with(['children' => function($q) {
+                $q->where('status', 'Show')->orderBy('urutan', 'asc');
+            }])->where('status', 'Show')->whereNull('parent_id')->orderBy('urutan', 'asc')->get());
         });
     }
 }

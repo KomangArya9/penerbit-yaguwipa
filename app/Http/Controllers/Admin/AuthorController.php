@@ -32,10 +32,7 @@ class AuthorController extends Controller
 
         // Handle upload foto
         if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/authors'), $filename);
-            $data['foto'] = 'uploads/authors/' . $filename;
+            $data['foto'] = $request->file('foto')->store('authors', 'public');
         }
 
         Author::create($data);
@@ -72,17 +69,16 @@ class AuthorController extends Controller
 
        // Handle upload foto baru jika ada
         if ($request->hasFile('foto')) {
-            // Hapus foto lama di storage jika ada
-            if ($author->foto && Storage::disk('public')->exists($author->foto)) {
-                Storage::disk('public')->delete($author->foto);
+            // Hapus foto lama jika ada
+            if ($author->foto) {
+                if (Storage::disk('public')->exists($author->foto)) {
+                    Storage::disk('public')->delete($author->foto);
+                } elseif (file_exists(public_path($author->foto))) {
+                    unlink(public_path($author->foto));
+                }
             }
-
-            $file = $request->file('foto');
-            $filename = time() . '_' . $file->getClientOriginalName();
             
-            // Simpan foto baru ke folder storage/app/public/authors
-            $path = $file->storeAs('authors', $filename, 'public');
-            $data['foto'] = $path;
+            $data['foto'] = $request->file('foto')->store('authors', 'public');
         }
 
         $author->update($data);
@@ -106,8 +102,12 @@ class AuthorController extends Controller
         $author = Author::findOrFail($id);
         
         // Hapus file foto fisik jika ada
-        if ($author->foto && file_exists(public_path($author->foto))) {
-            unlink(public_path($author->foto));
+        if ($author->foto) {
+            if (Storage::disk('public')->exists($author->foto)) {
+                Storage::disk('public')->delete($author->foto);
+            } elseif (file_exists(public_path($author->foto))) {
+                unlink(public_path($author->foto));
+            }
         }
 
         $author->delete();

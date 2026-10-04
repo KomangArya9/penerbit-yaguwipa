@@ -23,6 +23,15 @@ class ReviewController extends Controller
         return redirect()->back()->with('success', 'Status review berhasil diubah!');
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        $review = Review::findOrFail($id);
+        $review->status = $request->status ?? 'Show';
+        $review->save();
+
+        return redirect()->back()->with('success', 'Status review berhasil diperbarui.');
+    }
+
     public function destroy($id)
     {
         $review = Review::findOrFail($id);

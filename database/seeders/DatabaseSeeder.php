@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         // sebelumnya di file UserSeeder.php bisa masuk ke database.
         $this->call([
             UserSeeder::class,
+            MenuSeeder::class,
         ]);
     }
 }

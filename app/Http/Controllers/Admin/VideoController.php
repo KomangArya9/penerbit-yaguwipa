@@ -22,20 +22,31 @@ class VideoController extends Controller
 
     public function store(Request $request)
     {
+        // Sanitize source (otomatis ekstrak URL jika mem-paste embed code <iframe>, atau tambahkan https:// jika kurang)
+        $source = trim($request->source ?? '');
+        if (preg_match('/src=["\']([^"\']+)["\']/', $source, $matches)) {
+            $source = $matches[1];
+        }
+        if (!preg_match('~^https?://~i', $source) && !empty($source)) {
+            $source = 'https://' . $source;
+        }
+        $request->merge(['source' => $source]);
+
         $request->validate([
             'date' => 'required|date',
             'title' => 'required|string|max:100',
-            'content' => 'required',
+            'content' => 'nullable|string',
             'source' => 'required|string|max:255',
             'status' => 'required|in:Show,Hide',
+            'hit' => 'nullable|integer|min:0',
         ]);
 
         Video::create([
             'date' => $request->date,
             'title' => $request->title,
-            'content' => $request->content,
+            'content' => $request->content ?? '',
             'source' => $request->source,
-            'hit' => 0,
+            'hit' => $request->hit ?? 0,
             'status' => $request->status,
             'slug' => Str::slug($request->title),
         ]);
@@ -51,20 +62,32 @@ class VideoController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Sanitize source
+        $source = trim($request->source ?? '');
+        if (preg_match('/src=["\']([^"\']+)["\']/', $source, $matches)) {
+            $source = $matches[1];
+        }
+        if (!preg_match('~^https?://~i', $source) && !empty($source)) {
+            $source = 'https://' . $source;
+        }
+        $request->merge(['source' => $source]);
+
         $request->validate([
             'date' => 'required|date',
             'title' => 'required|string|max:100',
-            'content' => 'required',
+            'content' => 'nullable|string',
             'source' => 'required|string|max:255',
             'status' => 'required|in:Show,Hide',
+            'hit' => 'nullable|integer|min:0',
         ]);
 
         $video = Video::findOrFail($id);
         $video->update([
             'date' => $request->date,
             'title' => $request->title,
-            'content' => $request->content,
+            'content' => $request->content ?? '',
             'source' => $request->source,
+            'hit' => $request->hit ?? $video->hit,
             'status' => $request->status,
             'slug' => Str::slug($request->title),
         ]);

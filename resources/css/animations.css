@@ -384,14 +384,18 @@
 }
 
 .filter-red {
-    /* Filter ini akan mengubah gambar menjadi merah */
-    filter: invert(30%) sepia(90%) saturate(5000%) hue-rotate(350deg)
-        brightness(90%) contrast(90%);
+    /* Safe non-destructive rendering */
+    filter: none;
 }
 
-/* Sesuaikan 80px dengan tinggi navbar Anda */
+::selection {
+    background-color: rgba(182, 23, 30, 0.15);
+    color: #B6171E;
+}
+
+/* Sesuaikan scroll-margin-top dengan tinggi navbar */
 [id] {
-    scroll-margin-top: 180px; 
+    scroll-margin-top: 100px; 
 }
 
 html {
