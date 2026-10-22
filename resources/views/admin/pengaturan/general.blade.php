@@ -113,7 +113,7 @@
             </div>
         </div>
 
-        <!-- Informasi Kontak & Utama -->
+        <!-- Informasi Kontak & Lembaga -->
         <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
             <h3 class="font-bold text-lg text-slate-800 mb-6 pb-3 border-b border-slate-100 flex items-center gap-2">
                 <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,41 +126,26 @@
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Perusahaan / Penerbit</label>
                     <input type="text" name="company" value="{{ $setting->company ?? '' }}"
-                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none"
+                        placeholder="Contoh: Penerbit Yaguwipa">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Alamat Website</label>
                     <input type="text" name="website" value="{{ $setting->website ?? '' }}"
-                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor Telepon / WhatsApp</label>
-                    <input type="text" name="phone" value="{{ $setting->phone ?? '' }}"
-                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none"
+                        placeholder="Contoh: https://penerbityaguwipa.com">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Resmi</label>
                     <input type="email" name="email" value="{{ $setting->email ?? '' }}"
-                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none"
+                        placeholder="Contoh: info@penerbityaguwipa.com">
                 </div>
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tautan Form Unggah Naskah (Google Forms / Link Eksternal)</label>
-                    <input type="url" name="cek" value="{{ $setting->cek ?? '' }}" placeholder="https://docs.google.com/forms/..."
-                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
-                    <p class="text-xs text-slate-400 mt-1">Tautan ini digunakan otomatis untuk tombol "Form Unggah Naskah" pada halaman Penulis.</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Alamat Lengkap Kantor</label>
                     <textarea name="address" rows="3"
-                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">{{ $setting->address ?? '' }}</textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Embed Google Maps (Iframe / URL)</label>
-                    <textarea name="map" rows="3"
-                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm font-mono text-xs focus:ring-2 focus:ring-red-500 focus:outline-none">{{ $setting->map ?? '' }}</textarea>
+                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none"
+                        placeholder="Masukkan alamat fisik kantor operasional penerbit...">{{ $setting->address ?? '' }}</textarea>
                 </div>
             </div>
         </div>
@@ -263,16 +248,31 @@
                     </div>
 
                     <!-- Sub-section Profil & Arsip -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 pt-4 border-t border-slate-200">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-200">
                         <div>
                             <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Photo Archive</label>
                             <input type="text" name="profile_photo_title" value="{{ $setting->profile_photo_title ?? 'Photo Archive' }}"
                                 class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
                         </div>
                         <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Halaman Semua Foto</label>
+                            <input type="text" name="all_photos_title" value="{{ $setting->all_photos_title ?? 'Semua Foto Album' }}"
+                                class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        </div>
+                        <div>
                             <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Documentary & Film</label>
                             <input type="text" name="profile_video_title" value="{{ $setting->profile_video_title ?? 'Documentary & Film' }}"
                                 class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Halaman Semua Video</label>
+                            <input type="text" name="all_videos_title" value="{{ $setting->all_videos_title ?? 'Semua Koleksi Video & Dokumenter' }}"
+                                class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Subjudul Halaman Semua Video</label>
+                            <textarea name="all_videos_subtitle" rows="2"
+                                class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">{{ $setting->all_videos_subtitle ?? 'Daftar lengkap dokumentasi video dan film yang telah dipublikasikan.' }}</textarea>
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Reader Perspectives</label>
@@ -285,26 +285,15 @@
                                 class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Lokasi Kantor Kami</label>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Bagian Peta / Lokasi</label>
                             <input type="text" name="profile_map_title" value="{{ $setting->profile_map_title ?? 'Lokasi Kantor Kami' }}"
                                 class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Halaman Semua Foto</label>
-                            <input type="text" name="all_photos_title" value="{{ $setting->all_photos_title ?? 'Semua Foto Album' }}"
-                                class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Halaman Semua Video</label>
-                            <input type="text" name="all_videos_title" value="{{ $setting->all_videos_title ?? 'Semua Koleksi Video & Dokumenter' }}"
-                                class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Subjudul Halaman Semua Video</label>
-                            <textarea name="all_videos_subtitle" rows="2"
-                                class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">{{ $setting->all_videos_subtitle ?? 'Daftar lengkap dokumentasi video dan film yang telah dipublikasikan.' }}</textarea>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Embed Google Maps (Iframe / URL)</label>
+                            <textarea name="map" rows="2"
+                                class="border border-slate-300 p-2.5 rounded-lg w-full text-sm font-mono text-xs bg-white focus:ring-2 focus:ring-red-500 focus:outline-none"
+                                placeholder="<iframe src='https://www.google.com/maps/embed?...' width='600' height='450' style='border:0;' allowfullscreen='' loading='lazy'></iframe>">{{ $setting->map ?? '' }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -352,6 +341,11 @@
                                     class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
                             </div>
                             <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Tautan Form Unggah Naskah (Google Forms / Link Eksternal)</label>
+                                <input type="url" name="cek" value="{{ $setting->cek ?? '' }}" placeholder="https://docs.google.com/forms/..."
+                                    class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                            </div>
+                            <div class="md:col-span-2">
                                 <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Halaman Tim Redaksi (Penulis)</label>
                                 <textarea name="team" rows="2"
                                     class="border border-slate-300 p-2.5 rounded-lg w-full text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">{{ $setting->team ?? '' }}</textarea>

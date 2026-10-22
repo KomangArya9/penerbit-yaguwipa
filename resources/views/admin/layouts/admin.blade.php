@@ -47,16 +47,42 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+        /* Responsive padding for admin content pages */
+        @media (max-width: 640px) {
+            div.p-8 {
+                padding: 1rem !important;
+            }
+        }
+        @media (min-width: 641px) and (max-width: 1024px) {
+            div.p-8 {
+                padding: 1.5rem !important;
+            }
+        }
     </style>
 </head>
 
-<body class="bg-slate-50 flex min-h-screen text-slate-800 antialiased selection:bg-red-500 selection:text-white">
+<body class="bg-slate-50 flex min-h-screen text-slate-800 antialiased selection:bg-red-500 selection:text-white"
+      x-data="{ sidebarOpen: false }"
+      @keydown.escape.window="sidebarOpen = false">
+
+    <!-- Mobile Backdrop Overlay -->
+    <div x-show="sidebarOpen" 
+         x-transition:enter="transition-opacity ease-linear duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition-opacity ease-linear duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @click="sidebarOpen = false" 
+         class="fixed inset-0 bg-slate-950/70 backdrop-blur-xs z-40 lg:hidden"
+         style="display: none;"></div>
 
     <!-- SIDEBAR -->
-    <aside class="w-64 bg-[#0a0f1d] text-slate-200 flex-shrink-0 h-screen flex flex-col sticky top-0 border-r border-slate-800/80 z-30 shadow-xl">
+    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
+           class="fixed inset-y-0 left-0 z-50 w-64 bg-[#0a0f1d] text-slate-200 flex flex-col border-r border-slate-800/80 shadow-2xl lg:shadow-xl transition-transform duration-300 ease-in-out lg:static lg:h-screen lg:sticky lg:top-0 flex-shrink-0">
         <!-- Logo & Brand Header -->
         <div class="px-5 py-4 border-b border-slate-800/80 flex items-center justify-between flex-shrink-0 bg-[#070b16]">
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 group">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 group min-w-0">
                 @if(!empty($setting->logo))
                     <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo" class="h-9 w-9 object-contain shrink-0">
                 @else
@@ -69,6 +95,16 @@
                     <span class="text-[11px] text-slate-400 block font-normal mt-0.5">Admin Panel</span>
                 </div>
             </a>
+
+            <!-- Mobile Close Button (X) -->
+            <button @click="sidebarOpen = false" 
+                    type="button"
+                    class="lg:hidden p-1.5 text-slate-400 hover:text-white hover:bg-slate-800/80 rounded-lg transition-smooth pressable"
+                    title="Tutup Menu">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
         </div>
 
         <!-- Navigation Container -->
@@ -272,67 +308,58 @@
             </div>
 
         </nav>
-
-        <!-- User Profile Card di Bawah Sidebar (Double-Bezel Architecture) -->
-        <div class="p-3 bg-[#060a14] border-t border-slate-800/80 flex-shrink-0">
-            <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
-                <div class="flex items-center gap-2.5 min-w-0">
-                    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-slate-700 to-slate-800 border border-slate-600 text-slate-200 font-bold flex items-center justify-center text-[11px] font-mono flex-shrink-0 shadow-inner">
-                        {{ strtoupper(substr(Auth::user()->username ?? 'AD', 0, 2)) }}
-                    </div>
-                    <div class="min-w-0">
-                        <p class="text-xs font-semibold text-slate-200 truncate">{{ Auth::user()->username ?? 'admin' }}</p>
-                        <span class="text-[9px] text-slate-400 block font-mono">Super Administrator</span>
-                    </div>
-                </div>
-                <form action="{{ route('logout') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" title="Keluar dari Panel Admin"
-                        class="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition-smooth pressable">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                        </svg>
-                    </button>
-                </form>
-            </div>
-        </div>
     </aside>
 
     <!-- MAIN AREA -->
     <main class="flex-1 flex flex-col min-w-0 bg-[#f8fafc]">
         <!-- TOP NAVBAR (Floating Glass Architecture) -->
-        <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/80 px-8 py-3.5 flex justify-between items-center sticky top-0 z-20 shadow-xs">
-            <div class="flex items-center gap-3">
-                <span class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400">Backoffice</span>
-                <span class="text-slate-300">/</span>
-                <h2 class="font-bold text-slate-800 text-sm tracking-tight">@yield('title', 'Dashboard')</h2>
+        <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center sticky top-0 z-20 shadow-xs">
+            <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                <!-- Hamburger Button (Mobile / Tablet) -->
+                <button @click="sidebarOpen = true"
+                        type="button"
+                        class="lg:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-smooth pressable focus:outline-none"
+                        aria-label="Buka Menu Navigasi">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
+                <div class="flex items-center gap-2 min-w-0">
+                    <span class="hidden sm:inline text-xs font-mono font-semibold uppercase tracking-wider text-slate-400">Backoffice</span>
+                    <span class="hidden sm:inline text-slate-300">/</span>
+                    <h2 class="font-bold text-slate-800 text-sm tracking-tight truncate">@yield('title', 'Dashboard')</h2>
+                </div>
             </div>
             
-            <div class="flex items-center gap-2.5">
+            <div class="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
                 <!-- Tombol Lihat Live Website (Button-in-Button Trailing Icon) -->
                 <a href="{{ url('/') }}" target="_blank"
-                    class="group inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg shadow-2xs transition-smooth pressable"
+                    class="group inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg shadow-2xs transition-smooth pressable"
                     title="Buka Website Publik di Tab Baru">
-                    <span>Lihat Website</span>
-                    <span class="w-4 h-4 rounded bg-slate-100 group-hover:bg-slate-200 flex items-center justify-center text-slate-500 transition-smooth">
+                    <span class="hidden md:inline">Lihat Website</span>
+                    <span class="md:hidden">Web</span>
+                    <span class="w-4 h-4 rounded bg-slate-100 group-hover:bg-slate-200 flex items-center justify-center text-slate-500 transition-smooth text-[10px]">
                         ↗
                     </span>
                 </a>
 
                 <!-- Tombol Ganti Password -->
                 <a href="{{ route('admin.password.edit') }}"
-                    class="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition-smooth pressable shadow-2xs">
+                    class="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-smooth pressable shadow-2xs"
+                    title="Ganti Password">
                     <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                     </svg>
-                    <span>Ganti Password</span>
+                    <span class="hidden sm:inline">Ganti Password</span>
                 </a>
 
                 <!-- Tombol Logout -->
                 <form action="{{ route('logout') }}" method="POST" class="inline">
                     @csrf
                     <button type="submit"
-                        class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-lg transition-smooth pressable">
+                        class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-lg transition-smooth pressable"
+                        title="Keluar dari Panel Admin">
                         Keluar
                     </button>
                 </form>

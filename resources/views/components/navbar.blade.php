@@ -2,7 +2,7 @@
 <nav x-data="{ isOpen: false }" id="navbar"
     class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-stone-200/80 py-3.5 w-full transition-all duration-300 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
 
-    <div class="w-full px-6 md:px-10 flex justify-between items-center relative">
+    <div class="w-full px-4 sm:px-6 lg:px-8 xl:px-10 flex justify-between items-center relative flex-nowrap">
 
         <!-- Logo (Dinamis dari Pengaturan Admin) -->
         @php
@@ -175,12 +175,12 @@
         ['code' => 'zu', 'name' => 'Zulu - (isiZulu)']
     ];
         @endphp
-        <a href="/" class="flex items-center group">
-            <img src="{{ $logoPath }}" alt="Logo Yaguwipa" class="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]">
+        <a href="/" class="flex items-center group shrink-0">
+            <img src="{{ $logoPath }}" alt="Logo Yaguwipa" class="h-8 sm:h-9 lg:h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]">
         </a>
 
         <!-- Wrapper Mobile (Language Switcher + Hamburger) -->
-        <div class="md:hidden flex items-center gap-3">
+        <div class="lg:hidden flex items-center gap-2 sm:gap-3 shrink-0">
 
             <!-- Language Switcher Mobile -->
             <div x-data="{
@@ -223,21 +223,32 @@
                     @endforeach
                 </div>
             </div>
-<!-- Tombol Hamburger -->
+            <!-- Tombol Hamburger (Toggle Hamburger & X) -->
             <button @click="isOpen = !isOpen"
+                type="button"
+                aria-label="Toggle Menu"
                 class="p-2 rounded-xl text-stone-700 hover:text-[#B6171E] hover:bg-stone-100 transition-colors focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
-                    </path>
+                <svg x-show="!isOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                <svg x-show="isOpen" x-cloak class="w-6 h-6 text-[#B6171E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
         </div>
 
-        <!-- Menu Mobile (Dinamis dari Database) -->
-        <div x-show="isOpen" x-cloak x-transition @click.away="isOpen = false"
-            class="md:hidden bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-xl absolute w-full left-0 top-full z-40">
-            <div class="flex flex-col px-6 py-6">
-                <div class="space-y-4">
+        <!-- Menu Mobile (Dinamis dari Database - Vertikal List Rapi) -->
+        <div x-show="isOpen" x-cloak
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 -translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-2"
+            @click.away="isOpen = false"
+            class="lg:hidden bg-white/98 backdrop-blur-md border-b border-stone-200 shadow-2xl absolute w-full left-0 top-full z-40 max-h-[calc(100vh-70px)] overflow-y-auto">
+            <div class="px-5 py-5">
+                <nav class="flex flex-col space-y-1">
                     @isset($menus)
                         @foreach($menus as $menu)
                             @php
@@ -246,46 +257,45 @@
                                 $hasChildren = $menu->children && $menu->children->count() > 0;
                             @endphp
                             @if($hasChildren)
-                                <div x-data="{ openSub: false }" class="py-1">
-                                    <div class="flex items-center justify-between">
-                                        <a href="{{ $menuUrl }}"
-                                            class="font-medium text-sm transition-colors duration-200 {{ $isActive ? 'text-[#B6171E] font-semibold' : 'text-stone-700 hover:text-[#B6171E]' }}">
+                                <div x-data="{ openSub: {{ $isActive ? 'true' : 'false' }} }" class="w-full">
+                                    <div class="flex items-center justify-between w-full rounded-xl px-3.5 py-2.5 transition-colors {{ $isActive ? 'bg-red-50 text-[#B6171E] font-semibold' : 'text-stone-700 hover:bg-stone-50 hover:text-[#B6171E]' }}">
+                                        <a href="{{ $menuUrl }}" @click="isOpen = false"
+                                            class="flex-1 font-medium text-sm">
                                             {{ $menu->title }}
                                         </a>
-                                        <button @click="openSub = !openSub" type="button" class="p-1 text-stone-500 hover:text-[#B6171E]">
+                                        <button @click.stop="openSub = !openSub" type="button" class="p-1.5 -mr-1 text-stone-400 hover:text-[#B6171E] rounded-lg">
                                             <svg class="w-4 h-4 transition-transform duration-200" :class="openSub ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                             </svg>
                                         </button>
                                     </div>
-                                    <div x-show="openSub" x-cloak class="pl-4 mt-2 space-y-2 border-l-2 border-red-100">
+                                    <div x-show="openSub" x-cloak class="pl-4 pr-2 mt-1 mb-2 space-y-1 border-l-2 border-red-200 ml-4">
                                         @foreach($menu->children as $child)
                                             @php
                                                 $childUrl = '/' . ltrim($child->url, '/');
                                                 $childActive = request()->is(trim($childUrl, '/'));
                                             @endphp
-                                            <a href="{{ $childUrl }}"
-                                                class="block py-1 text-xs font-medium {{ $childActive ? 'text-[#B6171E] font-semibold' : 'text-stone-600 hover:text-[#B6171E]' }}">
-                                                ↳ {{ $child->title }}
+                                            <a href="{{ $childUrl }}" @click="isOpen = false"
+                                                class="block w-full py-2 px-3 rounded-lg text-xs font-medium transition-colors {{ $childActive ? 'bg-red-50 text-[#B6171E] font-semibold' : 'text-stone-600 hover:bg-stone-50 hover:text-[#B6171E]' }}">
+                                                {{ $child->title }}
                                             </a>
                                         @endforeach
                                     </div>
                                 </div>
                             @else
-                                <a href="{{ $menuUrl }}"
-                                    class="relative py-2 font-medium text-sm transition-colors duration-200 {{ $isActive ? 'text-[#B6171E] font-semibold' : 'text-stone-700 hover:text-[#B6171E]' }}">
+                                <a href="{{ $menuUrl }}" @click="isOpen = false"
+                                    class="block w-full rounded-xl px-3.5 py-2.5 text-sm font-medium transition-colors {{ $isActive ? 'bg-red-50 text-[#B6171E] font-semibold border-l-4 border-[#B6171E]' : 'text-stone-700 hover:bg-stone-50 hover:text-[#B6171E]' }}">
                                     {{ $menu->title }}
-                                    <span class="absolute left-0 bottom-0 h-0.5 bg-[#B6171E] origin-left transition-all duration-300 ease-out {{ $isActive ? 'w-full' : 'w-0' }}"></span>
                                 </a>
                             @endif
                         @endforeach
                     @endisset
-                </div>
+                </nav>
             </div>
         </div>
 
         <!-- Menu Desktop (Dinamis dari Database) -->
-        <div class="hidden md:flex items-center space-x-7 text-sm font-medium text-stone-700">
+        <div class="hidden lg:flex items-center gap-3.5 xl:gap-5 2xl:gap-7 text-xs xl:text-sm font-medium text-stone-700 whitespace-nowrap flex-nowrap shrink-0">
             @isset($menus)
                 @foreach($menus as $menu)
                     @php
@@ -294,9 +304,9 @@
                         $hasChildren = $menu->children && $menu->children->count() > 0;
                     @endphp
                     @if($hasChildren)
-                        <div x-data="{ openDropdown: false }" class="relative" @mouseenter="openDropdown = true" @mouseleave="openDropdown = false">
+                        <div x-data="{ openDropdown: false }" class="relative shrink-0 whitespace-nowrap" @mouseenter="openDropdown = true" @mouseleave="openDropdown = false">
                             <a href="{{ $menuUrl }}"
-                                class="relative py-2 flex items-center gap-1 transition-colors duration-200 {{ $isActive ? 'text-[#B6171E] font-semibold' : 'hover:text-[#B6171E]' }}">
+                                class="relative py-2 flex items-center gap-1 whitespace-nowrap shrink-0 transition-colors duration-200 {{ $isActive ? 'text-[#B6171E] font-semibold' : 'hover:text-[#B6171E]' }}">
                                 {{ $menu->title }}
                                 <svg class="w-3.5 h-3.5 text-stone-400 transition-transform duration-200" :class="openDropdown ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -321,7 +331,7 @@
                         </div>
                     @else
                         <a href="{{ $menuUrl }}"
-                            class="relative py-2 transition-colors duration-200 {{ $isActive ? 'text-[#B6171E] font-semibold' : 'hover:text-[#B6171E]' }}">
+                            class="relative py-2 whitespace-nowrap shrink-0 transition-colors duration-200 {{ $isActive ? 'text-[#B6171E] font-semibold' : 'hover:text-[#B6171E]' }}">
                             {{ $menu->title }}
                             <span class="absolute left-0 bottom-0 h-0.5 bg-[#B6171E] origin-left transition-all duration-300 ease-out {{ $isActive ? 'w-full' : 'w-0' }}"></span>
                         </a>
@@ -331,7 +341,7 @@
         </div>
 
         <!-- Right Side (Language Switcher Desktop) -->
-        <div class="hidden md:flex items-center gap-6">
+        <div class="hidden lg:flex items-center gap-3 xl:gap-6 shrink-0">
             <div x-data="{
                     open: false,
                     searchLang: '',

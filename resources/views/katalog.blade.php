@@ -75,7 +75,7 @@
             <!-- 3. Katalog Grid Section -->
             <main class="flex-1">
                 <!-- Header Filter & Sort -->
-                <div class="portfolio-entry flex justify-between items-center mb-8 text-sm"
+                <div class="portfolio-entry flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-8 text-sm"
                     style="transition-delay: 200ms;">
                     <p class="text-stone-500 font-medium">
                         Menampilkan {{ $catalogs->firstItem() ?? 0 }} - {{ $catalogs->lastItem() ?? 0 }} dari {{ $catalogs->total() }} buku
@@ -92,7 +92,7 @@
                 </div>
 
                 <!-- Grid Buku Dinamis dari Database -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-7 mb-12">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 mb-12">
                     @forelse($catalogs as $index => $book)
                         <!-- Seluruh card dibungkus tag <a> agar bisa diklik dan berpindah ke halaman detail -->
                         <a href="{{ route('catalog.show', $book->id) }}" 

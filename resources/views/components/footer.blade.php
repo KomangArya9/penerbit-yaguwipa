@@ -109,7 +109,7 @@
             </div>
 
             <!-- Bagian Kanan: Sitemap & Services -->
-            <div class="flex flex-row justify-start md:justify-end gap-16 md:gap-24 w-full md:w-2/3">
+            <div class="flex flex-col sm:flex-row justify-start md:justify-end gap-10 sm:gap-16 md:gap-24 w-full md:w-2/3">
                 <!-- Sitemap (Dinamis dari Menu Manager Admin) -->
                 <div>
                     <h3 class="font-bold text-lg mb-6 text-white tracking-wide">Sitemap</h3>

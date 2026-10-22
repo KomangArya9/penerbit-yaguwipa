@@ -74,6 +74,8 @@
     html, body {
         top: 0px !important;
         position: static !important;
+        overflow-x: hidden;
+        max-width: 100%;
     }
 
     .goog-text-highlight {

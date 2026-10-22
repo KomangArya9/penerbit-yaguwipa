@@ -33,7 +33,7 @@
                 {{ $setting->home_program_title ?? 'Program Utama Kami' }}
             </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-fr">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
                 @if(isset($programs) && $programs->count() > 0)
                     @foreach($programs as $index => $program)
                         <div class="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-stone-300 hover:-translate-y-1 animate-on-scroll program-reveal flex flex-col h-full transition-all duration-300 ease-out group"
@@ -100,7 +100,7 @@
             <!-- Gambar Kanan (Mengambil dari file background/logo/header yang di-upload di admin) -->
             <div class="md:w-1/2 animate-on-scroll zoom-out" style="transition-delay: 0.3s;">
                 <div
-                    class="relative w-full h-[450px] rounded-2xl overflow-hidden border border-stone-200/80 shadow-xl group">
+                    class="relative w-full h-[280px] sm:h-[360px] md:h-[450px] rounded-2xl overflow-hidden border border-stone-200/80 shadow-xl group">
                     @if($setting && $setting->background && Storage::disk('public')->exists($setting->background))
                         <img src="{{ asset('storage/' . $setting->background) }}" alt="Tentang Yaguwipa"
                             class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
@@ -126,7 +126,7 @@
             </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
             @if(isset($catalogs) && $catalogs->count() > 0)
                 @foreach($catalogs as $index => $catalog)
                     <div class="animate-on-scroll program-reveal group" style="transition-delay: {{ 0.2 + ($index * 0.1) }}s;">

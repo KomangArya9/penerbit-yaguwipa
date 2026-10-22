@@ -198,11 +198,11 @@
 
 </head>
 
-<body class="antialiased bg-[#FAF9F6] text-stone-900 selection:bg-red-500/15 selection:text-[#B6171E]">
+<body class="antialiased bg-[#FAF9F6] text-stone-900 selection:bg-red-500/15 selection:text-[#B6171E] overflow-x-hidden min-h-screen flex flex-col">
 
     @include('components.navbar')
 
-    <main>
+    <main class="flex-grow">
         @yield('content')
     </main>
 

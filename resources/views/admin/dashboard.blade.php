@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="p-8 max-w-7xl mx-auto space-y-6">
+<div class="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
 
     <!-- Page Header (Simple & Bersih) -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -66,7 +66,7 @@
     @endif
 
     <!-- Kartu Statistik Utama (Simple & Bersih Tanpa Ikon) -->
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
         <!-- Card 1: Katalog -->
         <div class="bg-white p-5 rounded-xl shadow-2xs border border-slate-200">
             <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Katalog Buku</span>

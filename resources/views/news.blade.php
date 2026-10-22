@@ -111,7 +111,7 @@
         @endif
 
         <!-- News Grid & Events Section -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-7 mb-16">
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 mb-16">
             @forelse($blogs as $index => $blog)
                 <div class="animate-card border border-stone-200/80 rounded-2xl p-5 flex flex-col transition-all duration-300 hover:border-stone-300 hover:shadow-xl hover:-translate-y-1 bg-white shadow-2xs group"
                     style="animation-delay: {{ $index * 0.1 }}s;">

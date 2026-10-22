@@ -138,8 +138,12 @@
                 <!-- Tombol Pesan via WhatsApp -->
                 @php
                     $rawWa = $catalog->wa;
-                    if (empty($rawWa) && !empty($setting->phone)) {
-                        $rawWa = $setting->phone;
+                    if (empty($rawWa)) {
+                        if (isset($kontakList) && $kontakList->where('type', 'Whatsapp')->isNotEmpty()) {
+                            $rawWa = $kontakList->where('type', 'Whatsapp')->first()->kontak;
+                        } elseif (!empty($setting->phone)) {
+                            $rawWa = $setting->phone;
+                        }
                     }
                     $noWa = !empty($rawWa) ? preg_replace('/[^0-9]/', '', $rawWa) : '628113996698';
                     if (str_starts_with($noWa, '0')) {

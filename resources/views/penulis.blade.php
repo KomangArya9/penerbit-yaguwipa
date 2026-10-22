@@ -12,7 +12,7 @@
         </div>
 
         <!-- 2. Grid Kartu Penulis -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-7 mb-20">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 mb-20">
             @foreach($authors as $index => $author)
                 <div class="portfolio-entry bg-white rounded-2xl border border-stone-200/80 p-7 shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:border-stone-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                     style="transition-delay: {{ $index * 100 }}ms;">
