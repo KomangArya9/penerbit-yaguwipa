@@ -208,52 +208,68 @@
 
     @include('components.footer')
 
-    <!-- Tombol WhatsApp Floating (Dinamis dari Kontak Kami & Pengaturan Admin) -->
+    <!-- Tombol WhatsApp & Kontak Floating (Dinamis dari Kontak Kami & Pengaturan Admin) -->
     @php
-        $waContacts = collect();
+        $floatingContacts = collect();
         if (isset($kontakList)) {
-            $waContacts = $kontakList->filter(function($k) {
-                return strtolower($k->type) === 'whatsapp' || str_contains(strtolower($k->title), 'wa') || str_contains(strtolower($k->title), 'whatsapp');
+            $floatingContacts = $kontakList->filter(function($k) {
+                $type = strtolower($k->type ?? '');
+                $title = strtolower($k->title ?? '');
+                return in_array($type, ['whatsapp', 'call']) || str_contains($title, 'wa') || str_contains($title, 'whatsapp') || str_contains($title, 'call') || str_contains($title, 'telepon');
+            })->map(function($k) {
+                $type = strtolower($k->type ?? '');
+                $title = strtolower($k->title ?? '');
+                $isCall = ($type === 'call' || (str_contains($title, 'call') && !str_contains($title, 'wa')));
+
+                $digits = preg_replace('/[^0-9]/', '', $k->kontak);
+                $cleanWa = $digits;
+                if (str_starts_with($cleanWa, '0')) {
+                    $cleanWa = '62' . substr($cleanWa, 1);
+                }
+
+                $k->is_call = $isCall;
+                $k->action_url = $isCall ? 'tel:' . preg_replace('/[^0-9+]/', '', $k->kontak) : 'https://wa.me/' . $cleanWa;
+                $k->action_target = $isCall ? '_self' : '_blank';
+                return $k;
             });
         }
 
-        if ($waContacts->isEmpty() && !empty($setting->phone)) {
+        if ($floatingContacts->isEmpty() && !empty($setting->phone)) {
             $cleanDigits = preg_replace('/[^0-9]/', '', $setting->phone);
             if (str_starts_with($cleanDigits, '0')) {
                 $cleanDigits = '62' . substr($cleanDigits, 1);
             }
             if (!empty($cleanDigits)) {
-                $waContacts = collect([
+                $floatingContacts = collect([
                     (object)[
                         'title' => 'Admin Penerbit',
                         'kontak' => $setting->phone,
-                        'digits' => $cleanDigits
+                        'is_call' => false,
+                        'action_url' => 'https://wa.me/' . $cleanDigits,
+                        'action_target' => '_blank'
                     ]
                 ]);
             }
-        } else {
-            $waContacts = $waContacts->map(function($k) {
-                $digits = preg_replace('/[^0-9]/', '', $k->kontak);
-                if (str_starts_with($digits, '0')) {
-                    $digits = '62' . substr($digits, 1);
-                }
-                $k->digits = $digits;
-                return $k;
-            });
         }
     @endphp
 
-    @if($waContacts->isNotEmpty())
-        @if($waContacts->count() === 1)
-            @php $singleWa = $waContacts->first(); @endphp
-            <a href="https://wa.me/{{ $singleWa->digits }}" target="_blank" rel="noopener noreferrer" aria-label="Hubungi WhatsApp Resmi"
-                class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-3.5 rounded-full shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center border-2 border-white">
-                <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28" />
-                </svg>
+    @if($floatingContacts->isNotEmpty())
+        @if($floatingContacts->count() === 1)
+            @php $singleContact = $floatingContacts->first(); @endphp
+            <a href="{{ $singleContact->action_url }}" target="{{ $singleContact->action_target }}" rel="noopener noreferrer" aria-label="Hubungi Kami"
+                class="fixed bottom-6 right-6 z-50 {{ $singleContact->is_call ? 'bg-sky-600 hover:bg-sky-700 shadow-sky-900/20' : 'bg-[#25D366] hover:bg-[#20ba59] shadow-emerald-900/20' }} text-white p-3.5 rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center border-2 border-white">
+                @if($singleContact->is_call)
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                @else
+                    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28" />
+                    </svg>
+                @endif
             </a>
         @else
-            <!-- Multi-Contact Popup WhatsApp (Simple & Clean) -->
+            <!-- Multi-Contact Popup (WhatsApp & Call) -->
             <div x-data="{ openWa: false }" class="fixed bottom-6 right-6 z-50">
                 <div x-show="openWa" @click.away="openWa = false" x-cloak
                     x-transition:enter="transition ease-out duration-200"
@@ -266,29 +282,35 @@
                     
                     <!-- Header Minimalis -->
                     <div class="flex items-center justify-between px-2 pt-0.5 pb-2 border-b border-stone-100">
-                        <span class="text-xs font-semibold text-stone-800 tracking-tight">Hubungi WhatsApp</span>
-                        <button @click="openWa = false" class="text-stone-400 hover:text-stone-700 transition p-0.5 rounded-md hover:bg-stone-100">
+                        <span class="text-xs font-semibold text-stone-800 tracking-tight">Hubungi Kami</span>
+                        <button @click="openWa = false" class="text-stone-400 hover:text-stone-700 transition p-0.5 rounded-md hover:bg-stone-100 cursor-pointer">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
                     </div>
 
-                    <!-- Daftar Kontak WhatsApp -->
+                    <!-- Daftar Kontak -->
                     <div class="space-y-1">
-                        @foreach($waContacts as $item)
-                            <a href="https://wa.me/{{ $item->digits }}" target="_blank"
-                                class="flex items-center gap-3 p-2 rounded-xl hover:bg-emerald-50/70 transition-colors group">
-                                <div class="w-8 h-8 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                                        <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28" />
-                                    </svg>
+                        @foreach($floatingContacts as $item)
+                            <a href="{{ $item->action_url }}" target="{{ $item->action_target }}"
+                                class="flex items-center gap-3 p-2 rounded-xl {{ $item->is_call ? 'hover:bg-sky-50/70' : 'hover:bg-emerald-50/70' }} transition-colors group">
+                                <div class="w-8 h-8 rounded-full {{ $item->is_call ? 'bg-sky-600 text-white' : 'bg-[#25D366] text-white' }} flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                    @if($item->is_call)
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                        </svg>
+                                    @else
+                                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                            <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28" />
+                                        </svg>
+                                    @endif
                                 </div>
                                 <div class="min-w-0 flex-1 text-left">
-                                    <div class="text-xs font-semibold text-stone-800 truncate group-hover:text-emerald-700 transition-colors">{{ $item->title }}</div>
+                                    <div class="text-xs font-semibold text-stone-800 truncate {{ $item->is_call ? 'group-hover:text-sky-700' : 'group-hover:text-emerald-700' }} transition-colors">{{ $item->title }}</div>
                                     <div class="text-[11px] text-stone-400 font-mono">{{ $item->kontak }}</div>
                                 </div>
-                                <svg class="w-4 h-4 text-stone-300 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 text-stone-300 {{ $item->is_call ? 'group-hover:text-sky-600' : 'group-hover:text-emerald-600' }} group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                 </svg>
                             </a>
@@ -296,7 +318,7 @@
                     </div>
                 </div>
 
-                <button @click="openWa = !openWa" aria-label="Hubungi WhatsApp Resmi"
+                <button @click="openWa = !openWa" aria-label="Hubungi Kami"
                     class="bg-[#25D366] text-white p-3.5 rounded-full shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center border-2 border-white cursor-pointer">
                     <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28" />
