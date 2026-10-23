@@ -65,11 +65,19 @@
                     </div>
 
                     <!-- TOMBOL CARI / FILTER -->
-                    <button type="submit" class="w-full bg-[#B6171E] text-white text-xs font-semibold py-3 rounded-xl shadow-sm hover:bg-[#9e141a] hover:shadow-md active:scale-[0.98] transition-all">
+                    <button type="submit" class="w-full bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-stone-900 border border-stone-200 text-xs font-semibold py-3 rounded-xl shadow-2xs hover:shadow-xs active:scale-[0.98] transition-all cursor-pointer">
                         Terapkan Filter
                     </button>
 
                 </form>
+
+                <!-- Tombol Pemicu Pop-up Form Katalog -->
+                <div class="pt-4 mt-4 border-t border-stone-200">
+                    <button type="button" onclick="document.getElementById('modal-katalog').classList.remove('hidden')"
+                        class="w-full bg-[#B6171E] text-white text-xs font-semibold py-3 rounded-xl shadow-sm hover:bg-[#9e141a] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer">
+                        Form Katalog
+                    </button>
+                </div>
             </aside>
 
             <!-- 3. Katalog Grid Section -->
@@ -137,18 +145,6 @@
                 </div>
             </main>
         </div>
-
-        <!-- Section 2: Formulir Pengajuan Naskah -->
-        <section class="portfolio-entry mt-20 border-t border-stone-200 pt-16 max-w-4xl mx-auto animate-on-scroll"
-            style="transition-delay: 200ms;">
-
-            <!-- Tombol Pemicu Pop-up Form Katalog -->
-            <button onclick="document.getElementById('modal-katalog').classList.remove('hidden')"
-                class="block w-full text-center bg-[#B6171E] text-white px-10 py-3.5 rounded-xl font-medium hover:bg-[#9e141a] transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.99]">
-                Form Katalog
-            </button>
-
-        </section>
 
         <!-- Modal Form Unggah Catalog -->
         <div id="modal-katalog"

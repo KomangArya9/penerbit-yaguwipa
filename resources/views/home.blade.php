@@ -55,9 +55,9 @@
                                 {{ $program->title }}
                             </h3>
 
-                            <!-- DESKRIPSI (Ringkas otomatis) -->
+                            <!-- RINGKASAN PROGRAM -->
                             <p class="text-sm text-stone-600 mb-6 flex-grow leading-relaxed">
-                                {{ Str::limit(strip_tags($program->content), 150, '...') }}
+                                {{ $program->short ?: Str::limit(strip_tags($program->content), 150, '...') }}
                             </p>
 
                             <!-- Tombol -->
