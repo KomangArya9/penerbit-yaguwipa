@@ -133,10 +133,10 @@
                         <a href="{{ route('catalog.show', $catalog->id) }}" class="block">
                             <div class="bg-stone-100 aspect-[3/4] mb-3.5 overflow-hidden rounded-xl border border-stone-200/80 shadow-sm transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-1">
                                 @if($catalog->cover || $catalog->img)
-                                    <img src="{{ asset('storage/' . ($catalog->cover ?? $catalog->img)) }}" alt="{{ $catalog->Judul }}"
+                                    <img src="{{ asset('storage/' . ($catalog->cover ?? $catalog->img)) }}" alt="{{ $catalog->judul }}"
                                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                                 @else
-                                    <img src="{{ asset('images/default-book.png') }}" alt="{{ $catalog->Judul }}"
+                                    <img src="{{ asset('images/default-book.png') }}" alt="{{ $catalog->judul }}"
                                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                                 @endif
                             </div>
@@ -156,8 +156,10 @@
 
                         <!-- 3. Harga -->
                         <p class="font-semibold text-stone-900 text-sm">
-                            @if($catalog->harga)
+                            @if(is_numeric($catalog->harga))
                                 Rp {{ number_format($catalog->harga, 0, ',', '.') }}
+                            @elseif(!empty($catalog->harga))
+                                {{ $catalog->harga }}
                             @else
                                 <span class="text-stone-500 font-normal">Gratis / Hubungi Admin</span>
                             @endif

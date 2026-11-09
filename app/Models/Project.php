@@ -12,6 +12,10 @@ class Project extends Model
     protected $table = 'project'; 
     protected $guarded = [];
 
+    protected $casts = [
+        'hit' => 'integer',
+    ];
+
     // Tambahkan relasi ini di model Project
     public function kategoriProject()
     {

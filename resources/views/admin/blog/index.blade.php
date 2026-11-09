@@ -75,7 +75,7 @@
                                 {{ date('d M Y', strtotime($item->date)) }}
                             </td>
                             <td class="p-4 text-center whitespace-nowrap text-xs font-semibold text-slate-600">
-                                {{ number_format($item->hit) }}
+                                {{ number_format((int)($item->hit ?? 0)) }}
                             </td>
                             <td class="p-4 text-center whitespace-nowrap">
                                 @if($item->status == 'Show')

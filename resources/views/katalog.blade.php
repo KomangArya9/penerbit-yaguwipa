@@ -15,6 +15,9 @@
             <!-- 2. Sidebar Filter -->
             <aside class="portfolio-entry w-full md:w-64 shrink-0 bg-white p-6 rounded-2xl border border-stone-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.03)] h-fit md:sticky md:top-24" style="transition-delay: 100ms;">
                 <form method="GET" action="{{ route('catalog.index') }}" id="filterForm">
+                    @if(request('sort'))
+                        <input type="hidden" name="sort" value="{{ request('sort') }}">
+                    @endif
                     
                     <!-- KATEGORI -->
                     <div class="mb-8">
@@ -90,11 +93,11 @@
                     </p>
                     <div class="flex items-center">
                         <span class="mr-2.5 text-stone-500 text-xs uppercase tracking-wider font-semibold">Urutkan:</span>
-                        <select
+                        <select onchange="const url = new URL(window.location.href); url.searchParams.set('sort', this.value); window.location.href = url.toString();"
                             class="border border-stone-200 bg-white rounded-lg px-3 py-1.5 text-stone-700 text-sm outline-none cursor-pointer hover:border-[#B6171E] transition-colors focus:border-[#B6171E] shadow-2xs">
-                            <option>Terbaru</option>
-                            <option>Terpopuler</option>
-                            <option>Abjad (A-Z)</option>
+                            <option value="terbaru" {{ request('sort', 'terbaru') == 'terbaru' ? 'selected' : '' }}>Terbaru</option>
+                            <option value="terpopuler" {{ request('sort') == 'terpopuler' ? 'selected' : '' }}>Terpopuler</option>
+                            <option value="abjad" {{ request('sort') == 'abjad' ? 'selected' : '' }}>Abjad (A-Z)</option>
                         </select>
                     </div>
                 </div>
@@ -104,7 +107,7 @@
                     @forelse($catalogs as $index => $book)
                         <!-- Seluruh card dibungkus tag <a> agar bisa diklik dan berpindah ke halaman detail -->
                         <a href="{{ route('catalog.show', $book->id) }}" 
-                           class="portfolio-entry bg-white rounded-2xl border border-stone-200/80 p-5 flex flex-col hover:border-stone-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 opacity-0 translate-y-8 group"
+                           class="portfolio-entry bg-white rounded-2xl border border-stone-200/80 p-5 flex flex-col hover:border-stone-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
                            style="transition-delay: {{ 100 + ($index * 100) }}ms;">
 
                             <!-- Image Wrapper (Menampilkan Cover dari Storage) -->
@@ -129,7 +132,13 @@
 
                             <!-- Harga (Format Rupiah) -->
                             <p class="text-base font-semibold text-stone-900 mt-auto">
-                                Rp {{ number_format($book->harga ?? 0, 0, ',', '.') }}
+                                @if(is_numeric($book->harga))
+                                    Rp {{ number_format($book->harga, 0, ',', '.') }}
+                                @elseif(!empty($book->harga))
+                                    {{ $book->harga }}
+                                @else
+                                    <span class="text-stone-500 font-normal text-sm">Gratis / Hubungi Admin</span>
+                                @endif
                             </p>
                         </a>
                     @empty
@@ -140,7 +149,7 @@
                 </div>
 
                 <!-- Pagination Laravel -->
-                <div class="portfolio-entry opacity-0 translate-y-8" style="transition-delay: 500ms;">
+                <div class="mt-8">
                     {{ $catalogs->links() }}
                 </div>
             </main>

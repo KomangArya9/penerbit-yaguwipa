@@ -40,7 +40,13 @@
 
                     <!-- Harga -->
                     <p class="text-2xl font-bold text-[#B6171E] mb-6">
-                        Rp {{ number_format($catalog->harga ?? 0, 0, ',', '.') }},-
+                        @if(is_numeric($catalog->harga))
+                            Rp {{ number_format($catalog->harga, 0, ',', '.') }},-
+                        @elseif(!empty($catalog->harga))
+                            {{ $catalog->harga }}
+                        @else
+                            Gratis / Hubungi Admin
+                        @endif
                     </p>
 
                     <!-- Tabel Spesifikasi Detail -->

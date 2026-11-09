@@ -48,6 +48,10 @@ class Catalog extends Model
         'hite'
     ];
 
+    protected $casts = [
+        'hite' => 'integer',
+    ];
+
     /**
      * Relasi ke tabel ulasan
      * Satu catalog/buku bisa memiliki banyak ulasan

@@ -91,12 +91,20 @@
                 <p class="text-xs text-slate-400 mt-1">Format: JPG, PNG, WEBP. Maks 2MB.</p>
             </div>
 
-            <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Status Publikasi</label>
-                <select name="status" class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none bg-white">
-                    <option value="Show">Tampilkan (Show)</option>
-                    <option value="Hide">Sembunyikan (Hide)</option>
-                </select>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Jumlah Kunjungan Awal (Hit)</label>
+                    <input type="number" name="hit" value="{{ old('hit', 0) }}" min="0"
+                        class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none"
+                        placeholder="Contoh: 0">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Status Publikasi</label>
+                    <select name="status" class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none bg-white">
+                        <option value="Show" {{ old('status') == 'Show' ? 'selected' : '' }}>Tampilkan (Show)</option>
+                        <option value="Hide" {{ old('status') == 'Hide' ? 'selected' : '' }}>Sembunyikan (Hide)</option>
+                    </select>
+                </div>
             </div>
 
             <!-- Action Buttons -->

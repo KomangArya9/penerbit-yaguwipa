@@ -14,24 +14,34 @@ class CatalogPublicController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = Catalog::where('status', 'Show')->select('kategori')->distinct()->pluck('kategori');
-        $query = Catalog::where('status', 'Show');
+        $categories = Catalog::whereIn('status', ['Show', 'show'])->select('kategori')->distinct()->pluck('kategori');
+        $query = Catalog::whereIn('status', ['Show', 'show']);
 
-        if ($request->has('kategori')) {
+        if ($request->has('kategori') && is_array($request->kategori)) {
             $query->whereIn('kategori', $request->kategori);
         }
 
-        if ($request->has('tahun')) {
+        if ($request->filled('tahun')) {
             if ($request->tahun == '2026') {
                 $query->whereYear('created_at', 2026);
             } elseif ($request->tahun == '2020-2023') {
-                $query->whereBetween(DB::raw('YEAR(created_at)'), [2020, 2023]);
+                $query->whereYear('created_at', '>=', 2020)->whereYear('created_at', '<=', 2023);
             } elseif ($request->tahun == 'sebelum_2020') {
                 $query->whereYear('created_at', '<', 2020);
             }
         }
 
-        $catalogs = $query->latest()->paginate(9)->withQueryString();
+        // Penanganan Sorting
+        $sort = $request->get('sort', 'terbaru');
+        if ($sort === 'terpopuler') {
+            $query->orderByRaw('COALESCE(hite, 0) DESC')->latest();
+        } elseif ($sort === 'abjad') {
+            $query->orderBy('judul', 'asc');
+        } else {
+            $query->latest();
+        }
+
+        $catalogs = $query->paginate(9)->withQueryString();
 
         return view('katalog', compact('catalogs', 'categories'));
     }
@@ -39,7 +49,7 @@ class CatalogPublicController extends Controller
     public function show($id)
     {
         // Memuat katalog yang berstatus Show beserta relasi ulasannya
-        $catalog = Catalog::where('status', 'Show')->with('ulasans')->findOrFail($id);
+        $catalog = Catalog::whereIn('status', ['Show', 'show'])->with('ulasans')->findOrFail($id);
         $catalog->increment('hite');
         return view('show', compact('catalog'));
     }

@@ -85,10 +85,16 @@
                                 {{ $item->penerbit ?? 'Yaguwipa' }}
                             </td>
                             <td class="p-4 text-right font-medium text-slate-800 whitespace-nowrap">
-                                Rp {{ number_format($item->harga, 0, ',', '.') }}
+                                @if(is_numeric($item->harga))
+                                    Rp {{ number_format($item->harga, 0, ',', '.') }}
+                                @elseif(!empty($item->harga))
+                                    {{ $item->harga }}
+                                @else
+                                    <span class="text-slate-400 font-normal">-</span>
+                                @endif
                             </td>
                             <td class="p-4 text-center text-xs font-semibold text-slate-600 whitespace-nowrap">
-                                {{ number_format($item->hite ?? 0) }}
+                                {{ number_format((int)($item->hite ?? 0)) }}
                             </td>
                             <td class="p-4 text-center whitespace-nowrap">
                                 @if($item->status == 'Show')

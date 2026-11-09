@@ -22,8 +22,9 @@ class HomeController extends Controller
         // <-- TAMBAHKAN BARIS INI: Mengambil data program yang statusnya 'Show' -->
         $programs = Program::where('status', 'Show')->latest()->get(); 
 
-        $catalogs = Catalog::where('status', 'Show')
-                       ->orderBy('hite', 'desc')
+        $catalogs = Catalog::whereIn('status', ['Show', 'show'])
+                       ->orderByRaw('COALESCE(hite, 0) DESC')
+                       ->latest()
                        ->take(4)
                        ->get();
 
