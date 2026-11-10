@@ -91,15 +91,23 @@
                     <p class="text-stone-500 font-medium">
                         Menampilkan {{ $catalogs->firstItem() ?? 0 }} - {{ $catalogs->lastItem() ?? 0 }} dari {{ $catalogs->total() }} buku
                     </p>
-                    <div class="flex items-center">
+                    <form id="sortForm" method="GET" action="{{ route('catalog.index') }}" class="flex items-center m-0">
+                        {{-- Tetap pertahankan filter kategori & tahun saat sorting berubah --}}
+                        @foreach((array)request('kategori', []) as $cat)
+                            <input type="hidden" name="kategori[]" value="{{ $cat }}">
+                        @endforeach
+                        @if(request('tahun'))
+                            <input type="hidden" name="tahun" value="{{ request('tahun') }}">
+                        @endif
+
                         <span class="mr-2.5 text-stone-500 text-xs uppercase tracking-wider font-semibold">Urutkan:</span>
-                        <select onchange="const url = new URL(window.location.href); url.searchParams.set('sort', this.value); window.location.href = url.toString();"
+                        <select name="sort" id="sort-select" onchange="this.form.submit()"
                             class="border border-stone-200 bg-white rounded-lg px-3 py-1.5 text-stone-700 text-sm outline-none cursor-pointer hover:border-[#B6171E] transition-colors focus:border-[#B6171E] shadow-2xs">
                             <option value="terbaru" {{ request('sort', 'terbaru') == 'terbaru' ? 'selected' : '' }}>Terbaru</option>
                             <option value="terpopuler" {{ request('sort') == 'terpopuler' ? 'selected' : '' }}>Terpopuler</option>
                             <option value="abjad" {{ request('sort') == 'abjad' ? 'selected' : '' }}>Abjad (A-Z)</option>
                         </select>
-                    </div>
+                    </form>
                 </div>
 
                 <!-- Grid Buku Dinamis dari Database -->
@@ -446,7 +454,23 @@
 
 <!-- Script AJAX dan Penanganan Alert/Error -->
 <script>
-    document.getElementById('form-katalog').addEventListener('submit', function (e) {
+document.addEventListener('DOMContentLoaded', function() {
+    var sortSelect = document.getElementById('sort-select');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+            if (this.form) {
+                this.form.submit();
+            } else {
+                var url = new URL(window.location.href);
+                url.searchParams.set('sort', this.value);
+                url.searchParams.delete('page');
+                window.location.assign(url.toString());
+            }
+        });
+    }
+});
+
+document.getElementById('form-katalog').addEventListener('submit', function (e) {
     e.preventDefault();
 
     let formData = new FormData(this);
