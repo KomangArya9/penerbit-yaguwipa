@@ -79,8 +79,8 @@
             </div>
 
             <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Deskripsi Lengkap Portofolio <span class="text-rose-500">*</span></label>
-                <textarea name="content" rows="5" placeholder="Ceritakan proses dan hasil penerbitan proyek ini..." required
+                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Deskripsi Lengkap Portofolio</label>
+                <textarea name="content" rows="5" placeholder="Ceritakan proses dan hasil penerbitan proyek ini..."
                     class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">{{ old('content') }}</textarea>
             </div>
 

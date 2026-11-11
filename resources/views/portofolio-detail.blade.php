@@ -38,9 +38,11 @@
         </div>
 
         <!-- Content -->
-        <div class="prose max-w-none text-stone-700 leading-relaxed text-base md:text-lg">
-            {!! $project->content !!}
-        </div>
+        @if(filled($project->content))
+            <div class="prose max-w-none text-stone-700 leading-relaxed text-base md:text-lg">
+                {!! $project->content !!}
+            </div>
+        @endif
 
         <!-- Tombol Link Eksternal (Opsional jika diisi URL) -->
         @if($project->url)

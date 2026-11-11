@@ -224,7 +224,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Jumlah Kunjungan Awal (Hit)</label>
-                    <input type="number" name="hite" value="{{ old('hite', 0) }}"
+                    <input type="number" name="hite" value="{{ old('hite', 0) }}" min="0"
                         class="border border-slate-300 p-2.5 rounded-lg w-full text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
                 </div>
                 <div>

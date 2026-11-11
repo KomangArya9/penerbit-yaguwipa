@@ -294,7 +294,7 @@
                         </div>
                         <div>
                             <label for="jumlah_halaman" class="block text-sm font-medium text-stone-700 mb-1">Jumlah Halaman</label>
-                            <input type="number" id="jumlah_halaman" name="jumlah" placeholder="Contoh: 150"
+                            <input type="text" id="jumlah_halaman" name="jumlah" placeholder="Contoh: 180 hlm"
                                 class="w-full p-3 border border-stone-200 rounded-xl text-sm outline-none focus:border-[#B6171E] focus:ring-1 focus:ring-[#B6171E] bg-stone-50/50 hover:bg-white transition-all">
                         </div>
                     </div>

@@ -28,18 +28,7 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'kategori_project_id' => 'required',
-            'id_service' => 'required',
-            'date' => 'required|max:20',
-            'title' => 'required|max:500|unique:project,title',
-            'lokasi' => 'required',
-            'content' => 'required',
-            'img' => 'required|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
-            'hit' => 'nullable|integer',
-            'url' => 'nullable',
-            'status' => 'required|in:Show,Hide',
-        ]);
+        $this->validateProject($request);
 
         $project = Project::create([
             'kategori_project_id' => $request->kategori_project_id,
@@ -48,7 +37,7 @@ class ProjectController extends Controller
             'title' => $request->title,
             'lokasi' => $request->lokasi,
             'slug' => Str::slug($request->title),
-            'content' => $request->content,
+            'content' => $request->content ?? '',
             'hit' => $request->hit ?? 0,
             'url' => $request->url ?? '',
             'status' => $request->status,
@@ -76,18 +65,7 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project)
     {
-        $request->validate([
-            'kategori_project_id' => 'required',
-            'id_service' => 'required',
-            'date' => 'required|max:20',
-            'title' => 'required|max:500|unique:project,title,' . $project->id,
-            'lokasi' => 'required',
-            'content' => 'required',
-            'img' => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
-            'hit' => 'nullable|integer',
-            'url' => 'nullable',
-            'status' => 'required|in:Show,Hide',
-        ]);
+        $this->validateProject($request, $project->id);
 
         $project->update([
             'kategori_project_id' => $request->kategori_project_id,
@@ -96,7 +74,7 @@ class ProjectController extends Controller
             'title' => $request->title,
             'lokasi' => $request->lokasi,
             'slug' => Str::slug($request->title),
-            'content' => $request->content,
+            'content' => $request->content ?? '',
             'hit' => $request->hit ?? $project->hit,
             'url' => $request->url ?? '',
             'status' => $request->status,
@@ -138,5 +116,32 @@ class ProjectController extends Controller
         $project->delete();
 
         return redirect()->route('admin.project.index')->with('success', 'Project beserta seluruh fotonya berhasil dihapus!');
+    }
+
+    /**
+     * Validasi field portofolio untuk proses simpan dan pembaruan.
+     */
+    private function validateProject(Request $request, ?int $ignoreId = null): array
+    {
+        $titleRule = 'required|max:500|unique:project,title';
+        $imgRule = 'required|image|mimes:jpeg,png,jpg,svg,webp|max:2048';
+
+        if ($ignoreId !== null) {
+            $titleRule .= ',' . $ignoreId;
+            $imgRule = 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:2048';
+        }
+
+        return $request->validate([
+            'kategori_project_id' => 'required',
+            'id_service' => 'required',
+            'date' => 'required|max:20',
+            'title' => $titleRule,
+            'lokasi' => 'required',
+            'content' => 'nullable|string',
+            'img' => $imgRule,
+            'hit' => 'nullable|integer',
+            'url' => 'nullable',
+            'status' => 'required|in:Show,Hide',
+        ]);
     }
 }

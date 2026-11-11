@@ -61,6 +61,7 @@ class CatalogPublicController extends Controller
             $request->validate([
                 'judul' => 'required|string|max:255',
                 'penulis' => 'required|string|max:255',
+                'jumlah' => 'nullable|string|max:255',
             ]);
 
             // Pemetaan data secara menyeluruh (Mendukung semua jenis penulisan name di form)
@@ -157,6 +158,7 @@ class CatalogPublicController extends Controller
         $request->validate([
             'judul' => 'nullable|string|max:255',
             'penulis' => 'nullable|string|max:255',
+            'jumlah' => 'nullable|string|max:255',
             'deskripsi' => 'nullable|string',
         ]);
 
