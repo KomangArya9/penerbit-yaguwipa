@@ -8,6 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // Tabel 'project' baru dibuat pada migration tanggal 2026_07_23,
+        // sehingga FK check dinonaktifkan sementara agar aman dijalankan di MySQL.
+        Schema::disableForeignKeyConstraints();
         Schema::create('project_foto', function (Blueprint $table) {
             $table->id();
             // Menghubungkan ke kolom 'id' di tabel 'project'
@@ -15,6 +18,7 @@ return new class extends Migration
             $table->string('img'); // Untuk menyimpan path/nama file foto galeri
             $table->timestamps();
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     public function down(): void
